@@ -1,6 +1,6 @@
 import express from "express"
 import mysql from "mysql"
-// import cors from "cors"
+import cors from "cors"
  
 const app = express()
 
@@ -17,7 +17,7 @@ const db = mysql.createConnection({
 // alter user 'root'@'localhost' identified with mysql_native_password by '';
 
 app.use(express.json())
-// app.use(cors())
+app.use(cors())
 
 app.get("/", (req,res)=>{
     res.json("hello this is the backend")
@@ -32,7 +32,7 @@ app.get("/seat", (req,res)=>{
 })
 
 app.post("/seat", (req,res)=>{
-    const q = "INSERT INTO seats (`seatcol`,`year`) values (?)"
+    const q = "INSERT INTO seating (`seatcol`,`year`) values (?)"
     const values = [req.body.seatcol, req.body.year]
 
     db.query(q,[values], (err,data)=>{

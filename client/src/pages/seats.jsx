@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/seats.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
 
 const Seats = () => {
   const [seats, setSeats] = useState([]);
@@ -36,6 +37,7 @@ const Seats = () => {
           ))}
         </tbody>
       </table>
+      <button><Link to="/add">Add seats</Link></button>
     </div>
   );
 };

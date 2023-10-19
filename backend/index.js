@@ -32,8 +32,8 @@ app.get("/seat", (req,res)=>{
 })
 
 app.post("/seat", (req,res)=>{
-    const q = "INSERT INTO seating (`seatcol`,`year`) values (?)"
-    const values = [req.body.seatcol, req.body.year]
+    const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";
+    const values = [req.body.seatcol, req.body.year];
 
     db.query(q,[values], (err,data)=>{
         if(err) return res.json(err)

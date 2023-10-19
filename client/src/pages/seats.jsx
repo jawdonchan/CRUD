@@ -1,34 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../css/seats.css'; // Import the CSS file
+
 const Seats = () => {
+  const [seats, setSeats] = useState([]);
 
-const [seats, setSeats] = useState([])
-
-useEffect(()=>{
-    const fetchAllSeats = async ()=>{
-        try{
-            const res = await axios.get("http://localhost:8800/seat")
-            // console.log(res)
-            setSeats(res.data)
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
+  useEffect(() => {
+    const fetchAllSeats = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/seat");
+        setSeats(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchAllSeats();
-},[])
+  }, []);
 
-    return <div>
-       <div className='seats'>
-        {seats.map(seat=>(
-            <div className='seat'>
-                <h2>Seat Column: {seat.seatcol}</h2>
-                <h2>Seat Year: {seat.year}</h2>
-                </div>
-        ))}
-       </div>
-        <div>Seats</div>
-        </div>;
-}
+  return (
+    <div>
+      <h1>Seats</h1>
+      <table className='seats-table'>
+        <thead>
+          <tr>
+            <th>Seat Column</th>
+            <th>Seat Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          {seats.map(seat => (
+            <tr key={seat.id}>
+              <td>{seat.seatcol}</td>
+              <td>{seat.year}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default Seats
+export default Seats;

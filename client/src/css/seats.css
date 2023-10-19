@@ -1,0 +1,20 @@
+/* Seats.css */
+h1 {
+    text-align: center;
+  }
+  
+  .seats-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .seats-table th, .seats-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .seats-table th {
+    background-color: #f2f2f2;
+  }
+  

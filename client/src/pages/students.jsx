@@ -37,7 +37,7 @@ const Students = () => {
           ))}
         </tbody>
       </table>
-      {/* <button><Link to="/add">Add seats</Link></button> */}
+      
     </div>
   );
 };

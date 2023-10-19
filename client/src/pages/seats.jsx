@@ -18,6 +18,15 @@ const Seats = () => {
     fetchAllSeats();
   }, []);
 
+  const handleDelete = async (id)=>{
+    try{
+      await axios.delete("http://localhost:8800/seat/"+id);
+      window.location.reload()
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <h1>Seats</h1>
@@ -33,6 +42,7 @@ const Seats = () => {
             <tr key={seat.id}>
               <td>{seat.seatcol}</td>
               <td>{seat.year}</td>
+              <button className='delete' onClick={()=>handleDelete(seat.id)}>Delete</button>
             </tr>
           ))}
         </tbody>

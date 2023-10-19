@@ -49,6 +49,16 @@ app.get("/student", (req,res)=>{
     })
 })
 
+app.delete("/seat/:id", (req,res)=>{
+    const seatId = req.params.id;
+    const q = "DELETE from seating where id = ?"
+
+    db.query(q,[seatId], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Seats has been deleted!");
+    })
+})
+
 app.listen(8800, ()=>{
     console.log("connected to crud app!")
 })

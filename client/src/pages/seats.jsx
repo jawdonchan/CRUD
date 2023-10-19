@@ -22,8 +22,8 @@ useEffect(()=>{
        <div className='seats'>
         {seats.map(seat=>(
             <div className='seat'>
-                <h2>{seat.seatscol}</h2>
-                <h2>{seat.year}</h2>
+                <h2>Seat Column: {seat.seatcol}</h2>
+                <h2>Seat Year: {seat.year}</h2>
                 </div>
         ))}
        </div>

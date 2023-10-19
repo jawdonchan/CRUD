@@ -41,6 +41,14 @@ app.post("/seat", (req,res)=>{
     })
 })
 
+app.get("/student", (req,res)=>{
+    const q = "SELECT * from student"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.listen(8800, ()=>{
     console.log("connected to crud app!")
 })

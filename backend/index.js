@@ -59,7 +59,46 @@ app.delete("/seat/:id", (req,res)=>{
     })
 })
 
+app.put("/seat/:id", (req, res) => {
+    const seatId = req.params.id;
+    const q = "UPDATE seating SET seatcol = IFNULL(?, seatcol), year = IF (ISNULL(?), NULL, year) WHERE id = ?";
+  
+    const values = [req.body.seatcol, req.body.year];
+  
+    db.query(q, [...values, seatId], (err, data) => {
+      if (err) return res.json(err);
+      return res.json("Seats have been updated!");
+    });
+  });
+  
+
 app.listen(8800, ()=>{
     console.log("connected to crud app!")
 })
+
+
+//liheng - qr scanner
+app.put("/attendance/:id", (req, res) => {
+    const adminNo = req.params.id;
+    const q = `UPDATE student SET Attendance = 'yes' WHERE adminNo = ${adminNo}`;
+    const completeQuery = q; // No need to replace '?' in this case
+
+    // Log the complete SQL query
+    console.log("Complete SQL Query:", completeQuery);
+
+    // Execute the database query
+    db.query(q, (err, data) => {
+        if (err) {
+            console.log(err);
+            return res.json(err);
+        } else {
+            // Log the query result and return a response
+            console.log(data);
+            return res.json("Your attendance has been updated");
+        }
+    });
+});
+
+
+
 

@@ -26,6 +26,11 @@ const Students = () => {
           <tr>
             <th>Student Name</th>
             <th>Student Admin</th>
+            <th>Good Progress</th>
+            <th>D List</th>
+            <th>Top Student</th>
+            <th>Coming</th>
+            <th>Attendance</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +38,11 @@ const Students = () => {
             <tr key={student.id}>
               <td>{student.FullName}</td>
               <td>{student.adminNo}</td>
+              <td>{student.GdProgress}</td>
+              <td>{student.DList}</td>
+              <td>{student.TopStudent}</td>
+              <td>{student.Cmging}</td>
+              <td>{student.Attendance}</td>
             </tr>
           ))}
         </tbody>

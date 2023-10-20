@@ -38,14 +38,18 @@ const Seats = () => {
           </tr>
         </thead>
         <tbody>
-          {seats.map(seat => (
-            <tr key={seat.id}>
-              <td>{seat.seatcol}</td>
-              <td>{seat.year}</td>
-              <button className='delete' onClick={()=>handleDelete(seat.id)}>Delete</button>
-            </tr>
-          ))}
-        </tbody>
+  {seats.map(seat => (
+    <tr key={seat.id}>
+      <td>{seat.seatcol}</td>
+      <td>{seat.year}</td>
+      <td> {/* Wrap the buttons in a <td> */}
+        <button className='delete' onClick={() => handleDelete(seat.id)}>Delete</button>
+        <button className='update'><Link to={`/update/${seat.id}`}>Update</Link></button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
       <button><Link to="/add">Add seats</Link></button>
     </div>

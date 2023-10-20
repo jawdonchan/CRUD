@@ -11,12 +11,12 @@ import Seating from './seatingPlan';
 export default function Login(){
     const navigate = useNavigate();
     const handleGuestClick = () => {
-        navigate('/seating');
+        navigate('/seatingplan');
     };
     return (
         <div>
             <Routes>
-                <Route path = "/seating" element={<Seating/>}></Route>
+                <Route path = "/seatingplan" element={<Seating/>}></Route>
             </Routes>            
             <Button variant = "contained" onClick = {handleGuestClick}>Seating</Button>
 

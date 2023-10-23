@@ -8,8 +8,9 @@ const AddAccount = () => {
   const [account, setAccount] = useState({
     username: "",
     password: "",
-    role: "", 
+    role: "",
   });
+  const [errorMessage, setErrorMessage] = useState(""); // New state for error message
 
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
 
@@ -28,6 +29,7 @@ const AddAccount = () => {
     }
 
     try {
+<<<<<<< HEAD
       console.log("adding account");
       await axios.post("http://localhost:8800/addaccount", account);
       navigate("/");
@@ -37,6 +39,20 @@ const AddAccount = () => {
         // Display the error message received from the server
         setErrorMessage(err.response.data.error);
       }
+=======
+      const response = await axios.post("http://localhost:8800/addaccount", account);
+
+      if (response.status === 200) {
+        console.log("Account has been added!");
+        navigate('/admin');
+      } else {
+        console.log("Error adding account. Please check the input and try again.");
+        setErrorMessage("Error adding account. Please check the input and try again.");
+      }
+    } catch (err) {
+      console.log(err);
+      setErrorMessage("Error adding account. Please try again later.");
+>>>>>>> e66564e168fece92685a916cc59e61d0ce49dc99
     }
   };
 
@@ -82,8 +98,14 @@ const AddAccount = () => {
             <FormControlLabel value="Student" control={<Radio />} label="Student" />
           </RadioGroup>
         </FormControl>
+<<<<<<< HEAD
         <Button variant="contained" onClick={handleClick}>Add</Button>
         {errorMessage && <div className="error" >{errorMessage}</div>} {/* Display error message */}
+=======
+        <button onClick={handleClick}>Add</button>
+        {/* Conditional rendering of error message */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+>>>>>>> e66564e168fece92685a916cc59e61d0ce49dc99
       </Stack>
       <div></div>
     </Stack>

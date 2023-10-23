@@ -9,6 +9,7 @@ import Guest from './pages/guest';
 import SeatingPlan from './pages/seatingPlan'; 
 import Login from './pages/login';
 import AddAccount from "./pages/AddAccount";
+import AddStudent from "./pages/addStudent";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/addaccount" element={<AddAccount/>}></Route>
-
+        <Route path="/addstudent" element={<AddStudent/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

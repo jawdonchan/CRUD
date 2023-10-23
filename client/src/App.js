@@ -7,6 +7,7 @@ import Choose from './pages/Choose';
 import Admin from './pages/admin'; 
 import Guest from './pages/guest'; 
 import SeatingPlan from './pages/seatingPlan'; 
+import Login from './pages/login';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/guest" element={<Guest/>}></Route>
         <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

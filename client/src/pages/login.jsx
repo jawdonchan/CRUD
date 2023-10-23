@@ -6,17 +6,21 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8800/api/login", { username, password });
       setMessage(response.data.message);
+      localStorage.setItem("username", username);
+      navigate('/student'); // Use navigate for programmatic navigation
     } catch (error) {
       setMessage("Login failed. Check your credentials.");
     }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import Navbar from './navigationbar';
 
 export default function Seating() {
   const [rows, setRows] = useState('');
@@ -71,7 +72,10 @@ export default function Seating() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+    <div>
+      <Navbar></Navbar>
+         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+      
       <div>Seating plan:</div>
       <Stack direction="row" spacing={2} justifyContent="center">
         <TextField
@@ -81,7 +85,12 @@ export default function Seating() {
           value={rows}
           onChange={handleRowsChange}
         />
-        <div>&times;</div>
+        <Stack
+        direction="column"
+        justifyContent="center"
+        >
+          <div>&times;</div>
+        </Stack>
         <TextField
           id="outlined-basic-columns"
           label="Columns"
@@ -89,7 +98,12 @@ export default function Seating() {
           value={columns}
           onChange={handleColumnsChange}
         />
-        <div>columns</div>
+        <Stack
+        direction="column"
+        justifyContent="center"
+        >        
+        <div>Categories</div>
+        </Stack>
         <TextField
           id="outlined-basic-categories"
           label="Categories"
@@ -148,5 +162,7 @@ export default function Seating() {
         `}
       </style>
     </div>
+    </div>
+ 
   );
 }

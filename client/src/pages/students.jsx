@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/seats.css'; // Import the CSS file
-import { Link } from 'react-router-dom';
+
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -11,6 +11,7 @@ const Students = () => {
       try {
         const res = await axios.get("http://localhost:8800/student");
         setStudents(res.data);
+        
       } catch (err) {
         console.log(err);
       }

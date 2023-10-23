@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Seating from './seatingPlan';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 
-function App() {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,6 +18,7 @@ function App() {
       const response = await axios.post("http://localhost:8800/api/login", { username, password });
       setMessage(response.data.message);
       localStorage.setItem("username", username);
+      console.log("Stored username:", localStorage.getItem("username")); // Debugging line
       navigate('/student'); // Use navigate for programmatic navigation
     } catch (error) {
       setMessage("Login failed. Check your credentials.");
@@ -63,4 +62,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

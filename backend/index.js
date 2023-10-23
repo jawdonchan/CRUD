@@ -74,7 +74,7 @@ app.put("/seat/:id", (req, res) => {
 
 app.listen(8800, ()=>{
     console.log("connected to crud app!")
-})
+});
 
 
 //liheng - qr scanner
@@ -98,7 +98,20 @@ app.put("/attendance/:id", (req, res) => {
         }
     });
 });
-
-
+// Login endpoint
+app.post("/api/login", (req, res) => {
+    const { username, password } = req.body;
+    const sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    db.query(sql, [username, password], (err, results) => {
+      if (err) {
+        res.status(500).json({ message: "Database error" });
+      } else if (results.length > 0) {
+        res.json({ message: "Login successful" });
+      } else {
+        res.status(401).json({ message: "Invalid credentials" });
+      }
+    });
+  });
+  
 
 

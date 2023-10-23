@@ -8,27 +8,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Guest from './guest'; // Import your dashboard components here
 import Student from './students'; // Import your dashboard components here
-
+import Navbar from './navigationbar';
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const handleGuestClick = () => {
-    navigate('/seatingplan');
-  };
+//   const handleGuestClick = () => {
+//     navigate('/seatingplan');
+//   };
 
   return (
     <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
-          </Typography>
-          <Button color="inherit" onClick={handleGuestClick}>
-            Seating
-          </Button>
-        </Toolbar>
-      </AppBar>
-
+    
+        <Navbar></Navbar>
       <Box
         component="form"
         sx={{
@@ -37,7 +28,7 @@ export default function Dashboard() {
         noValidate
         autoComplete="off"
       >
-        <Typography variant="h5">Welcome to the Dashboard</Typography>
+        {/* <Typography variant="h5">Welcome to the Dashboard</Typography> */}
         {/* Include your dashboard components here */}
         <Student />
       </Box>

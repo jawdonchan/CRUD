@@ -22,29 +22,38 @@ export default function Choose() {
   };
 
   return (
-    <Stack
-      direction="Column"
+
+      <Stack
+      direction="column"
       justifyContent='space-around'
       alignItems="center"
       spacing={8}
     >
+    
       <Routes>
         <Route path="/guest" element={<Guests />} />
         <Route path="/admin" element={<Login />} />
         <Route path="/seats" element={<Seats />} /> {/* Add the new route for Seats */}
       </Routes>
-
       <div>
-        {!window.location.pathname.includes('/guest') && (
+        <Stack       
+        direction="row"
+        spacing={3}>
+          {!window.location.pathname.includes('/guest') && (
           <Button variant="contained" onClick={handleGuestClick}>Guest</Button>
         )}
+        
         {!window.location.pathname.includes('/admin') && (
           <Button variant="contained" onClick={handleAdminClick}>Admin</Button>
         )}
         {!window.location.pathname.includes('/seats') && (
           <Button variant="contained" onClick={handleSeatsClick}>Seats</Button>
         )}
+        </Stack>
+        
       </div>
     </Stack>
+
+    
   );
 }

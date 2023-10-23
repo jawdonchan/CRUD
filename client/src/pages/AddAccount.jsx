@@ -7,8 +7,9 @@ const AddAccount = () => {
   const [account, setAccount] = useState({
     username: "",
     password: "",
-    role: "", 
+    role: "",
   });
+  const [errorMessage, setErrorMessage] = useState(""); // New state for error message
 
   const navigate = useNavigate();
 
@@ -19,11 +20,18 @@ const AddAccount = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-        console.log("adding account");
-      await axios.post("http://localhost:8800/addaccount", account);
-    //   navigate("/");
+      const response = await axios.post("http://localhost:8800/addaccount", account);
+
+      if (response.status === 200) {
+        console.log("Account has been added!");
+        navigate('/admin');
+      } else {
+        console.log("Error adding account. Please check the input and try again.");
+        setErrorMessage("Error adding account. Please check the input and try again.");
+      }
     } catch (err) {
       console.log(err);
+      setErrorMessage("Error adding account. Please try again later.");
     }
   };
 
@@ -47,6 +55,8 @@ const AddAccount = () => {
           </RadioGroup>
         </FormControl>
         <button onClick={handleClick}>Add</button>
+        {/* Conditional rendering of error message */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </Stack>
     </div>
   );

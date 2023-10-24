@@ -11,6 +11,7 @@ import Login from './pages/login';
 import AddAccount from "./pages/AddAccount";
 import AddStudent from "./pages/addStudent";
 import UpdateStudent from "./pages/updateStudent";
+import Transition from "./pages/transition";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/addstudent" element={<AddStudent/>}></Route>
         <Route path="/updateStudent/:id" element={<UpdateStudent/>}></Route>
         <Route path="/seats" element={<Seats/>}></Route>
+        <Route path="/transition" element={<Transition/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

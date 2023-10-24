@@ -12,15 +12,24 @@ const Guest = (props) => {
     const handleBack = () => {
         navigate('/');
     }
+
     const handleQrResult = async (result, error) => {
         if (result) {
-            setIsLoading(false); // Set loading state to true
+            setIsLoading(true); // Set loading state to true
 
             try {
                 const response = await axios.put("http://localhost:8800/attendance/" + result.text);
-                console.log('Axios Response:', response.data); // Add this line
-                // Assuming the result.text contains the adminNo for updating attendance
+                console.log('Axios Response:', response.data);
+
+                // Insert admin number into the student and seatcol tables
+                await axios.post("http://localhost:8800/insertStudent", { adminNo: result.text });
+                await axios.post("http://localhost:8800/insertSeatcol", { adminNo: result.text });
+
                 setData(result.text);
+                // Add a delay of 2 seconds (2000 milliseconds)
+                setTimeout(() => {
+                    setIsLoading(false); // Set loading state to false after the delay
+                }, 1500);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -47,21 +56,20 @@ const Guest = (props) => {
                     justifyContent="center"
                 >
                     <br></br>
-                    <Typography variant="h4"> Scan For attendance</Typography>
+                    <Typography variant="h4">Scan For Attendance</Typography>
                     <div style={{ width: 300 }}>
                         <QrReader
                             onResult={handleQrResult}
                             style={{ width: '10%' }}
                         />
                     </div>
-                    <Stack direction="row" alignContent="center"justifyContent="center">    
-{isLoading ? (
-                        <CircularProgress /> // Display the loading indicator while loading
-                    ) : (
-                        <p>Attendance scanned for {data}</p>
-                    )}
+                    <Stack direction="row" alignContent="center"justifyContent="center">
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <p>Attendance scanned for {data}</p>
+                        )}
                     </Stack>
-                    
                 </Stack>
             </div>
             <div></div>

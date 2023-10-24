@@ -41,6 +41,7 @@ function App() {
         ) : (
           <p>Loading student data...</p>
         )}
+        <br></br><br></br><br></br><br></br>
         <button onClick={nextSlide}>Next</button>
       </header>
     </div>

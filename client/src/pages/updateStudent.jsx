@@ -38,6 +38,18 @@ const UpdateStudent = () => {
   };
 
   const handleUpdate = async () => {
+    // Check if all fields are chosen
+    if (
+      student.GdProgress === '' ||
+      student.DList === '' ||
+      student.TopStudent === '' ||
+      student.Cmging === '' ||
+      student.Attendance === ''
+    ) {
+      alert('Please select values for all fields.');
+      return;
+    }
+
     try {
       await axios.put(`http://localhost:8800/updateStudent/${studentId}`, student);
       navigate("/student"); // Redirect to the students page after updating
@@ -58,6 +70,7 @@ const UpdateStudent = () => {
             value="yes"
             checked={student.GdProgress === "yes"}
             onChange={handleChange}
+            required
           /> Yes
           <input
             type="radio"
@@ -65,6 +78,7 @@ const UpdateStudent = () => {
             value="no"
             checked={student.GdProgress === "no"}
             onChange={handleChange}
+            required
           /> No
         </div>
       </div>
@@ -77,6 +91,7 @@ const UpdateStudent = () => {
             value="yes"
             checked={student.DList === "yes"}
             onChange={handleChange}
+            required
           /> Yes
           <input
             type="radio"
@@ -84,6 +99,7 @@ const UpdateStudent = () => {
             value="no"
             checked={student.DList === "no"}
             onChange={handleChange}
+            required
           /> No
         </div>
       </div>
@@ -96,6 +112,7 @@ const UpdateStudent = () => {
             value="yes"
             checked={student.TopStudent === "yes"}
             onChange={handleChange}
+            required
           /> Yes
           <input
             type="radio"
@@ -103,6 +120,7 @@ const UpdateStudent = () => {
             value="no"
             checked={student.TopStudent === "no"}
             onChange={handleChange}
+            required
           /> No
         </div>
       </div>
@@ -115,6 +133,7 @@ const UpdateStudent = () => {
             value="yes"
             checked={student.Cmging === "yes"}
             onChange={handleChange}
+            required
           /> Yes
           <input
             type="radio"
@@ -122,6 +141,7 @@ const UpdateStudent = () => {
             value="no"
             checked={student.Cmging === "no"}
             onChange={handleChange}
+            required
           /> No
         </div>
       </div>
@@ -134,6 +154,7 @@ const UpdateStudent = () => {
             value="yes"
             checked={student.Attendance === "yes"}
             onChange={handleChange}
+            required
           /> Yes
           <input
             type="radio"
@@ -141,6 +162,7 @@ const UpdateStudent = () => {
             value="no"
             checked={student.Attendance === "no"}
             onChange={handleChange}
+            required
           /> No
         </div>
       </div>

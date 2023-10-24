@@ -4,8 +4,8 @@
     gap: 20px;
 }
 input{
-    width:250px;
-    padding: 20px;
+    width:90px;
+    padding: 10px;
     border: 1px solid gray;
 
 }
@@ -13,6 +13,67 @@ input{
 .formButton{
     border: none;
     padding: 10px;
-    background-color: lightcoral;
+    background-color: teal;
     color: white;
 }
+
+/* Add this CSS to adjust spacing between radio buttons and labels */
+div div input[type="radio"] {
+    margin-right: 5px; /* Adjust the margin as needed */
+  }
+  
+  /* Add this CSS to adjust spacing between radio button labels and buttons */
+  div div label {
+    margin-right: 5px; /* Adjust the margin as needed */
+  }
+  
+  /* Add this CSS to adjust spacing between radio buttons and buttons */
+  div div input[type="radio"] + label {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+
+  /* update.css */
+.update-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .update-form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .update-form div {
+    margin-bottom: 10px;
+
+  }
+  
+  .update-form label {
+    display: block;
+    font-weight: bold;
+    text-align: left; /* Align labels to the left */
+  }
+  
+  .update-form input[type="radio"] {
+    margin: 0 10px;
+  }
+  
+  .formButton {
+    background-color: #0073e6;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .formButton:hover {
+    background-color: #005bbb;
+  }
+  
+
+
+
+  

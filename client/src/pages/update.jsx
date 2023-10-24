@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../css/update.css'; // Import the CSS file
+// import '../css/update.css'; // Import the CSS file
 const Update = () => {
 
     const [seats, setSeats] = useState({

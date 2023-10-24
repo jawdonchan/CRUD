@@ -51,48 +51,98 @@ const UpdateStudent = () => {
       <h1>Update Student</h1>
       <div>
         <label>Good Progress:</label>
-        <input
-          type="text"
-          name="GdProgress"
-          value={student.GdProgress}
-          onChange={handleChange}
-        />
+        <div>
+          <input
+            type="radio"
+            name="GdProgress"
+            value="yes"
+            checked={student.GdProgress === "yes"}
+            onChange={handleChange}
+          /> Yes
+          <input
+            type="radio"
+            name="GdProgress"
+            value="no"
+            checked={student.GdProgress === "no"}
+            onChange={handleChange}
+          /> No
+        </div>
       </div>
       <div>
         <label>D List:</label>
-        <input
-          type="text"
-          name="DList"
-          value={student.DList}
-          onChange={handleChange}
-        />
+        <div>
+          <input
+            type="radio"
+            name="DList"
+            value="yes"
+            checked={student.DList === "yes"}
+            onChange={handleChange}
+          /> Yes
+          <input
+            type="radio"
+            name="DList"
+            value="no"
+            checked={student.DList === "no"}
+            onChange={handleChange}
+          /> No
+        </div>
       </div>
       <div>
         <label>Top Student:</label>
-        <input
-          type="text"
-          name="TopStudent"
-          value={student.TopStudent}
-          onChange={handleChange}
-        />
+        <div>
+          <input
+            type="radio"
+            name="TopStudent"
+            value="yes"
+            checked={student.TopStudent === "yes"}
+            onChange={handleChange}
+          /> Yes
+          <input
+            type="radio"
+            name="TopStudent"
+            value="no"
+            checked={student.TopStudent === "no"}
+            onChange={handleChange}
+          /> No
+        </div>
       </div>
       <div>
         <label>Coming:</label>
-        <input
-          type="text"
-          name="Cmging"
-          value={student.Cmging}
-          onChange={handleChange}
-        />
+        <div>
+          <input
+            type="radio"
+            name="Cmging"
+            value="yes"
+            checked={student.Cmging === "yes"}
+            onChange={handleChange}
+          /> Yes
+          <input
+            type="radio"
+            name="Cmging"
+            value="no"
+            checked={student.Cmging === "no"}
+            onChange={handleChange}
+          /> No
+        </div>
       </div>
       <div>
         <label>Attendance:</label>
-        <input
-          type="text"
-          name="Attendance"
-          value={student.Attendance}
-          onChange={handleChange}
-        />
+        <div>
+          <input
+            type="radio"
+            name="Attendance"
+            value="yes"
+            checked={student.Attendance === "yes"}
+            onChange={handleChange}
+          /> Yes
+          <input
+            type="radio"
+            name="Attendance"
+            value="no"
+            checked={student.Attendance === "no"}
+            onChange={handleChange}
+          /> No
+        </div>
       </div>
       <button className="formButton" onClick={handleUpdate}>
         Update

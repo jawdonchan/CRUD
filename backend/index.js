@@ -71,6 +71,32 @@ app.put("/seat/:id", (req, res) => {
     });
   });
   
+//updating student details
+app.put('/updateStudent/:id', (req, res) => {
+    const studentId = req.params.id;
+    const { GdProgress, DList, TopStudent, Cmging, Attendance } = req.body;
+
+    // Define the SQL query to update student information with IFNULL
+    const updateQuery = `UPDATE student
+                          SET
+                            GdProgress = IFNULL(?, GdProgress),
+                            DList = IFNULL(?, DList),
+                            TopStudent = IFNULL(?, TopStudent),
+                            Cmging = IFNULL(?, Cmging),
+                            Attendance = IFNULL(?, Attendance)
+                          WHERE id = ?`;
+
+    const values = [GdProgress, DList, TopStudent, Cmging, Attendance, studentId];
+
+    db.query(updateQuery, values, (err, data) => {
+      if (err) {
+        console.error('Error updating student:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      return res.json('Student has been updated!');
+    });
+  });
+
 
 app.listen(8800, ()=>{
     console.log("connected to crud app!")
@@ -113,5 +139,38 @@ app.post("/api/login", (req, res) => {
     });
   });
   
-
-
+//qr inserting 2 tables
+app.post('/insertStudent', (req, res) => {
+    const { adminNo } = req.body;
+  
+    // Define the SQL query to insert a new student's admin number
+    const insertQuery = 'INSERT INTO display (student) VALUES (?)';
+  
+    const values = [adminNo];
+  
+    db.query(insertQuery, values, (err, data) => {
+      if (err) {
+        console.error('Error inserting student:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      return res.json('Student has been inserted!');
+    });
+  });
+  
+  app.post('/insertSeatcol', (req, res) => {
+    const { adminNo } = req.body;
+  
+    // Define the SQL query to insert a new seatcol record with student's admin number
+    const insertQuery = 'INSERT INTO seating (seatcol) VALUES (?)';
+  
+    const values = [adminNo];
+  
+    db.query(insertQuery, values, (err, data) => {
+      if (err) {
+        console.error('Error inserting seatcol data:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      return res.json('Seatcol data has been inserted!');
+    });
+  });
+  

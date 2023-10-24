@@ -22,3 +22,9 @@ h1 {
     padding: 0px;
     margin: 0px;
 }
+
+/* In your CSS file, e.g., seats.css */
+.no-underline-link {
+  text-decoration: none; /* Remove underline */
+  color: #007bff; /* Set the link color to your preferred color */
+}

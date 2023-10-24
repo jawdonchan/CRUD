@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../css/seats.css'; // Import the CSS file
-
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -11,7 +11,6 @@ const Students = () => {
       try {
         const res = await axios.get("http://localhost:8800/student");
         setStudents(res.data);
-        
       } catch (err) {
         console.log(err);
       }
@@ -32,6 +31,7 @@ const Students = () => {
             <th>Top Student</th>
             <th>Coming</th>
             <th>Attendance</th>
+            <th>Action</th> {/* New column for the update action */}
           </tr>
         </thead>
         <tbody>
@@ -44,11 +44,13 @@ const Students = () => {
               <td>{student.TopStudent}</td>
               <td>{student.Cmging}</td>
               <td>{student.Attendance}</td>
+              <td>
+                <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      
     </div>
   );
 };

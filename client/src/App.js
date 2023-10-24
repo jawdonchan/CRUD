@@ -10,6 +10,7 @@ import SeatingPlan from './pages/seatingPlan';
 import Login from './pages/login';
 import AddAccount from "./pages/AddAccount";
 import AddStudent from "./pages/addStudent";
+import UpdateStudent from "./pages/updateStudent";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/addaccount" element={<AddAccount/>}></Route>
         <Route path="/addstudent" element={<AddStudent/>}></Route>
+        <Route path="/updateStudent/:id" element={<UpdateStudent/>}></Route>
+        <Route path="/seats" element={<Seats/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

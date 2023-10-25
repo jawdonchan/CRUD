@@ -36,16 +36,16 @@ const Students = () => {
         </thead>
         <tbody>
           {students.map(student => (
-            <tr key={student.id}>
-              <td>{student.FullName}</td>
-              <td>{student.adminNo}</td>
-              <td>{student.GdProgress}</td>
+            <tr key={student.idstudent}>
+              <td>{student.fullname}</td>
+              <td>{student.adminno}</td>
+              <td>{student.GoodPgrss}</td>
               <td>{student.DList}</td>
-              <td>{student.TopStudent}</td>
-              <td>{student.Cmging}</td>
+              <td>{student.TopStdnt}</td>
+              <td>{student.AcceptStatus}</td>
               <td>{student.Attendance}</td>
               <td>
-                <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
+                <Link to={`/updateStudent/${student.idstudent}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
               </td>
             </tr>
           ))}

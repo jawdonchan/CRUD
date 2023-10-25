@@ -2,16 +2,20 @@ import express from "express"
 import mysql from "mysql"
 import cors from "cors"
  
-const app = express()
+import dotenv from "dotenv"; // Import dotenv
+
+// Load environment variables from .env
+dotenv.config();
+
+const app = express();
 
 const db = mysql.createConnection({
-    host:"127.0.0.1",
-    user:"root",
-    password:"",
-    database: "crud",
-    port: "3303"
-
-})
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT
+});
 
 // if there is an auth problem
 // alter user 'root'@'localhost' identified with mysql_native_password by '';

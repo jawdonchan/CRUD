@@ -11,6 +11,9 @@ export default function Navbar(){
     const handleSeatingClick = () => {
       navigate('/seatingplan');
     };
+    const handleStudentlistClick = () => {
+      navigate('/admin');
+    };
 
     const handleAddAccountClick = () => {
         navigate('/addAccount');
@@ -34,7 +37,9 @@ export default function Navbar(){
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Dashboard
             </Typography>
-
+            <Button color="inherit" onClick={handleStudentlistClick}>
+              Student List
+            </Button>
             <Button color="inherit" onClick={handleSeatingClick}>
               Seating
             </Button>

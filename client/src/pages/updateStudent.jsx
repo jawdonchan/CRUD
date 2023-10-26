@@ -5,11 +5,9 @@ import '../css/update.css';
 
 const UpdateStudent = () => {
   const [student, setStudent] = useState({
-    GdProgress: '',
-    DList: '',
-    TopStudent: '',
-    Cmging: '',
-    Attendance: '',
+    Award: '', // Add Award field
+    Status: '', // Add Status field
+    Attendance: '', // Add Attendance field
   });
 
   const navigate = useNavigate();
@@ -19,7 +17,7 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/student/${studentId}`);
+        const response = await axios.get(`http://localhost:8800/students/${studentId}`);
         const studentData = response.data;
         setStudent(studentData);
       } catch (error) {
@@ -39,13 +37,7 @@ const UpdateStudent = () => {
 
   const handleUpdate = async () => {
     // Check if all fields are chosen
-    if (
-      student.GdProgress === '' ||
-      student.DList === '' ||
-      student.TopStudent === '' ||
-      student.Cmging === '' ||
-      student.Attendance === ''
-    ) {
+    if (student.Award === '' || student.Status === '' || student.Attendance === '') {
       alert('Please select values for all fields.');
       return;
     }
@@ -62,87 +54,55 @@ const UpdateStudent = () => {
     <div className="update-form">
       <h1>Update Student</h1>
       <div>
-        <label>Good Progress:</label>
+        <label>Award:</label>
         <div>
           <input
             type="radio"
-            name="GdProgress"
-            value="yes"
-            checked={student.GdProgress === "yes"}
+            name="Award"
+            value="Director List Year 1"
+            checked={student.Award === "Director List Year 1"}
             onChange={handleChange}
-            required
-          /> Yes
+          /> Director List Year 1
           <input
             type="radio"
-            name="GdProgress"
-            value="no"
-            checked={student.GdProgress === "no"}
+            name="Award"
+            value="Director List Year 2"
+            checked={student.Award === "Director List Year 2"}
             onChange={handleChange}
-            required
-          /> No
+          /> Director List Year 2
+          <input
+            type="radio"
+            name="Award"
+            value="Director List Year 3"
+            checked={student.Award === "Director List Year 3"}
+            onChange={handleChange}
+          /> Director List Year 3
+          <input
+            type="radio"
+            name="Award"
+            value="Good Progress"
+            checked={student.Award === "Good Progress"}
+            onChange={handleChange}
+          /> Good Progress
         </div>
       </div>
       <div>
-        <label>D List:</label>
+        <label>Status:</label>
         <div>
           <input
             type="radio"
-            name="DList"
-            value="yes"
-            checked={student.DList === "yes"}
+            name="Status"
+            value="Attending"
+            checked={student.Status === "Attending"}
             onChange={handleChange}
-            required
-          /> Yes
+          /> Attending
           <input
             type="radio"
-            name="DList"
-            value="no"
-            checked={student.DList === "no"}
+            name="Status"
+            value="Not Attending"
+            checked={student.Status === "Not Attending"}
             onChange={handleChange}
-            required
-          /> No
-        </div>
-      </div>
-      <div>
-        <label>Top Student:</label>
-        <div>
-          <input
-            type="radio"
-            name="TopStudent"
-            value="yes"
-            checked={student.TopStudent === "yes"}
-            onChange={handleChange}
-            required
-          /> Yes
-          <input
-            type="radio"
-            name="TopStudent"
-            value="no"
-            checked={student.TopStudent === "no"}
-            onChange={handleChange}
-            required
-          /> No
-        </div>
-      </div>
-      <div>
-        <label>Coming:</label>
-        <div>
-          <input
-            type="radio"
-            name="Cmging"
-            value="yes"
-            checked={student.Cmging === "yes"}
-            onChange={handleChange}
-            required
-          /> Yes
-          <input
-            type="radio"
-            name="Cmging"
-            value="no"
-            checked={student.Cmging === "no"}
-            onChange={handleChange}
-            required
-          /> No
+          /> Not Attending
         </div>
       </div>
       <div>
@@ -151,19 +111,17 @@ const UpdateStudent = () => {
           <input
             type="radio"
             name="Attendance"
-            value="yes"
-            checked={student.Attendance === "yes"}
+            value="Present"
+            checked={student.Attendance === "Present"}
             onChange={handleChange}
-            required
-          /> Yes
+          /> Present
           <input
             type="radio"
             name="Attendance"
-            value="no"
-            checked={student.Attendance === "no"}
+            value="Absent"
+            checked={student.Attendance === "Absent"}
             onChange={handleChange}
-            required
-          /> No
+          /> Absent
         </div>
       </div>
       <button className="formButton" onClick={handleUpdate}>

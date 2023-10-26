@@ -9,7 +9,7 @@ const Students = () => {
   useEffect(() => {
     const fetchAllStudents = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/student");
+        const res = await axios.get("http://localhost:8800/students");
         setStudents(res.data);
       } catch (err) {
         console.log(err);
@@ -17,6 +17,42 @@ const Students = () => {
     };
     fetchAllStudents();
   }, []);
+
+  // return (
+  //   <div>
+  //     <h1>Students</h1>
+  //     <table className='seats-table'>
+  //       <thead>
+  //         <tr>
+  //           <th>Student Name</th>
+  //           <th>Student Admin</th>
+  //           <th>Good Progress</th>
+  //           <th>D List</th>
+  //           <th>Top Student</th>
+  //           <th>Coming</th>
+  //           <th>Attendance</th>
+  //           <th>Action</th> {/* New column for the update action */}
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {students.map(student => (
+  //           <tr key={student.id}>
+  //             <td>{student.FullName}</td>
+  //             <td>{student.adminNo}</td>
+  //             <td>{student.GdProgress}</td>
+  //             <td>{student.DList}</td>
+  //             <td>{student.TopStudent}</td>
+  //             <td>{student.Cmging}</td>
+  //             <td>{student.Attendance}</td>
+  //             <td>
+  //               <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
+  //             </td>
+  //           </tr>
+  //         ))}
+  //       </tbody>
+  //     </table>
+  //   </div>
+  // );
 
   return (
     <div>
@@ -26,26 +62,26 @@ const Students = () => {
           <tr>
             <th>Student Name</th>
             <th>Student Admin</th>
-            <th>Good Progress</th>
-            <th>D List</th>
+            <th>Award</th>
             <th>Top Student</th>
-            <th>Coming</th>
+            <th>FlipFlop</th>
+            <th>Status</th>
             <th>Attendance</th>
-            <th>Action</th> {/* New column for the update action */}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {students.map(student => (
-            <tr key={student.idstudent}>
-              <td>{student.fullname}</td>
-              <td>{student.adminno}</td>
-              <td>{student.GoodPgrss}</td>
-              <td>{student.DList}</td>
-              <td>{student.TopStdnt}</td>
-              <td>{student.AcceptStatus}</td>
+            <tr key={student.id}>
+              <td>{student.FullName}</td>
+              <td>{student.AdmNo}</td>
+              <td>{student.Award}</td>
+              <td>{student.Top}</td>
+              <td>{student.FlipFlop}</td>
+              <td>{student.Status}</td>
               <td>{student.Attendance}</td>
               <td>
-                <Link to={`/updateStudent/${student.idstudent}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
+                <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link>
               </td>
             </tr>
           ))}

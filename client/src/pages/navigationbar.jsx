@@ -8,6 +8,10 @@ import Button from '@mui/material/Button';
 export default function Navbar(){
     const navigate = useNavigate();
 
+    const handleUsersClick = () => {
+      navigate('/users');
+    }
+
     const handleSeatingClick = () => {
       navigate('/seatingplan');
     };
@@ -37,6 +41,7 @@ export default function Navbar(){
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Dashboard
             </Typography>
+            <Button color="inherit" onClick = {handleUsersClick}>User List</Button>
             <Button color="inherit" onClick={handleStudentlistClick}>
               Student List
             </Button>

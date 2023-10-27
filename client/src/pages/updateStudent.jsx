@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/update.css';
+import Stack from '@mui/material/Stack';
 
 const UpdateStudent = () => {
   const [student, setStudent] = useState({
@@ -10,6 +11,7 @@ const UpdateStudent = () => {
     TopStudent: '',
     Cmging: '',
     Attendance: '',
+    Year: '', // Add the "Year" property
   });
 
   const navigate = useNavigate();
@@ -44,7 +46,8 @@ const UpdateStudent = () => {
       student.DList === '' ||
       student.TopStudent === '' ||
       student.Cmging === '' ||
-      student.Attendance === ''
+      student.Attendance === '' ||
+      student.Year === '' // Ensure "Year" is selected
     ) {
       alert('Please select values for all fields.');
       return;
@@ -61,6 +64,45 @@ const UpdateStudent = () => {
   return (
     <div className="update-form">
       <h1>Update Student</h1>
+      <div>
+        <div>
+          <Stack direction="row">
+            <label>Year:</label>
+            <div>
+               <input
+            type="radio"
+            name="Year"
+            value="Year 1"
+            checked={student.Year === "Year 1"}
+            onChange={handleChange}
+            required
+          /> Year 1
+            </div>
+           <div>
+            <input
+            type="radio"
+            name="Year"
+            value="Year 2"
+            checked={student.Year === "Year 2"}
+            onChange={handleChange}
+            required
+          /> Year 2
+           </div>
+          <div>
+            <input
+            type="radio"
+            name="Year"
+            value="Year 3"
+            checked={student.Year === "Year 3"}
+            onChange={handleChange}
+            required
+          /> Year 3
+          </div>
+          
+          </Stack>
+          
+        </div>
+      </div>
       <div>
         <label>Good Progress:</label>
         <div>

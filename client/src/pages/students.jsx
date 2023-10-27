@@ -18,6 +18,9 @@ const Students = () => {
     fetchAllStudents();
   }, []);
 
+
+  
+
   return (
     <div>
       <h1>Students</h1>
@@ -26,6 +29,7 @@ const Students = () => {
           <tr>
             <th>Student Name</th>
             <th>Student Admin</th>
+            <th>Student Year</th>
             <th>Good Progress</th>
             <th>D List</th>
             <th>Top Student</th>
@@ -39,6 +43,7 @@ const Students = () => {
             <tr key={student.idstudent}>
               <td>{student.fullname}</td>
               <td>{student.adminno}</td>
+              <td>{student.year}</td>
               <td>{student.GoodPgrss}</td>
               <td>{student.DList}</td>
               <td>{student.TopStdnt}</td>
@@ -47,6 +52,7 @@ const Students = () => {
               <td>
                 <Link to={`/updateStudent/${student.idstudent}`} className="no-underline-link">Update</Link> {/* Link to the update page */}
               </td>
+
             </tr>
           ))}
         </tbody>

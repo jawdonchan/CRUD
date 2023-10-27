@@ -52,6 +52,14 @@ app.get("/student", (req,res)=>{
         return res.json(data)
     })
 })
+//khai chers student list
+app.get("/students", (req,res)=>{
+    const q = "SELECT * from students"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
 app.delete("/seat/:id", (req,res)=>{
     const seatId = req.params.id;
@@ -78,19 +86,17 @@ app.put("/seat/:id", (req, res) => {
 //updating student details
 app.put('/updateStudent/:id', (req, res) => {
     const studentId = req.params.id;
-    const { GdProgress, DList, TopStudent, Cmging, Attendance } = req.body;
+    const { Award, Status, Attendance } = req.body;
 
     // Define the SQL query to update student information with IFNULL
-    const updateQuery = `UPDATE student
+    const updateQuery = `UPDATE students
                           SET
-                            GdProgress = IFNULL(?, GdProgress),
-                            DList = IFNULL(?, DList),
-                            TopStudent = IFNULL(?, TopStudent),
-                            Cmging = IFNULL(?, Cmging),
+                            Award = IFNULL(?, Award),
+                            Status = IFNULL(?, Status),
                             Attendance = IFNULL(?, Attendance)
                           WHERE id = ?`;
 
-    const values = [GdProgress, DList, TopStudent, Cmging, Attendance, studentId];
+    const values = [Award, Status, Attendance, studentId];
 
     db.query(updateQuery, values, (err, data) => {
       if (err) {
@@ -99,12 +105,41 @@ app.put('/updateStudent/:id', (req, res) => {
       }
       return res.json('Student has been updated!');
     });
-  });
-
-
-app.listen(8800, ()=>{
-    console.log("connected to crud app!")
 });
+
+app.listen(8800, () => {
+    console.log("connected to crud app!");
+});
+
+// app.put('/updateStudent/:id', (req, res) => {
+//     const studentId = req.params.id;
+//     const { GdProgress, DList, TopStudent, Cmging, Attendance } = req.body;
+
+//     // Define the SQL query to update student information with IFNULL
+//     const updateQuery = `UPDATE student
+//                           SET
+//                             GdProgress = IFNULL(?, GdProgress),
+//                             DList = IFNULL(?, DList),
+//                             TopStudent = IFNULL(?, TopStudent),
+//                             Cmging = IFNULL(?, Cmging),
+//                             Attendance = IFNULL(?, Attendance)
+//                           WHERE id = ?`;
+
+//     const values = [GdProgress, DList, TopStudent, Cmging, Attendance, studentId];
+
+//     db.query(updateQuery, values, (err, data) => {
+//       if (err) {
+//         console.error('Error updating student:', err);
+//         return res.status(500).json({ error: 'Internal server error' });
+//       }
+//       return res.json('Student has been updated!');
+//     });
+//   });
+
+
+// app.listen(8800, ()=>{
+//     console.log("connected to crud app!")
+// });
 
 
 //liheng - qr scanner

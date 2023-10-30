@@ -14,6 +14,7 @@ import UpdateStudent from "./pages/updateStudent";
 import Transition from "./pages/transition";
 import Users from "./pages/users";
 import FilterPage from "./pages/FilterPage";
+import UpdateUser from "./pages/updateUser";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/seats" element={<Seats/>}></Route>
         <Route path="/transition" element={<Transition/>}></Route>
         <Route path="/users" element={<Users/>}></Route>
+        <Route path="/updateUser/:id" element={<UpdateUser/>}></Route>
         <Route path="/FilterPage" element={<FilterPage/>}></Route>
       </Routes>
       </BrowserRouter>

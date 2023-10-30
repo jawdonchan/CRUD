@@ -94,6 +94,14 @@ app.get("/students", (req,res)=>{
     })
 })
 
+app.get("/user",(req,res)=>{
+  const q  = "Select * from users"
+  db.query(q,(err,data)=>{
+    if(err) return res.json(res)
+    return res.json(data)
+  })
+})
+
 app.delete("/seat/:id", (req,res)=>{
     const seatId = req.params.id;
     const q = "DELETE from seating where id = ?"
@@ -162,6 +170,10 @@ app.get("/accounts",(req,res)=> {
   })
 })
 
+
+
+
+
 app.post("/addaccount", (req,res)=>{
   const q = "INSERT INTO users (username,password,role) values (?)";
   const values = [req.body.username, req.body.password,req.body.role];
@@ -175,6 +187,33 @@ app.post("/addaccount", (req,res)=>{
       }
   })
 })
+
+
+
+
+app.put('/updateUser/:id', (req, res) => {
+  const userID = req.params.id;
+  const { username, password, role } = req.body;
+
+  // Define the SQL query to update student information with IFNULL
+  const updateQuery = `UPDATE users
+                        SET
+                          username = IFNULL(?, username),
+                          password = IFNULL(?, password),
+                          role = IFNULL(?, role)
+                        WHERE idaccounts = ?`;
+
+  const values = [username, password, role, userID];
+
+  db.query(updateQuery, values, (err, data) => {
+    if (err) {
+      console.error('Error updating User:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    return res.json('User has been updated!');
+  });
+});
+
 app.delete("/deleteUser/:id", (req,res)=>{
   const seatId = req.params.id;
   const q = "DELETE from users where idaccounts = ?"

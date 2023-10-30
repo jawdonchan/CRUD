@@ -24,6 +24,8 @@ const UpdateUser = () => {
       try {
         const response = await axios.get(`http://localhost:8800/user/${userId}`);
         const userData = response.data;
+        console.log("User data");
+        console.log(userData);
         setUser(userData);
       } catch (error) {
         console.error(error);

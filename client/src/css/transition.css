@@ -86,3 +86,22 @@
       transition: opacity 500ms, transform 500ms;
     }
     
+
+    /* Add your CSS styles here */
+.tab-container {
+  display: flex;
+}
+
+.active-tab {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.inactive-tab {
+  background-color: #ccc;
+  color: #333;
+}
+
+.content-container {
+  /* Add styles for content containers here */
+}

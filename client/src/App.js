@@ -12,6 +12,7 @@ import AddAccount from "./pages/AddAccount";
 import AddStudent from "./pages/addStudent";
 import UpdateStudent from "./pages/updateStudent";
 import Transition from "./pages/transition";
+import FilterPage from "./pages/FilterPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/updateStudent/:id" element={<UpdateStudent/>}></Route>
         <Route path="/seats" element={<Seats/>}></Route>
         <Route path="/transition" element={<Transition/>}></Route>
+        <Route path="/FilterPage" element={<FilterPage/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

@@ -77,7 +77,7 @@ const FilterPage = () => {
                 {studentData.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
-                    <br></br>
+                    <br></br><br></br>
                     {/* Add more student data here */}
                   </div>
                 ))}

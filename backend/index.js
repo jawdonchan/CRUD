@@ -77,7 +77,13 @@ app.get("/studentsfilter/:id", (req,res) => {
   
 })
 
-
+app.get("/student", (req,res)=>{
+    const q = "SELECT * from student"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
 //khai chers student list
 app.get("/students", (req,res)=>{

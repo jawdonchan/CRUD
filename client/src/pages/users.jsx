@@ -15,6 +15,7 @@ const Users = () => {
       try {
         const res = await axios.get("http://localhost:8800/accounts");
         setUsers(res.data);
+        console.log("users get : " + res.data);
       } catch (err) {
         console.log(err);
       }
@@ -61,6 +62,7 @@ const Users = () => {
                 <Button onClick={() => handleDeleteUser(user.idaccounts)}>
                   Delete
                 </Button>
+                
               </td>
             </tr>
           ))}

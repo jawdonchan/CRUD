@@ -45,13 +45,40 @@ app.post("/seat", (req,res)=>{
     })
 })
 
-app.get("/student", (req,res)=>{
-    const q = "SELECT * from student"
-    db.query(q,(err,data)=>{
+app.get("/studentsfilter/:id", (req,res) => {
+  let id = req.params.id;
+  console.log(id);
+  if(id == "Top")
+  {
+    const q = "Select * from students where Top = 'Top'";
+
+    db.query(q, (err,data)=>{
+      if(err) return res.json(err)
+      return res.json(data)
+  })
+  }
+  else if (id == "Directorlist")
+  {
+
+      const q = "Select * from students where Award like 'Director List%'";
+      db.query(q, (err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
+  }
+  else if (id == "Goodprogress")
+  {
+    const q = "Select * from students where Award = 'Good Progress'";
+    db.query(q, (err,data)=>{
+      if(err) return res.json(err)
+      return res.json(data)
+  })
+  }
+  
 })
+
+
+
 //khai chers student list
 app.get("/students", (req,res)=>{
     const q = "SELECT * from students"
@@ -111,35 +138,46 @@ app.listen(8800, () => {
     console.log("connected to crud app!");
 });
 
-// app.put('/updateStudent/:id', (req, res) => {
-//     const studentId = req.params.id;
-//     const { GdProgress, DList, TopStudent, Cmging, Attendance } = req.body;
-
-//     // Define the SQL query to update student information with IFNULL
-//     const updateQuery = `UPDATE student
-//                           SET
-//                             GdProgress = IFNULL(?, GdProgress),
-//                             DList = IFNULL(?, DList),
-//                             TopStudent = IFNULL(?, TopStudent),
-//                             Cmging = IFNULL(?, Cmging),
-//                             Attendance = IFNULL(?, Attendance)
-//                           WHERE id = ?`;
-
-//     const values = [GdProgress, DList, TopStudent, Cmging, Attendance, studentId];
-
-//     db.query(updateQuery, values, (err, data) => {
-//       if (err) {
-//         console.error('Error updating student:', err);
-//         return res.status(500).json({ error: 'Internal server error' });
-//       }
-//       return res.json('Student has been updated!');
-//     });
-//   });
 
 
-// app.listen(8800, ()=>{
-//     console.log("connected to crud app!")
-// });
+
+
+app.get("/accounts",(req,res)=> {
+  const q = "select idaccounts,username,role from users where username != 'admin'"
+  db.query(q,(err,data) => {
+    if(err) {
+      console.log(err);
+      return res.json(err);
+    }
+    else{
+      console.log(data);
+      return res.json(data)
+    }
+  })
+})
+
+app.post("/addaccount", (req,res)=>{
+  const q = "INSERT INTO users (username,password,role) values (?)";
+  const values = [req.body.username, req.body.password,req.body.role];
+
+  db.query(q,[values], (err,data)=>{
+      if(err) 
+      {return res.json(err)}
+      else{
+        return res.json("User has been added!")
+
+      }
+  })
+})
+app.delete("/deleteUser/:id", (req,res)=>{
+  const seatId = req.params.id;
+  const q = "DELETE from users where idaccounts = ?"
+
+  db.query(q,[seatId], (err,data)=>{
+      if(err) return res.json(err)
+      return res.json("Account has been deleted!");
+  })
+})
 
 
 //liheng - qr scanner

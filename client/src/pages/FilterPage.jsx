@@ -36,6 +36,8 @@ const FilterPage = () => {
 
   // Filter students with "Director List Year 1 " award
   const studentsDir1 = studentData.filter((student) => student.Award === 'Director List Year 1');
+    // Filter students with "Director List Year 2 " award
+  const studentsDir2 = studentData.filter((student) => student.Award === 'Director List Year 2');
   return (
     <div className="filter-page">
       <div className="tab-container">
@@ -56,6 +58,12 @@ const FilterPage = () => {
           className={activeTab === 'tab3' ? 'active' : ''}
         >
           Tab 3
+        </button>
+        <button
+          onClick={() => setActiveTab('tab4')}
+          className={activeTab === 'tab4' ? 'active' : ''}
+        >
+          Tab 4
         </button>
       </div>
 
@@ -104,6 +112,24 @@ const FilterPage = () => {
             {studentsDir1.length > 0 ? (
               <Slider {...sliderSettings}>
                 {studentsDir1.map((student, index) => (
+                  <div key={index}>
+                    <h3>{student.FullName}</h3>
+                    {/* Add more student data here */}
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <p>No students with "Good Progress" award found.</p>
+            )}
+          </div>
+        )}
+        {activeTab === 'tab4' && (
+          <div>
+            <h2>Director List Year 2</h2>
+            <h3>Students with "Director List Year 2" Award</h3>
+            {studentsDir2.length > 0 ? (
+              <Slider {...sliderSettings}>
+                {studentsDir2.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
                     {/* Add more student data here */}

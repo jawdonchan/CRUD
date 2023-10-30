@@ -143,7 +143,7 @@ export default function Seating() {
 
   const handleGuestClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/guest', '_blank');
+    window.open('/guest', '_blank', '/FilterPage');
     handleOptionsClose();
   };
 
@@ -320,6 +320,9 @@ export default function Seating() {
               </ListItem>
               <ListItem button>
                 <ListItemText primary="Option 2" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="SLide SHow" />
               </ListItem>
             </List>
           </Popover>

@@ -57,72 +57,98 @@ const UpdateStudent = () => {
       <div>
         <label>Award:</label>
         <div>
-          <input
+          <Stack direction='column' alignItems='flex-start'>
+            <div>
+              <input
             type="radio"
             name="Award"
             value="Director List Year 1"
             checked={student.Award === "Director List Year 1"}
             onChange={handleChange}
           /> Director List Year 1
-          <input
+            </div>
+            <div>
+               <input
             type="radio"
             name="Award"
             value="Director List Year 2"
             checked={student.Award === "Director List Year 2"}
             onChange={handleChange}
           /> Director List Year 2
-          <input
+            </div>
+          <div>
+            <input
             type="radio"
             name="Award"
             value="Director List Year 3"
             checked={student.Award === "Director List Year 3"}
             onChange={handleChange}
           /> Director List Year 3
-          <input
+          </div>
+          <div>
+            <input
             type="radio"
             name="Award"
             value="Good Progress"
             checked={student.Award === "Good Progress"}
             onChange={handleChange}
           /> Good Progress
+          </div>
+          
+          </Stack>
+          
         </div>
       </div>
       <div>
         <label>Status:</label>
         <div>
-          <input
+          <Stack direction='column' alignItems='flex-start'>
+            <div>
+              <input
             type="radio"
             name="Status"
             value="Attending"
             checked={student.Status === "Attending"}
             onChange={handleChange}
           /> Attending
-          <input
+            </div>
+            <div>
+              <input
             type="radio"
             name="Status"
             value="Not Attending"
             checked={student.Status === "Not Attending"}
             onChange={handleChange}
           /> Not Attending
+            </div>
+          </Stack>          
         </div>
       </div>
       <div>
         <label>Attendance:</label>
         <div>
-          <input
+          <Stack direction='column' alignItems='flex-start'>
+            <div>
+              <input
             type="radio"
             name="Attendance"
             value="Present"
             checked={student.Attendance === "Present"}
             onChange={handleChange}
           /> Present
-          <input
-            type="radio"
-            name="Attendance"
-            value="Absent"
-            checked={student.Attendance === "Absent"}
-            onChange={handleChange}
-          /> Absent
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="Attendance"
+                value="Absent"
+                checked={student.Attendance === "Absent"}
+                onChange={handleChange}
+              /> Absent
+            </div>
+          </Stack>
+          
+
         </div>
       </div>
       <button className="formButton" onClick={handleUpdate}>

@@ -143,7 +143,13 @@ export default function Seating() {
 
   const handleGuestClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/guest', '_blank', '/FilterPage');
+    window.open('/guest', '_blank',);
+    handleOptionsClose();
+  };
+
+  const handleFIlterClick = () => {
+    // Handle the first option - Open in a new tab
+    window.open('/FilterPage', '_blank',);
     handleOptionsClose();
   };
 
@@ -321,7 +327,7 @@ export default function Seating() {
               <ListItem button>
                 <ListItemText primary="Option 2" />
               </ListItem>
-              <ListItem button>
+              <ListItem button onClick={handleFIlterClick}>
                 <ListItemText primary="SLide SHow" />
               </ListItem>
             </List>

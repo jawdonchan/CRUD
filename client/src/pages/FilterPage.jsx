@@ -7,7 +7,7 @@ import axios from 'axios';
 const FilterPage = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
-  
+
   // Slider settings
   const sliderSettings = {
     dots: true,
@@ -17,11 +17,11 @@ const FilterPage = () => {
     slidesToScroll: 1,
   };
 
-  // Fetch student data when the component mounts
+  // Fetch all student data when the component mounts
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/student');
+        const response = await axios.get('http://localhost:8800/students');
         setStudentData(response.data);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -31,6 +31,11 @@ const FilterPage = () => {
     fetchStudentData();
   }, []);
 
+  // Filter students with "Good Progress" award
+  const studentsWithGoodProgress = studentData.filter((student) => student.Award === 'Good Progress');
+
+  // Filter students with "Director List Year 1 " award
+  const studentsDir1 = studentData.filter((student) => student.Award === 'Director List Year 1');
   return (
     <div className="filter-page">
       <div className="tab-container">
@@ -58,11 +63,13 @@ const FilterPage = () => {
         {activeTab === 'tab1' && (
           <div>
             <h2>Tab 1 Content with Student Data</h2>
+            <h3>All Students</h3>
             {studentData.length > 0 ? (
               <Slider {...sliderSettings}>
                 {studentData.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
+                    <br></br>
                     {/* Add more student data here */}
                   </div>
                 ))}
@@ -74,14 +81,38 @@ const FilterPage = () => {
         )}
         {activeTab === 'tab2' && (
           <div>
-            <h2>Tab 2 Content</h2>
-            {/* Add your content for Tab 2 here */}
+            <h2>Good Progress</h2>
+            <h3>Students with "Good Progress" Award</h3>
+            {studentsWithGoodProgress.length > 0 ? (
+              <Slider {...sliderSettings}>
+                {studentsWithGoodProgress.map((student, index) => (
+                  <div key={index}>
+                    <h3>{student.FullName}</h3>
+                    {/* Add more student data here */}
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <p>No students with "Good Progress" award found.</p>
+            )}
           </div>
         )}
         {activeTab === 'tab3' && (
           <div>
-            <h2>Tab 3 Content</h2>
-            {/* Add your content for Tab 3 here */}
+            <h2>Director List Year 1</h2>
+            <h3>Students with "Director List Year 1" Award</h3>
+            {studentsDir1.length > 0 ? (
+              <Slider {...sliderSettings}>
+                {studentsDir1.map((student, index) => (
+                  <div key={index}>
+                    <h3>{student.FullName}</h3>
+                    {/* Add more student data here */}
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <p>No students with "Good Progress" award found.</p>
+            )}
           </div>
         )}
       </div>

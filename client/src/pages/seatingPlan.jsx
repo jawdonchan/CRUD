@@ -147,11 +147,6 @@ export default function Seating() {
     handleOptionsClose();
   };
 
-  const handleFIlterClick = () => {
-    // Handle the first option - Open in a new tab
-    window.open('/FilterPage', '_blank',);
-    handleOptionsClose();
-  };
 
   const handleModalSave = () => {
 
@@ -327,9 +322,8 @@ export default function Seating() {
               <ListItem button>
                 <ListItemText primary="Option 2" />
               </ListItem>
-              <ListItem button onClick={handleFIlterClick}>
-                <ListItemText primary="SLide SHow" />
-              </ListItem>
+
+
             </List>
           </Popover>
         </div>

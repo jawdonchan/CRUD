@@ -1,24 +1,105 @@
 /* FilterPage.css */
 
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
+h2,h3
+{
+  color: antiquewhite;
+}
+
+/* Common styles for all screen sizes */
 .filter-page {
-    padding: 20px;
-  }
-  
+  padding: 20px;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+}
+
+.tab-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.tab-container button {
+  padding: 10px 15px;
+  background-color: #ccc;
+  border: none;
+  cursor: pointer;
+}
+
+.tab-container button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Styles for small screens (up to 768px) */
+/* Styles for screens up to 1536px width */
+@media (max-width: 1536px) {
   .tab-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
+    flex-direction: column;
+    align-items: flex-start; /* Align to the left side */
+    text-align: left; /* Align text to the left */
   }
-  
-  .tab-container button {
-    padding: 10px 15px;
-    background-color: #ccc;
-    border: none;
+  .tab-content
+  {
+    margin: 5rem 0rem 0rem 0rem ;
+  }
+  h2,h3
+  {
+    font-size: 1.5rem;
+  }
+  .slick-dots {
+    position: absolute;
+    bottom: -14.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; /* Add z-index to make sure dots are visible */
+  }
+}
+
+
+/* Styles for larger screens (769px and above) */
+@media (min-width: 1537px) {
+  .tab-content {
+    text-align: center;
+  }
+
+  .tab-content
+  {
+    margin: 25rem 0rem 0rem 0rem ;
+  }
+
+  .slick-slider {
+    padding: 2rem 0rem 0rem 0rem;
+  }
+  h2,h3
+  {
+    font-size: 2rem;
+  }
+  .slick-dots {
+    position: absolute;
+    bottom: -19.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; /* Add z-index to make sure dots are visible */
+  }
+  .slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    /* display: block; */
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    transform: translate(0, -50%);
     cursor: pointer;
-  }
-  
-  .tab-container button.active {
-    background-color: #007bff;
-    color: white;
-  }
-  
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+}

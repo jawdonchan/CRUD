@@ -8,7 +8,7 @@ import '../css/filterpage.css';
 const FilterPage = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
-
+  const [backgroundImage, setBackgroundImage] = useState('url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg)'); // Set your default background image URL here
   // Slider settings
   const sliderSettings = {
     dots: true,
@@ -17,6 +17,14 @@ const FilterPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  const tabBackgroundImages = {
+    tab1: 'url(https://i.pinimg.com/originals/f3/3a/4c/f33a4c8f3506265c396565a3cc4ecf27.jpg)', // Change to your image URL
+    tab2: 'url(https://i.pinimg.com/originals/c3/06/40/c306407ea7ea891e9ed4cd535911945a.jpg)', // Change to your image URL
+    tab3: 'url(https://i.pinimg.com/736x/bf/73/df/bf73df24dc5eba9576213812743d230e.jpg)', // Change to your image URL
+    tab4: 'url(https://i.pinimg.com/originals/d7/1d/14/d71d144c2f0c6f7baf612d09c8b9c7fa.jpg)', // Change to your image URL
+    tab5: 'url(https://i.pinimg.com/originals/26/80/c9/2680c91bc126887950edd059bd8f0372.jpg)', // Change to your image URL
+  };
+
 
   // Fetch all student data when the component mounts
   useEffect(() => {
@@ -41,8 +49,13 @@ const FilterPage = () => {
   const studentsDir2 = studentData.filter((student) => student.Award === 'Director List Year 2');
   // Filter students with "Director List Year 3 " award
   const studentsDir3 = studentData.filter((student) => student.Award === 'Director List Year 3');
+ 
+  useEffect(() => {
+    // Update the background image when the activeTab changes
+    setBackgroundImage(tabBackgroundImages[activeTab]);
+  }, [activeTab]);
   return (
-    <div className="filter-page">
+    <div className="filter-page" style={{ backgroundImage }}>
       <div className="tab-container">
         <button
           onClick={() => setActiveTab('tab1')}

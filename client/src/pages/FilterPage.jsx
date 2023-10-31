@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
+import '../css/filterpage.css';
 
 const FilterPage = () => {
   const [activeTab, setActiveTab] = useState('tab1');

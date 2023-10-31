@@ -1,0 +1,24 @@
+/* FilterPage.css */
+
+.filter-page {
+    padding: 20px;
+  }
+  
+  .tab-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .tab-container button {
+    padding: 10px 15px;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .tab-container button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  

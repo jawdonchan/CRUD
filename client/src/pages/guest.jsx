@@ -15,9 +15,20 @@ const Guest = (props) => {
 
     const handleQrResult = async (result, error) => {
         if (result) {
-            setIsLoading(true); // Set loading state to true
+            let resultText ={ 
+                value:String(result).replace(/^"|"$/g, ''),
+                writable:true
+            }
+            console.log(resultText.value.length);
+            
+            if(resultText.length != 7) {
+                setIsLoading(false);
+                setData("Invalid Qr code" );
+            }
+            else{
+              try {
+                setIsLoading(true); // Set loading state to true
 
-            try {
                 const response = await axios.put("http://localhost:8800/attendance/" + result.text);
                 console.log('Axios Response:', response.data);
 
@@ -34,7 +45,9 @@ const Guest = (props) => {
                 console.error(error);
             } finally {
                 setIsLoading(false); // Set loading state to false when done
+            }   
             }
+           
         }
 
         if (error) {

@@ -14,6 +14,7 @@ import UpdateStudent from "./pages/updateStudent";
 import Transition from "./pages/transition";
 import Users from "./pages/users";
 import FilterPage from "./pages/FilterPage";
+import LinkFilter from "./pages/LinkFilter";
 import UpdateUser from "./pages/updateUser";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/users" element={<Users/>}></Route>
         <Route path="/updateUser/:id" element={<UpdateUser/>}></Route>
         <Route path="/FilterPage" element={<FilterPage/>}></Route>
+        <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

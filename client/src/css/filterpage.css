@@ -86,20 +86,6 @@ h2,h3
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */
   }
-  .slick-prev, .slick-next {
-    font-size: 0;
-    line-height: 0;
-    position: absolute;
-    top: 50%;
-    /* display: block; */
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    transform: translate(0, -50%);
-    cursor: pointer;
-    color: transparent;
-    border: none;
-    outline: none;
-    background: transparent;
-}
+ 
+
 }

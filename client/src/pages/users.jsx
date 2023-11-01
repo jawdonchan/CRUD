@@ -39,7 +39,8 @@ const Users = () => {
       <br></br>
       <h1>Users</h1>
       <br></br>
-      <table className='seats-table'>
+      <div className='scroll'>
+<table className='seats-table'>
         <thead>
           <tr>
             <th>Username</th>
@@ -68,6 +69,16 @@ const Users = () => {
           ))}
         </tbody>
       </table>
+      </div>
+      <style>
+    {`
+          .scroll {
+            overflow-y:scroll;
+            height: 400px;
+          }
+        `}
+    </style>
+      
     </div>
   );
 };

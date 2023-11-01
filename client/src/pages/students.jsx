@@ -130,8 +130,8 @@ const Students = () => {
         </Grid>
       </Grid>
       <br></br>
-
-      <table className='seats-table'>
+      <div className='scroll'>
+        <table className='seats-table'>
         <thead>
           <tr>
             <th>Student Name</th>
@@ -161,12 +161,18 @@ const Students = () => {
           ))}
         </tbody>
       </table>
-    <style>
+
+      </div>
+          <style>
     {`
           .floating{
             position:fixed;
             bottom:60px;
             right:60px;
+          }
+          .scroll {
+            overflow-y:scroll;
+            height: 300px;
           }
         `}
     </style>

@@ -1,7 +1,8 @@
 import express from "express"
 import mysql from "mysql"
 import cors from "cors"
- 
+import multer from 'multer';
+import { read, utils } from 'xlsx';
 import dotenv from "dotenv"; // Import dotenv
 
 // Load environment variables from .env
@@ -20,8 +21,26 @@ const db = mysql.createConnection({
 // if there is an auth problem
 // alter user 'root'@'localhost' identified with mysql_native_password by '';
 
+
 app.use(express.json())
 app.use(cors())
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+function parseExcelFile(fileBuffer) {
+  try {
+    const workbook = read(fileBuffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const data = utils.sheet_to_json(worksheet);
+    return data;
+  } catch (error) {
+    console.error('Error parsing Excel file:', error);
+    throw new Error('Error parsing Excel file');
+  }
+}
 
 app.get("/", (req,res)=>{
     res.json("hello this is the backend")
@@ -34,6 +53,21 @@ app.get("/seat", (req,res)=>{
         return res.json(data)
     })
 })
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file provided' });
+  }
+
+  try {
+    const fileData = req.file.buffer;
+    const data = parseExcelFile(fileData);
+
+    res.json(data);
+  } catch (error) {
+    return res.status(500).json({ message: 'Error parsing Excel file' });
+  }
+});
 
 app.post("/seat", (req,res)=>{
     const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";

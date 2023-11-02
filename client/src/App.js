@@ -16,6 +16,7 @@ import Users from "./pages/users";
 import FilterPage from "./pages/FilterPage";
 import LinkFilter from "./pages/LinkFilter";
 import UpdateUser from "./pages/updateUser";
+import Excel from "./pages/Excel";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/updateUser/:id" element={<UpdateUser/>}></Route>
         <Route path="/FilterPage" element={<FilterPage/>}></Route>
         <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
+        <Route path="/Excel" element={<Excel/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

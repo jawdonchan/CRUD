@@ -54,6 +54,21 @@ app.get("/seat", (req,res)=>{
     })
 })
 
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: 'No file provided' });
+//   }
+
+//   try {
+//     const fileData = req.file.buffer;
+//     const data = parseExcelFile(fileData);
+
+//     res.json(data);
+//   } catch (error) {
+//     return res.status(500).json({ message: 'Error parsing Excel file' });
+//   }
+// });
+
 app.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file provided' });
@@ -63,11 +78,37 @@ app.post('/upload', upload.single('file'), (req, res) => {
     const fileData = req.file.buffer;
     const data = parseExcelFile(fileData);
 
-    res.json(data);
+    // Define the SQL query with parameter placeholders
+    const q = "INSERT INTO students (`Stage`, `Award`, `FlipFlop`, `AdmNo`, `FullName`, `TutGrp`, `Status`, `Top`) VALUES ?";
+
+    // Prepare the data for insertion with empty values replaced by null
+    const values = data.map((item) => [
+      item.Stage,
+      item.Award,
+      item.FlipFlop,
+      item.AdmNo,
+      item.FullName,
+      item.TutGrp,
+      item.Status,
+      // item.Attendance || null,
+      item.Top,
+      // item.Event || null
+    ]);
+    
+    db.query(q, [values], (err, result) => {
+      if (err) {
+        console.error('Error inserting data:', err);
+        return res.status(500).json({ message: 'Error inserting data' });
+      }
+      // res.json({ message: values });
+      console.log('Data inserted into "students" table successfully');
+      res.json({ message: 'Data inserted into "students" table successfully' });
+    });
   } catch (error) {
     return res.status(500).json({ message: 'Error parsing Excel file' });
   }
 });
+
 
 app.post("/seat", (req,res)=>{
     const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";

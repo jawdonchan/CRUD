@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Navbar from './navigationbar';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
 const ExcelFileUpload = () => {
   const [file, setFile] = useState(null);
@@ -26,9 +29,9 @@ const ExcelFileUpload = () => {
       });
 
       if (response.ok) {
+        // You can handle the response data as needed, but for now, let's log it
         const data = await response.json();
         console.log('Uploaded data:', data);
-        // Handle the uploaded data as needed
       } else {
         console.error('File upload failed.');
       }
@@ -38,7 +41,9 @@ const ExcelFileUpload = () => {
   };
 
   return (
+    
     <div>
+        <Navbar></Navbar>
       <h2>Upload Excel File</h2>
       <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
       <button onClick={handleFileUpload}>Upload</button>

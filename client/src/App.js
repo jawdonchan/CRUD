@@ -19,6 +19,8 @@ import UpdateUser from "./pages/updateUser";
 import CreateEvent from "./pages/createevent";
 import Events from "./pages/events.jsx";
 import Excel from "./pages/Excel";
+import ExcelExport from "./pages/ExcelExport";
+import StudentExport from "./pages/StudentExport";
 
 function App() {
   return (
@@ -46,7 +48,9 @@ function App() {
         <Route path="/createevent" element={<CreateEvent/>}></Route>
         <Route path="/event" element={<Events/>}></Route>
         <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
-        <Route path="/Excel" element={<Excel/>}></Route>
+        <Route path="/Excel/:id" element={<Excel/>}></Route>
+        <Route path="/ExcelExport" element={<ExcelExport/>}></Route>
+        <Route path="/StudentExport" element={<StudentExport/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

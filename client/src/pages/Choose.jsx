@@ -5,16 +5,18 @@ import Login from './admin';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Seats from './seats'; // Import the Seats component
+import Navbar from './navigationbar';
+import { createEvents } from '@react-three/fiber';
 
 export default function Choose() {
   const navigate = useNavigate();
 
-  const handleGuestClick = () => {
-    navigate('/guest');
+  const handleCreateClick = () => {
+    navigate('/createevent');
   };
 
-  const handleAdminClick = () => {
-    navigate('/admin');
+  const handleEventClick = () => {
+    navigate('/event');
   };
 
   const handleSeatsClick = () => {
@@ -22,38 +24,24 @@ export default function Choose() {
   };
 
   return (
-
-      <Stack
-      direction="column"
-      justifyContent='space-around'
-      alignItems="center"
-      spacing={8}
-    >
-    
-      <Routes>
-        <Route path="/guest" element={<Guests />} />
-        <Route path="/admin" element={<Login />} />
-        <Route path="/seats" element={<Seats />} /> {/* Add the new route for Seats */}
-      </Routes>
-      <div>
-        <Stack       
-        direction="row"
-        spacing={3}>
-          {!window.location.pathname.includes('/guest') && (
-          <Button variant="contained" onClick={handleGuestClick}>Guest</Button>
-        )}
-        
-        {!window.location.pathname.includes('/admin') && (
-          <Button variant="contained" onClick={handleAdminClick}>Admin</Button>
-        )}
-        {!window.location.pathname.includes('/seats') && (
-          <Button variant="contained" onClick={handleSeatsClick}>Seats</Button>
-        )}
+      <div>    
+        <Navbar></Navbar>
+        <br></br>
+        <Stack
+          direction="column"
+          justifyContent='space-around'
+          alignItems="center"
+          spacing={20}
+        > 
+        <div></div>
+          <Stack direction="row" spacing={3}>
+            <Button variant='contained' onClick={handleCreateClick}>Create Events</Button>
+            <Button variant='contained' onClick={handleEventClick}>View Events</Button>
+          </Stack>
         </Stack>
-        
-      </div>
-    </Stack>
 
+      </div>
+      
     
   );
 }

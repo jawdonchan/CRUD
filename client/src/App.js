@@ -15,6 +15,8 @@ import Transition from "./pages/transition";
 import Users from "./pages/users";
 import FilterPage from "./pages/FilterPage";
 import UpdateUser from "./pages/updateUser";
+import CreateEvent from "./pages/createevent";
+import Events from "./pages/events.jsx";
 
 function App() {
   return (
@@ -38,6 +40,9 @@ function App() {
         <Route path="/users" element={<Users/>}></Route>
         <Route path="/updateUser/:id" element={<UpdateUser/>}></Route>
         <Route path="/FilterPage" element={<FilterPage/>}></Route>
+        <Route path="/events" element={<Choose/>}></Route>
+        <Route path="/createevent" element={<CreateEvent/>}></Route>
+        <Route path="/event" element={<Events/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

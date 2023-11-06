@@ -19,9 +19,10 @@ export default function Navbar(){
       navigate('/admin');
     };
 
-    const handleAddAccountClick = () => {
-        navigate('/addAccount');
-      };
+    const handleEventsClick = () => {
+      navigate('/events');
+    }
+
 
 
       const handleLogoutClick = () => {
@@ -45,11 +46,11 @@ export default function Navbar(){
             <Button color="inherit" onClick={handleStudentlistClick}>
               Student List
             </Button>
+            <Button color="inherit" onClick={handleEventsClick}>
+              Events
+            </Button>
             <Button color="inherit" onClick={handleSeatingClick}>
               Seating
-            </Button>
-            <Button color="inherit" onClick={handleAddAccountClick}>
-              Add New Account
             </Button>
             <Button color="inherit" onClick={handleLogoutClick}>
               Logout

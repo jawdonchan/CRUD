@@ -326,3 +326,28 @@ app.post('/insertStudent', (req, res) => {
     });
   });
   
+  app.get("/events",(req,res)=>{
+    const q = "Select * from event";
+    db.query(q,(err,data)=>{
+      if(err){
+        res.json(err);
+      }
+      else{
+        return res.json(data);
+      }
+    })
+  });
+  app.post("/addEvent", (req,res)=>{
+    const q = "INSERT INTO Event (name,location,date,time) values (?)";
+    const values = [req.body.name, req.body.location,req.body.date,req.body.time];
+    
+    db.query(q,[values], (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event has been added!")
+  
+        }
+    })
+  })

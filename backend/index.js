@@ -79,7 +79,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     const data = parseExcelFile(fileData);
 
     // Define the SQL query with parameter placeholders
-    const q = "INSERT INTO students (`Stage`, `Award`, `FlipFlop`, `AdmNo`, `FullName`, `TutGrp`, `Status`, `Top`) VALUES ?";
+    const q = "INSERT INTO students (`Stage`, `Award`, `FlipFlop`, `AdmNo`, `FullName`, `TutGrp`, `Status`, `Top`, `Event`) VALUES ?";
 
     // Prepare the data for insertion with empty values replaced by null
     const values = data.map((item) => [
@@ -92,6 +92,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       item.Status,
       // item.Attendance || null,
       item.Top,
+      item.Event,
       // item.Event || null
     ]);
     
@@ -100,7 +101,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
         console.error('Error inserting data:', err);
         return res.status(500).json({ message: 'Error inserting data' });
       }
-      // res.json({ message: values });
+     
       console.log('Data inserted into "students" table successfully');
       res.json({ message: 'Data inserted into "students" table successfully' });
     });
@@ -232,7 +233,7 @@ app.listen(8800, () => {
 
 
 app.get("/accounts",(req,res)=> {
-  const q = "select idaccounts,username,role from users where username != 'admin'"
+  const q = "select id,username,role from users where username != 'admin'"
   db.query(q,(err,data) => {
     if(err) {
       console.log(err);

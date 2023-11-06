@@ -58,6 +58,16 @@ h2,h3
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */
   }
+  .default-style .tab-content{
+    margin: 0rem 0px 10rem 0px ;
+  }
+  .default-style .slick-dots
+  {
+    top: 22rem;
+  }
+  .default-style h3{
+    font-size: 2.5rem;
+  }
 }
 
 
@@ -86,20 +96,44 @@ h2,h3
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */
   }
-  .slick-prev, .slick-next {
-    font-size: 0;
-    line-height: 0;
-    position: absolute;
-    top: 50%;
-    /* display: block; */
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    transform: translate(0, -50%);
-    cursor: pointer;
-    color: transparent;
-    border: none;
-    outline: none;
-    background: transparent;
+ /* Styles for the "default" style */
+.default-style {
+  background-color: #f0f0f0; /* Set your background color */
 }
+
+.default-style h2 {
+  
+  font-size: 1.5rem; /* Customize the heading font size */
+  color: #333; /* Customize the heading text color */
 }
+
+.default-style h3 {
+  font-size: 3.5rem; /* Customize the subheading font size */
+  color: yellow; /* Customize the subheading text color */
+}
+
+.default-style .tab-container button {
+  background-color: #ccc; /* Customize the button background color */
+  color: #333; /* Customize the button text color */
+}
+
+.default-style .tab-container button.active {
+  background-color: #007bff; /* Customize the active button background color */
+  color: white; /* Customize the active button text color */
+}
+
+.default-style .tab-content {
+  /* Additional styles for the tab content in the "default" style */
+  margin: 4rem 0rem 0rem 0rem;
+}
+.default-style .slick-slider {
+  padding: 15rem 0rem 0rem 0rem;
+}
+/* .default-style .slick-dots
+{
+  margin: 20rem 0rem 0rem 0rem ;
+} */
+}
+
+/* Customize other elements specific to the "default" style as needed */
+

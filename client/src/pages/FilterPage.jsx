@@ -4,8 +4,14 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
 import '../css/filterpage.css';
+import { useLocation } from 'react-router-dom';
 
-const FilterPage = () => {
+const FilterPage = ({ match }) => {
+  //style
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const style = queryParams.get('style'); 
+  //tab
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState('url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg)'); // Set your default background image URL here
@@ -24,7 +30,13 @@ const FilterPage = () => {
     tab4: 'url(https://i.pinimg.com/originals/d7/1d/14/d71d144c2f0c6f7baf612d09c8b9c7fa.jpg)', // Change to your image URL
     tab5: 'url(https://i.pinimg.com/originals/26/80/c9/2680c91bc126887950edd059bd8f0372.jpg)', // Change to your image URL
   };
-
+   // Define CSS classes based on the selected style
+   const cssClasses = {
+    default: 'default-style',
+    style1: 'style1',
+    style2: 'style2',
+    // Add more styles here as needed
+  };
 
   // Fetch all student data when the component mounts
   useEffect(() => {
@@ -39,7 +51,12 @@ const FilterPage = () => {
 
     fetchStudentData();
   }, []);
-
+  //change css style
+  useEffect(() => {
+    // Apply the CSS class based on the selected style
+    document.body.className = cssClasses[style] || cssClasses.default;
+  }, [style]);
+  
   // Filter students with "Good Progress" award
   const studentsWithGoodProgress = studentData.filter((student) => student.Award === 'Good Progress');
 
@@ -49,7 +66,7 @@ const FilterPage = () => {
   const studentsDir2 = studentData.filter((student) => student.Award === 'Director List Year 2');
   // Filter students with "Director List Year 3 " award
   const studentsDir3 = studentData.filter((student) => student.Award === 'Director List Year 3');
- 
+ // change css background
   useEffect(() => {
     // Update the background image when the activeTab changes
     setBackgroundImage(tabBackgroundImages[activeTab]);

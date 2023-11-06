@@ -14,9 +14,11 @@ import UpdateStudent from "./pages/updateStudent";
 import Transition from "./pages/transition";
 import Users from "./pages/users";
 import FilterPage from "./pages/FilterPage";
+import LinkFilter from "./pages/LinkFilter";
 import UpdateUser from "./pages/updateUser";
 import CreateEvent from "./pages/createevent";
 import Events from "./pages/events.jsx";
+import Excel from "./pages/Excel";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route path="/events" element={<Choose/>}></Route>
         <Route path="/createevent" element={<CreateEvent/>}></Route>
         <Route path="/event" element={<Events/>}></Route>
+        <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
+        <Route path="/Excel" element={<Excel/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

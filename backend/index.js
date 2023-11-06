@@ -69,10 +69,12 @@ app.get("/seat", (req,res)=>{
 //   }
 // });
 
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/upload/:id', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file provided' });
   }
+  let id = req.params.id;
+
 
   try {
     const fileData = req.file.buffer;
@@ -92,7 +94,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       item.Status,
       // item.Attendance || null,
       item.Top,
-      item.Event,
+      id,
       // item.Event || null
     ]);
     

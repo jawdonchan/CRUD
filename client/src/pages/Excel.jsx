@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './navigationbar';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/excel.css';
 
 const ExcelFileUpload = () => {
@@ -10,6 +11,9 @@ const ExcelFileUpload = () => {
     setFile(selectedFile);
   };
 
+  const location = useLocation();
+  const eventid = location.pathname.split("/")[2];
+
   const handleFileUpload = async () => {
     if (!file) {
       alert('Please select a file to upload.');
@@ -18,9 +22,10 @@ const ExcelFileUpload = () => {
 
     const formData = new FormData();
     formData.append('file', file);
+    
 
     try {
-      const response = await fetch('http://localhost:8800/upload', {
+      const response = await fetch('http://localhost:8800/upload/'+eventid, {
         method: 'POST',
         body: formData,
       });

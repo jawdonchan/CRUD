@@ -120,9 +120,9 @@ const Events = () => {
               <td>{event.date}</td>
               <td>{event.time}</td>
               <td>
-                {/* <Link to={`/updateUser/${user.idaccounts}`} className="no-underline-link">
-                  Update
-                </Link> */}
+                <Link to={`/Excel/${event.id}`} className="no-underline-link">
+                  Excel
+                </Link>
               </td>
 
             </tr>

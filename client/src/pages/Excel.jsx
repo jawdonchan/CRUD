@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './navigationbar';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
+import '../css/excel.css';
 
 const ExcelFileUpload = () => {
   const [file, setFile] = useState(null);
@@ -17,19 +16,16 @@ const ExcelFileUpload = () => {
       return;
     }
 
-    // Create a FormData object to send the file to the server
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      // Make a POST request to your backend to upload the file
       const response = await fetch('http://localhost:8800/upload', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        // You can handle the response data as needed, but for now, let's log it
         const data = await response.json();
         console.log('Uploaded data:', data);
       } else {
@@ -41,12 +37,13 @@ const ExcelFileUpload = () => {
   };
 
   return (
-    
-    <div>
-        <Navbar></Navbar>
+    <div className="container">
+      <Navbar />
       <h2>Upload Excel File</h2>
-      <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
-      <button onClick={handleFileUpload}>Upload</button>
+      <label className='excels' htmlFor="fileInput">Select File</label>
+      <input type="file" id="fileInput" accept=".xlsx, .xls" onChange={handleFileChange} />
+      {file && <p>Selected File: {file.name}</p>} {/* Display the file name */}
+      <button className='excelbtn' onClick={handleFileUpload}>Upload</button>
     </div>
   );
 };

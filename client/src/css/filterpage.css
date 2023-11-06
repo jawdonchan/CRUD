@@ -53,7 +53,7 @@ h2,h3
   }
   .slick-dots {
     position: absolute;
-    bottom: -14.2rem;
+    bottom: -13.2rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */
@@ -63,10 +63,10 @@ h2,h3
   }
   .default-style .slick-dots
   {
-    top: 22rem;
+    top: 18.5rem;
   }
   .default-style h3{
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 }
 

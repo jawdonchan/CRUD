@@ -43,9 +43,9 @@ export default function Navbar(){
               Dashboard
             </Typography>
             <Button color="inherit" onClick = {handleUsersClick}>User List</Button>
-            <Button color="inherit" onClick={handleStudentlistClick}>
+            {/* <Button color="inherit" onClick={handleStudentlistClick}>
               Student List
-            </Button>
+            </Button> */}
             <Button color="inherit" onClick={handleEventsClick}>
               Events
             </Button>

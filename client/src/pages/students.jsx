@@ -7,45 +7,71 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import '../css/seats.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
+import '../css/seats.css';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Navbar from './navigationbar';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 const Students = () => {
   const [students, setStudents] = useState([]);
-  const [filter, setFilter] = useState('all'); // Default filter
+  const [awardFilters, setAwardFilters] = useState([]);
+  const [filter, setFilter] = useState('all');
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const location = useLocation();
+  const eventid = location.pathname.split("/")[2];
+
+
+  const fetchStudents = async (endpoint) => {
+    console.log("fetching students");
+    try {
+      const res = await axios.get(endpoint);
+      console.log("endpoint btw: " + endpoint);
+      setStudents(res.data);
+      // console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchAwardFilters = async () => {
       try {
-        let endpoint = `http://localhost:8800/students`;
-        if (filter !== 'all') {
-          endpoint = `http://localhost:8800/studentsfilter/${filter}`;
-        }
-        
-        const res = await axios.get(endpoint);
-        setStudents(res.data);
+        const awardFilterRes = await axios.get(`http://localhost:8800/studentawardfilter/${eventid}`);
+        const awardFilters = awardFilterRes.data;
+        console.log(awardFilters);
+        setAwardFilters(awardFilters);
       } catch (err) {
         console.log(err);
       }
     };
 
-    fetchStudents();
+    fetchAwardFilters();
+  }, [eventid]);
+
+  useEffect(() => {
+    // Fetch students when the component mounts
+    const endpoint = `http://localhost:8800/studentsfilter/${filter}/${eventid}`;
+    console.log("this is the endpoint:"+endpoint);
+    fetchStudents(endpoint);
   }, [filter]);
 
   const handleFilterChange = (event) => {
-    setFilter(event.target.value);
+    const selectedFilter = event.target.value;
+    setFilter(selectedFilter);
   };
+
   const handleFabClick = (event) => {
     setFabAnchorEl(event.currentTarget);
     setIsOptionsOpen(true);
   };
+
   const handleOptionsClose = () => {
     setFabAnchorEl(null);
     setIsOptionsOpen(false);
@@ -53,56 +79,49 @@ const Students = () => {
 
   const handleGuestClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/guest', '_blank',);
+    window.open('/guest', '_blank');
     handleOptionsClose();
   };
 
   const handleFIlterClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/FilterPage', '_blank',);
+    window.open('/FilterPage', '_blank');
     handleOptionsClose();
   };
 
   return (
     <div>
-       <Fab
-            className="floating"
-            size="medium"
-            color="primary"
-            aria-label="add"
-            onClick={handleFabClick}
-          >
-            <AddIcon />
-          </Fab>
-
-          <Popover
-            open={isOptionsOpen}
-            anchorEl={fabAnchorEl}
-            onClose={handleOptionsClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-          >
-            <List>
-              {/* <ListItem button onClick={handleGuestClick}>
-                <ListItemText primary="Qr scanner" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Option 2" />
-              </ListItem> */}
-              <ListItem button onClick={handleFIlterClick}>
-                <ListItemText primary="SLide SHow" />
-              </ListItem>
-            </List>
-          </Popover>
-        
+      <Navbar />
+      <Fab
+        className="floating"
+        size="medium"
+        color="primary"
+        aria-label="add"
+        onClick={handleFabClick}
+      >
+        <AddIcon />
+      </Fab>
+      <Popover
+        open={isOptionsOpen}
+        anchorEl={fabAnchorEl}
+        onClose={handleOptionsClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <List>
+          <ListItem  onClick={handleFIlterClick}>
+            <ListItemText primary="SLide SHow" />
+          </ListItem>
+        </List>
+      </Popover>
       <Grid container spacing={2}>
-        <Grid xs={4}></Grid>
+      <Grid xs={4}></Grid>
         <Grid xs={4}>
           <Stack direction='column' justifyContent={'space-around'}>
             <br></br>
@@ -113,21 +132,29 @@ const Students = () => {
           </Stack>
         </Grid>
         <Grid xs={3}>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Filter</FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              value={filter}
-              onChange={handleFilterChange}
-              name="radio-buttons-group"
-            >
-              <FormControlLabel value="all" control={<Radio />} label="All" />
-              <FormControlLabel value="Top" control={<Radio />} label="Top Student" />
-              <FormControlLabel value="Directorlist" control={<Radio />} label="Director List" />
-              <FormControlLabel value="Goodprogress" control={<Radio />} label="Good Progress" />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label">Filter</FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            value={filter}
+            onChange={handleFilterChange}
+            name="radio-buttons-group"
+          >
+            <FormControlLabel value="all" control={<Radio />} label="All" />
+            <FormControlLabel value="top" control={<Radio />} label="Top" />
+            {awardFilters.map((filterOption) => (
+  // This could be the problematic part
+  <FormControlLabel
+    key={filterOption}
+    value={filterOption.Award}
+    control={<Radio />}
+    label={filterOption.Award} // Assuming Award is the property you want to render
+  />
+  ))}
+
+          </RadioGroup>
+        </FormControl>
+      </Grid>
       </Grid>
       <br></br>
       <div className='scroll'>
@@ -175,9 +202,7 @@ const Students = () => {
             height: 300px;
           }
         `}
-    </style>
-    </div>
-
+    </style>    </div>
   );
 };
 

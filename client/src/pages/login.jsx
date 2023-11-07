@@ -22,7 +22,7 @@ function Login() {
       setMessage(response.data.message);
       localStorage.setItem("username", username);
       console.log("Stored username:", localStorage.getItem("username")); // Debugging line
-      navigate('/admin'); // Use navigate for programmatic navigation
+      navigate('/events'); // Use navigate for programmatic navigation
     } catch (error) {
       setMessage("Login failed. Check your credentials.");
     }

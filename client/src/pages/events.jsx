@@ -6,6 +6,7 @@ import Navbar from "./navigationbar";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
+import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
@@ -49,11 +50,10 @@ const Events = () => {
     handleOptionsClose();
   };
 
-  const handleDeleteUser = async (userId) => {
+  const handleDeleteEvent = async (eventId) => {
     try {
-    //   await axios.delete(`http://localhost:8800/deleteUser/${userId}`);
-    //   navigate('/addaccount')
-      // Navigate to the users page and trigger a page reload
+      await axios.delete(`http://localhost:8800/deleteEvent/${eventId}`);
+      navigate('/choose')
     } catch (err) {
       console.error(err);
     }
@@ -120,9 +120,18 @@ const Events = () => {
               <td>{event.date}</td>
               <td>{event.time}</td>
               <td>
+                <Stack direction="column">
                 <Link to={`/Excel/${event.id}`} className="no-underline-link">
-                  Excel
+                  Upload
                 </Link>
+                <Link to={`/student/${event.id}`} className='no-underline-link'>
+                  Student List
+                </Link>
+                <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
+                  Delete
+                </Button>
+                </Stack>
+               
               </td>
 
             </tr>

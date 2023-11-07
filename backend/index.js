@@ -123,46 +123,71 @@ app.post("/seat", (req,res)=>{
     })
 })
 
-app.get("/studentsfilter/:id", (req,res) => {
+app.get("/studentsfilter/:id/:id2", (req,res) => {
   let id = req.params.id;
+  let id2 = req.params.id2;
   console.log(id);
-  if(id == "Top")
+  if(id == "all")
   {
-    const q = "Select * from students where Top = 'Top'";
+    const q = `Select * from students where Event = `+ id2;
 
     db.query(q, (err,data)=>{
       if(err) return res.json(err)
       return res.json(data)
   })
   }
-  else if (id == "Directorlist")
-  {
+  else if(id=="top"){
+    const q = `Select * from students where Top = 'Top' and Event = `+id2;
 
-      const q = "Select * from students where Award like 'Director List%'";
-      db.query(q, (err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
-    })
-  }
-  else if (id == "Goodprogress")
-  {
-    const q = "Select * from students where Award = 'Good Progress'";
     db.query(q, (err,data)=>{
       if(err) return res.json(err)
       return res.json(data)
   })
   }
+  else{
+    const q  = `Select * from students where Award like "${id}" and Event = `+ id2;
+    db.query(q, (err,data)=>{
+              if(err) return res.json(err)
+              return res.json(data)
+          })
+  }
+//   else if (id == "Directorlist")
+//   {
+
+//       const q = "Select * from students where Award like 'Director List%'";
+//       db.query(q, (err,data)=>{
+//         if(err) return res.json(err)
+//         return res.json(data)
+//     })
+//   }
+//   else if (id == "Goodprogress")
+//   {
+//     const q = "Select * from students where Award = 'Good Progress'";
+//     db.query(q, (err,data)=>{
+//       if(err) return res.json(err)
+//       return res.json(data)
+//   })
+//   }
   
 })
 
-app.get("/student", (req,res)=>{
-    const q = "SELECT * from student"
+app.get("/student/:id", (req,res)=>{
+    const eventid = req.params.id;
+    const q = "SELECT * from students where Event = "+eventid;
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 })
-
+app.get("/studentawardfilter/:id",(req,res)=>
+{
+  const eventid = req.params.id;
+  const q  = "SELECT DISTINCT Award from Students where Event = "+eventid;
+  db.query(q,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+})
 //khai chers student list
 app.get("/students", (req,res)=>{
     const q = "SELECT * from students"
@@ -426,6 +451,26 @@ app.post('/insertStudent', (req, res) => {
           console.log(data);
           return res.json("Event has been added!")
   
+        }
+    })
+  })
+
+  app.delete("/deleteEvent/:id", (req,res)=>{
+    const eventid = req.params.id;
+    const q = "DELETE from event where id = ?"
+  
+    db.query(q,[eventid], (err,data)=>{
+        if(err) return res.json(err)
+        else 
+        {
+        const q = "Delete from students where Event  = ?"
+        db.query(q,[eventid], (err,data)=>{
+          if(err) return res.json(err)
+          else 
+          {
+            return res.json("Event has been deleted!");
+          }})
+
         }
     })
   })

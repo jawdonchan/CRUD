@@ -1,48 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import ExportToExcel from './ExcelExport';
+import React from 'react';
+import axios from 'axios';
 
-const StudentsTable = () => {
-  const [students, setStudents] = useState([]);
-
-  // Fetch students data from your backend API
-  useEffect(() => {
-    fetch("http://localhost:8800/students")
-      .then((response) => response.json())
-      .then((data) => setStudents(data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+function StudentExport() {
+  const handleExportToExcel = () => {
+    axios
+      .get('http://localhost:8800/export-excel') // Make sure this matches your backend route
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'students-export.xlsx';
+        a.click();
+      })
+      .catch((error) => {
+        console.error('Error exporting to Excel:', error);
+      });
+  }
 
   return (
-    <div style={{ height: '400px', overflow: 'auto' }}>
-      <table>
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Student Admin</th>
-            <th>Award</th>
-            <th>Top Student</th>
-            <th>FlipFlop</th>
-            <th>Status</th>
-            <th>Attendance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td>{student.FullName}</td>
-              <td>{student.AdmNo}</td>
-              <td>{student.Award}</td>
-              <td>{student.Top}</td>
-              <td>{student.FlipFlop}</td>
-              <td>{student.Status}</td>
-              <td>{student.Attendance}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <ExportToExcel data={students} />
+    <div>
+      <h2>Student Export Page</h2>
+      <p>Click the button below to export student data to Excel:</p>
+      <button onClick={handleExportToExcel}>Export Students to Excel</button>
     </div>
   );
-};
+}
 
-export default StudentsTable;
+export default StudentExport;

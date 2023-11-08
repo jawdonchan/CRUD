@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
 
 const ExportToExcel = ({ data }) => {
   const [fileName, setFileName] = useState('');
@@ -9,20 +10,23 @@ const ExportToExcel = ({ data }) => {
       return;
     }
 
-    import('xlsx').then((XLSX) => {
-      const worksheet = XLSX.utils.json_to_sheet(data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Students'); // Specify the sheet name
+    const ws = XLSX.utils.json_to_sheet(data);
 
-      const fileExtension = 'xlsx';
-      const blob = XLSX.write(workbook, { bookType: fileExtension, type: 'blob' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${fileName}.${fileExtension}`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Students'); // Specify the sheet name
+
+    const fileExtension = 'xlsx';
+
+    // Use XLSX.write function to save the file
+    const blob = XLSX.write(wb, { bookType: fileExtension, type: 'blob' });
+
+    // Create a download link
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}.${fileExtension}`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (

@@ -1,29 +1,30 @@
 import React from 'react';
 import axios from 'axios';
 
-function StudentExport() {
-  const handleExportToExcel = () => {
-    axios
-      .get('http://localhost:8800/export-excel') // Make sure this matches your backend route
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+const ExportStudentsToExcel = () => {
+  const handleExportExcel = () => {
+    // Make a GET request to your server to trigger the export
+    axios.get('http://localhost:8800/export-students-excel', { responseType: 'arraybuffer' })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = 'students-export.xlsx';
         a.click();
+        window.URL.revokeObjectURL(url);
       })
-      .catch((error) => {
-        console.error('Error exporting to Excel:', error);
+      .catch(error => {
+        console.error('Error exporting students data to Excel:', error);
       });
-  }
+  };
 
   return (
     <div>
-      <h2>Student Export Page</h2>
-      <p>Click the button below to export student data to Excel:</p>
-      <button onClick={handleExportToExcel}>Export Students to Excel</button>
+      <h1>Export Students Data to Excel</h1>
+      <button onClick={handleExportExcel}>Export Students to Excel</button>
     </div>
   );
-}
+};
 
-export default StudentExport;
+export default ExportStudentsToExcel;

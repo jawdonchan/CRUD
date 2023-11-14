@@ -615,7 +615,13 @@ app.post('/insertStudent', (req, res) => {
       else return res.json(data);
     })
   })
-
+  app.get("/searcheventseat",(req,res)=> {
+    const q = "SELECT * FROM event where rowxcol is not null";
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else return res.json(data);
+    })
+  })
   app.get("/searchseating",(req,res)=> {
     const q = "SELECT * FROM seating";
     db.query(q,(err,data)=>{

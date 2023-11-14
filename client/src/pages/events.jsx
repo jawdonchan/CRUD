@@ -127,6 +127,9 @@ const Events = () => {
                 <Link to={`/student/${event.id}`} className='no-underline-link'>
                   Student List
                 </Link>
+                <Link to={`/chooseseating/${event.id}`} className='no-underline-link'>
+                  Seating Plan
+                </Link>
                 <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
                   Delete
                 </Button>

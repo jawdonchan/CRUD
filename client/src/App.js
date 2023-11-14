@@ -21,6 +21,8 @@ import Events from "./pages/events.jsx";
 import Excel from "./pages/Excel";
 import ExcelExport from "./pages/ExcelExport";
 import StudentExport from "./pages/StudentExport";
+import ChooseSeating from "./pages/chooseseat.jsx";
+import Seatinglist from "./pages/seatinglist.jsx";
 
 function App() {
   return (
@@ -35,11 +37,14 @@ function App() {
         <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/guest" element={<Guest/>}></Route>
         <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
+        <Route path="/seatingplan/:id" element={<SeatingPlan/>}></Route>
+        <Route path="/chooseseating/:id" element={<ChooseSeating/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/addaccount" element={<AddAccount/>}></Route>
         <Route path="/addstudent" element={<AddStudent/>}></Route>
         <Route path="/updateStudent/:id" element={<UpdateStudent/>}></Route>
         <Route path="/seats" element={<Seats/>}></Route>
+        <Route path="/seatingsearch/:id" element={<Seatinglist/>}></Route>
         <Route path="/transition" element={<Transition/>}></Route>
         <Route path="/users" element={<Users/>}></Route>
         <Route path="/updateUser/:id" element={<UpdateUser/>}></Route>

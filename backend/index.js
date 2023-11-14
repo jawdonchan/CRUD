@@ -113,15 +113,15 @@ app.post('/upload/:id', upload.single('file'), (req, res) => {
 });
 
 
-app.post("/seat", (req,res)=>{
-    const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";
-    const values = [req.body.seatcol, req.body.year];
+// app.post("/seat", (req,res)=>{
+//     const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";
+//     const values = [req.body.seatcol, req.body.year];
 
-    db.query(q,[values], (err,data)=>{
-        if(err) return res.json(err)
-        return res.json("Seats has been added!")
-    })
-})
+//     db.query(q,[values], (err,data)=>{
+//         if(err) return res.json(err)
+//         return res.json("Seats has been added!")
+//     })
+// })
 
 app.get("/studentsfilter/:id/:id2", (req,res) => {
   let id = req.params.id;
@@ -205,27 +205,27 @@ app.get("/user",(req,res)=>{
   })
 })
 
-app.delete("/seat/:id", (req,res)=>{
-    const seatId = req.params.id;
-    const q = "DELETE from seating where id = ?"
+// app.delete("/seat/:id", (req,res)=>{
+//     const seatId = req.params.id;
+//     const q = "DELETE from seating where id = ?"
 
-    db.query(q,[seatId], (err,data)=>{
-        if(err) return res.json(err)
-        return res.json("Seats has been deleted!");
-    })
-})
+//     db.query(q,[seatId], (err,data)=>{
+//         if(err) return res.json(err)
+//         return res.json("Seats has been deleted!");
+//     })
+// })
 
-app.put("/seat/:id", (req, res) => {
-    const seatId = req.params.id;
-    const q = "UPDATE seating SET seatcol = IFNULL(?, seatcol), year = IF (ISNULL(?), NULL, year) WHERE id = ?";
+// app.put("/seat/:id", (req, res) => {
+//     const seatId = req.params.id;
+//     const q = "UPDATE seating SET seatcol = IFNULL(?, seatcol), year = IF (ISNULL(?), NULL, year) WHERE id = ?";
   
-    const values = [req.body.seatcol, req.body.year];
+//     const values = [req.body.seatcol, req.body.year];
   
-    db.query(q, [...values, seatId], (err, data) => {
-      if (err) return res.json(err);
-      return res.json("Seats have been updated!");
-    });
-  });
+//     db.query(q, [...values, seatId], (err, data) => {
+//       if (err) return res.json(err);
+//       return res.json("Seats have been updated!");
+//     });
+//   });
   
 //updating student details
 app.put('/updateStudent/:id', (req, res) => {
@@ -472,5 +472,60 @@ app.post('/insertStudent', (req, res) => {
           }})
 
         }
+    })
+  })
+
+
+  app.put("/seating/:id/:row/:col" ,(req,res)=>{
+    const eventid = req.params.id;
+    const rowxcol = req.params.row+","+req.params.col;
+    const q = `UPDATE event SET rowxcol = '${rowxcol}' WHERE id = `+eventid;
+    console.log(q);
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err)
+      else return res.json("Event has been updated")
+    })
+  })
+
+  app.post("/addseat/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    // const values = [req.body.name,req.body.range,eventid,req.body.color];
+    // console.log(values);
+    const q = `INSERT INTO seating (name, rowxcol, event, color) VALUES ('${req.body.name}','${req.body.range}',${eventid},'${req.body.color}')`;
+    db.query(q,(err,data)=>{
+      console.log(q);
+      if(err) return res.json(err)
+      else return res.json('Category Added');
+    })
+  })
+
+  app.get("/seatingsearch/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    const q = "SELECT * FROM seating WHERE event = "+eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else {
+        return res.json(data.length);}
+    })
+  })
+
+  app.get("/searchseating",(req,res)=> {
+    const q = "SELECT * FROM event";
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else return res.json(data);
+    })
+  })
+
+  app.get("/eventsearch/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    const q = "SELECT * FROM event WHERE id = "+eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else {
+        return res.json(data.length);}
     })
   })

@@ -12,6 +12,10 @@ import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,11 +37,20 @@ export default function Seating() {
   const [editCategoryName, setEditCategoryName] = useState('');
   const [selectedSeat, setSelectedSeat] = useState(null); // New state for selected seat
   const [adminNumber, setAdminNumber] = useState(''); // State to store admin number
+  const [save,setsave]= useState({
+    name:'',
+    rowxcol:''
+  });
 
   const handleClick = () => {
     setOpen(true);
   };
-
+  const location = useLocation();
+  const eventid = location.pathname.split("/")[2];
+  if(eventid !== undefined)
+  {
+    console.log(eventid);
+  }
   const defaultCategoryColor = 'gray'; // You can choose the desired default color
 
 
@@ -146,7 +159,26 @@ export default function Seating() {
     window.open('/guest', '_blank',);
     handleOptionsClose();
   };
+  const handleAddSeating = async () =>{
+    console.log(categories);    
+    console.log(categories.length);  
+    try {      
+      // let rowxcol = rows+","+columns;
+      // console.log(rowxcol);
+      const res2= await axios.put(`http://localhost:8800/seating/${eventid}/${rows}/${columns}`);
+      console.log(res2);
+      for(let i = 0 ; i < categories.length; i++)
+      {
+        console.log(categories[i]);
+      const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
+      console.log(res);
+      }
+      
+    }
+    catch(err){
 
+    }
+  };
 
   const handleModalSave = () => {
 
@@ -319,8 +351,8 @@ export default function Seating() {
               <ListItem button onClick={handleGuestClick}>
                 <ListItemText primary="Qr scanner" />
               </ListItem>
-              <ListItem button>
-                <ListItemText primary="Option 2" />
+              <ListItem button onClick={handleAddSeating}>
+                <ListItemText primary="Save" />
               </ListItem>
 
 

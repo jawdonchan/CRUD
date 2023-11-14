@@ -44,18 +44,18 @@ const Seatinglist = () => {
   useEffect(() => {
     const fetchSeating = async () => {
       try {
-        const data = await axios.get(`http://localhost:8800/searchevent/`);
+        const data = await axios.get(`http://localhost:8800/searcheventseat/`);
         setEvent(data.data);        
         console.log("huh");
         console.log(data.data);
         
         try{
            const color = await axios.get(`http://localhost:8800/searchseating/`);
-        // console.log(color.data);
-        // console.log(color.data.length);        
+        console.log(color.data);
+        console.log(color.data.length);        
         const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
 
-        for(let g = 0 ; g <= color.data.length;g++){
+        for(let g = 0 ; g < color.data.length;g++){
           // console.log("this is g" + g);
           let index1ST = alphabet.indexOf( color.data[g].rowxcol.split(',')[1]) ;
           let index2ND = alphabet.indexOf( color.data[g].rowxcol.split(',')[3]) +1;
@@ -68,7 +68,7 @@ const Seatinglist = () => {
             {
               // console.log(i+k);
               let id = color.data[g].event+""+i+""+alphabet[k];
-              // console.log(id);
+              console.log(id);
               // console.log(color.data[g].color);
               document.getElementById(id).style.backgroundColor = color.data[g].color;
 
@@ -149,6 +149,7 @@ const Seatinglist = () => {
       <div className='scroll'>
         <Grid container direction = "row" justifyContent="space-around" alignItems="flex-start" spacing={{xd:2,md:3}}>
           {eventlist.map((event) => (
+            
             <Grid item xs={4} >
               <Card key={event.id} sx={{ maxWidth: 350, minHeight: 60 }}>
               <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>

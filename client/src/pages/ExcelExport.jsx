@@ -1,41 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import axios from 'axios';
 
-const ExportToExcel = ({ data }) => {
-  const [fileName, setFileName] = useState('');
-
-  const exportToExcel = () => {
-    if (!fileName) {
-      alert('Please enter a file name.');
-      return;
-    }
-
-    import('xlsx').then((XLSX) => {
-      const worksheet = XLSX.utils.json_to_sheet(data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Students'); // Specify the sheet name
-
-      const fileExtension = 'xlsx';
-      const blob = XLSX.write(workbook, { bookType: fileExtension, type: 'blob' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${fileName}.${fileExtension}`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+const ExportStudentsToExcel = () => {
+  const handleExportExcel = () => {
+    // Make a GET request to your server to trigger the export
+    axios.get('http://localhost:8800/export-students-excel', { responseType: 'arraybuffer' })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'students-export.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(error => {
+        console.error('Error exporting students data to Excel:', error);
+      });
   };
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Enter file name"
-        value={fileName}
-        onChange={(e) => setFileName(e.target.value)}
-      />
-      <button onClick={exportToExcel}>Export to Excel</button>
+      <h1>Export Students Data to Excel</h1>
+      <button onClick={handleExportExcel}>Export Students to Excel</button>
     </div>
   );
 };
 
-export default ExportToExcel;
+export default ExportStudentsToExcel;

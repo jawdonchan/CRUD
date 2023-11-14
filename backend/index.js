@@ -4,7 +4,10 @@ import cors from "cors"
 import multer from 'multer';
 import { read, utils } from 'xlsx';
 import dotenv from "dotenv"; // Import dotenv
-
+import XLSX from 'xlsx';
+import fs from 'fs';
+import ExcelJS from 'exceljs';
+import XlsxPopulate from 'xlsx-populate';
 // Load environment variables from .env
 dotenv.config();
 
@@ -112,7 +115,93 @@ app.post('/upload/:id', upload.single('file'), (req, res) => {
   }
 });
 
+// Export data with specific column names
+app.get('/export-students-excel', (req, res) => {
+  // Define your SQL query to fetch student data
+  const q = 'SELECT Stage, Award, FlipFlop, AdmNo, FullName, TutGrp, Status, Top, Event FROM students';
 
+  // Execute the query to fetch the data from the students table
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error('Error fetching student data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    try {
+      // Create a new Excel workbook
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Students Data');
+
+      // Add header row
+      worksheet.addRow(['Stage', 'Award', 'FlipFlop', 'AdmNo', 'FullName', 'TutGrp', 'Status', 'Top', 'Event']);
+
+      // Add student data rows
+      data.forEach(row => {
+        worksheet.addRow([row.Stage, row.Award, row.FlipFlop, row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Top, row.Event]);
+      });
+
+      // Create a buffer to store the Excel file
+      workbook.xlsx.writeBuffer()
+        .then(buffer => {
+          // Set response headers for Excel file download
+          res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+          res.setHeader('Content-Disposition', 'attachment; filename=students-export.xlsx');
+
+          // Send the Excel file to the client
+          res.end(buffer);
+        })
+        .catch(error => {
+          console.error('Error generating Excel file:', error);
+          return res.status(500).json({ error: 'Error generating Excel file' });
+        });
+    } catch (error) {
+      console.error('Error generating Excel file:', error);
+      return res.status(500).json({ error: 'Error generating Excel file' });
+    }
+  });
+});
+
+app.get('/export-sample-excel', (req, res) => {
+  // Sample data
+  const sampleData = [
+    { Stage: 'A1', Award: 'B1', FlipFlop: 'C1', AdmNo: 'D1', FullName: 'E1', TutGrp: 'F1', Status: 'G1', Top: 'H1', Event: 'I1' },
+    { Stage: 'A2', Award: 'B2', FlipFlop: 'C2', AdmNo: 'D2', FullName: 'E2', TutGrp: 'F2', Status: 'G2', Top: 'H2', Event: 'I2' },
+    { Stage: 'A3', Award: 'B3', FlipFlop: 'C3', AdmNo: 'D3', FullName: 'E3', TutGrp: 'F3', Status: 'G3', Top: 'H3', Event: 'I3' },
+    // Add more sample data as needed
+  ];
+
+  try {
+    // Create a new Excel workbook
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Sample Data');
+
+    // Add header row
+    worksheet.addRow(['Stage', 'Award', 'FlipFlop', 'AdmNo', 'FullName', 'TutGrp', 'Status', 'Top', 'Event']);
+
+    // Add sample data rows
+    sampleData.forEach(row => {
+      worksheet.addRow([row.Stage, row.Award, row.FlipFlop, row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Top, row.Event]);
+    });
+
+    // Create a buffer to store the Excel file
+    workbook.xlsx.writeBuffer()
+      .then(buffer => {
+        // Set response headers for Excel file download
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=sample-data-export.xlsx');
+
+        // Send the Excel file to the client
+        res.end(buffer);
+      })
+      .catch(error => {
+        console.error('Error generating Excel file:', error);
+        return res.status(500).json({ error: 'Error generating Excel file' });
+      });
+  } catch (error) {
+    console.error('Error generating Excel file:', error);
+    return res.status(500).json({ error: 'Error generating Excel file' });
+  }
+});
 // app.post("/seat", (req,res)=>{
 //     const q = "INSERT INTO seating (`seatcol`,`year`) values (?,?)";
 //     const values = [req.body.seatcol, req.body.year];
@@ -526,6 +615,7 @@ app.post('/insertStudent', (req, res) => {
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {
-        return res.json(data.length);}
+        return res.json(data.length);
+      }
     })
   })

@@ -199,7 +199,7 @@ const Students = () => {
           }
           .scroll {
             overflow-y:scroll;
-            height: 300px;
+            height: 38vh;
           }
         `}
     </style>    </div>

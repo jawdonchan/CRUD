@@ -201,9 +201,9 @@ export default function Seating() {
      for(let k = index1ST ; k < index2ND+1; k++)
      {
        // console.log(i+k);
-       let id = i+alphabet[k];
+       let id = i+""+alphabet[k];
        // console.log(id);
-       document.getElementById(i+alphabet[k]).style.backgroundColor = newCategory.color;
+       document.getElementById(id).style.backgroundColor = newCategory.color;
 
      }
      
@@ -400,6 +400,10 @@ export default function Seating() {
 
         <style>
           {`
+          .seating-plan{
+            overflow:scroll;
+            height:60vh
+          }
           .floating{
             position:fixed;
             bottom:60px;

@@ -146,7 +146,7 @@ const Events = () => {
     {`
           .scroll {
             overflow-y:scroll;
-            height: 400px;
+            height:72vh;
           }
 
           .floating{

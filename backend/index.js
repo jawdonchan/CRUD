@@ -546,20 +546,28 @@ app.post('/insertStudent', (req, res) => {
 
   app.delete("/deleteEvent/:id", (req,res)=>{
     const eventid = req.params.id;
-    const q = "DELETE from event where id = ?"
+    const q = "DELETE from students where Event = ?"
   
     db.query(q,[eventid], (err,data)=>{
         if(err) return res.json(err)
         else 
         {
-        const q = "Delete from students where Event  = ?"
+        const q = " Delete from seating where event = ?"
+        db.query(q,[eventid],(err,data)=>{
+          if(err) return res.json(err)
+          else{
+        const q = "Delete from event where id  = ?"
         db.query(q,[eventid], (err,data)=>{
           if(err) return res.json(err)
           else 
           {
             return res.json("Event has been deleted!");
-          }})
+          }
+        })
 
+        }
+        })
+        
         }
     })
   })
@@ -600,8 +608,16 @@ app.post('/insertStudent', (req, res) => {
     })
   })
 
-  app.get("/searchseating",(req,res)=> {
+  app.get("/searchevent",(req,res)=> {
     const q = "SELECT * FROM event";
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else return res.json(data);
+    })
+  })
+
+  app.get("/searchseating",(req,res)=> {
+    const q = "SELECT * FROM seating";
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else return res.json(data);
@@ -615,7 +631,7 @@ app.post('/insertStudent', (req, res) => {
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {
-        return res.json(data.length);
+        return res.json(data);
       }
     })
   })

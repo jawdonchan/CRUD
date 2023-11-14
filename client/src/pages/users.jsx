@@ -135,7 +135,7 @@ const Users = () => {
     {`
           .scroll {
             overflow-y:scroll;
-            height: 400px;
+            height: 73vh;
           }
 
           .floating{

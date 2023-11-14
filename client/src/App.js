@@ -38,6 +38,7 @@ function App() {
         <Route path="/guest" element={<Guest/>}></Route>
         <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
         <Route path="/seatingplan/:id" element={<SeatingPlan/>}></Route>
+        <Route path="/seatingplan/:id/:eid" element={<SeatingPlan/>}></Route>
         <Route path="/chooseseating/:id" element={<ChooseSeating/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/addaccount" element={<AddAccount/>}></Route>

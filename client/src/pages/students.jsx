@@ -91,6 +91,7 @@ const Students = () => {
 
   const actions = [
     { icon: <SpeedDialIcon />, name: 'SLide SHow', onClick: handleFIlterClick },
+   
     // Add more actions as needed
   ];
 

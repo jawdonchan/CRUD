@@ -16,6 +16,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Navbar from './navigationbar';
+import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Students = () => {
@@ -26,7 +27,6 @@ const Students = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const location = useLocation();
   const eventid = location.pathname.split("/")[2];
-
 
   const fetchStudents = async (endpoint) => {
     console.log("fetching students");
@@ -58,7 +58,7 @@ const Students = () => {
   useEffect(() => {
     // Fetch students when the component mounts
     const endpoint = `http://localhost:8800/studentsfilter/${filter}/${eventid}`;
-    console.log("this is the endpoint:"+endpoint);
+    console.log("this is the endpoint:" + endpoint);
     fetchStudents(endpoint);
   }, [filter]);
 
@@ -89,39 +89,31 @@ const Students = () => {
     handleOptionsClose();
   };
 
+  const actions = [
+    { icon: <SpeedDialIcon />, name: 'SLide SHow', onClick: handleFIlterClick },
+    // Add more actions as needed
+  ];
+
   return (
     <div>
       <Navbar />
-      <Fab
-        className="floating"
-        size="medium"
-        color="primary"
-        aria-label="add"
-        onClick={handleFabClick}
-      >
-        <AddIcon />
-      </Fab>
-      <Popover
-        open={isOptionsOpen}
-        anchorEl={fabAnchorEl}
+      <SpeedDial
+        ariaLabel="SpeedDial openIcon example"
+        icon={<SpeedDialIcon openIcon={<AddIcon />} />}
         onClose={handleOptionsClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
+        onOpen={handleFabClick}
+        open={isOptionsOpen}
+        direction="up"
+        FabProps={{ ref: setFabAnchorEl }}
+        style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
       >
-        <List>
-          <ListItem  onClick={handleFIlterClick}>
-            <ListItemText primary="SLide SHow" />
-          </ListItem>
-        </List>
-      </Popover>
+        {actions.map((action) => (
+          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
+        ))}
+      </SpeedDial>
+
       <Grid container spacing={2}>
-      <Grid xs={4}></Grid>
+        <Grid xs={4}></Grid>
         <Grid xs={4}>
           <Stack direction='column' justifyContent={'space-around'}>
             <br></br>
@@ -132,66 +124,63 @@ const Students = () => {
           </Stack>
         </Grid>
         <Grid xs={3}>
-        <FormControl>
-          <FormLabel id="demo-radio-buttons-group-label">Filter</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            value={filter}
-            onChange={handleFilterChange}
-            name="radio-buttons-group"
-          >
-            <FormControlLabel value="all" control={<Radio />} label="All" />
-            <FormControlLabel value="top" control={<Radio />} label="Top" />
-            {awardFilters.map((filterOption) => (
-  // This could be the problematic part
-  <FormControlLabel
-    key={filterOption}
-    value={filterOption.Award}
-    control={<Radio />}
-    label={filterOption.Award} // Assuming Award is the property you want to render
-  />
-  ))}
-
-          </RadioGroup>
-        </FormControl>
-      </Grid>
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">Filter</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              value={filter}
+              onChange={handleFilterChange}
+              name="radio-buttons-group"
+            >
+              <FormControlLabel value="all" control={<Radio />} label="All" />
+              <FormControlLabel value="top" control={<Radio />} label="Top" />
+              {awardFilters.map((filterOption) => (
+                <FormControlLabel
+                  key={filterOption}
+                  value={filterOption.Award}
+                  control={<Radio />}
+                  label={filterOption.Award} // Assuming Award is the property you want to render
+                />
+              ))}
+            </RadioGroup>
+          </FormControl>
+        </Grid>
       </Grid>
       <br></br>
       <div className='scroll'>
         <table className='seats-table'>
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Student Admin</th>
-            <th>Award</th>
-            <th>Top Student</th>
-            <th>FlipFlop</th>
-            <th>Status</th>
-            <th>Attendance</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td>{student.FullName}</td>
-              <td>{student.AdmNo}</td>
-              <td>{student.Award}</td>
-              <td>{student.Top}</td>
-              <td>{student.FlipFlop}</td>
-              <td>{student.Status}</td>
-              <td>{student.Attendance}</td>
-              <td>
-                <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link>
-              </td>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Student Admin</th>
+              <th>Award</th>
+              <th>Top Student</th>
+              <th>FlipFlop</th>
+              <th>Status</th>
+              <th>Attendance</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {students.map((student) => (
+              <tr key={student.id}>
+                <td>{student.FullName}</td>
+                <td>{student.AdmNo}</td>
+                <td>{student.Award}</td>
+                <td>{student.Top}</td>
+                <td>{student.FlipFlop}</td>
+                <td>{student.Status}</td>
+                <td>{student.Attendance}</td>
+                <td>
+                  <Link to={`/updateStudent/${student.id}`} className="no-underline-link">Update</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-          <style>
-    {`
+      <style>
+        {`
           .floating{
             position:fixed;
             bottom:60px;
@@ -202,7 +191,8 @@ const Students = () => {
             height: 38vh;
           }
         `}
-    </style>    </div>
+      </style>
+    </div>
   );
 };
 

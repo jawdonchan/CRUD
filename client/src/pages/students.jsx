@@ -135,7 +135,6 @@ const Students = () => {
               name="radio-buttons-group"
             >
               <FormControlLabel value="all" control={<Radio />} label="All" />
-              <FormControlLabel value="top" control={<Radio />} label="Top" />
               {awardFilters.map((filterOption) => (
                 <FormControlLabel
                   key={filterOption}
@@ -190,7 +189,7 @@ const Students = () => {
           }
           .scroll {
             overflow-y:scroll;
-            height: 53vh;
+            height: 45vh;
           }
         `}
       </style>

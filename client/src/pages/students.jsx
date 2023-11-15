@@ -18,6 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Navbar from './navigationbar';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -79,7 +81,7 @@ const Students = () => {
 
   const handleGuestClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/guest', '_blank');
+    window.open(`/guest/${eventid}`, '_blank');
     handleOptionsClose();
   };
 
@@ -90,9 +92,8 @@ const Students = () => {
   };
 
   const actions = [
-    { icon: <SpeedDialIcon />, name: 'SLide SHow', onClick: handleFIlterClick },
-   
-    // Add more actions as needed
+    { icon: <CoPresentIcon />, name: 'Slide Show', onClick: handleFIlterClick },
+    { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
   ];
 
   return (
@@ -189,7 +190,7 @@ const Students = () => {
           }
           .scroll {
             overflow-y:scroll;
-            height: 38vh;
+            height: 53vh;
           }
         `}
       </style>

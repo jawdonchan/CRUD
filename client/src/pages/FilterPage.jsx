@@ -38,6 +38,14 @@ const FilterPage = ({ match }) => {
     // Add more styles here as needed
   };
 
+// for the mouse hovering effect @ tab
+const handleTabHover = (tab) => {
+  setActiveTab(tab);
+};
+
+const handleTabClick = (tab) => {
+  setActiveTab(tab);
+};
   // Fetch all student data when the component mounts
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -74,6 +82,7 @@ const FilterPage = ({ match }) => {
   return (
     <div className="filter-page" style={{ backgroundImage }}>
       <div className="tab-container">
+      <div className="tab-dropdown">
         <button
           onClick={() => setActiveTab('tab1')}
           className={activeTab === 'tab1' ? 'active' : ''}
@@ -105,7 +114,7 @@ const FilterPage = ({ match }) => {
           Tab 5
         </button>
       </div>
-
+      </div>
       <div className="tab-content">
         {activeTab === 'tab1' && (
           <div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import Navbar from "./navigationbar";
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState('default'); // Default CSS style option
 
@@ -10,6 +10,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <h1>Welcome to the Home Page</h1>
       <label>Select a CSS Style:</label>
       <select value={selectedOption} onChange={handleOptionChange}>

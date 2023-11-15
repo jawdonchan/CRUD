@@ -8,10 +8,12 @@ import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
+import EventIcon from '@mui/icons-material/Event';
 import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -59,44 +61,27 @@ const Events = () => {
     }
   };
 
+  const actions = [
+    { icon: <EventIcon />, name: 'Create Event', onClick: handleFIlterClick },
+    // Add more actions as needed
+  ];
   return (
     <div>
-      <Fab
-            className="floating"
-            size="medium"
-            color="primary"
-            aria-label="add"
-            onClick={handleFabClick}
-          >
-            <AddIcon />
-          </Fab>
-
-          <Popover
-            open={isOptionsOpen}
-            anchorEl={fabAnchorEl}
-            onClose={handleOptionsClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-          >
-            <List>
-              {/* <ListItem button onClick={handleGuestClick}>
-                <ListItemText primary="Qr scanner" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Option 2" />
-              </ListItem> */}
-              <ListItem onClick={handleFIlterClick}>
-                <ListItemText primary="Create Event" />
-              </ListItem>
-            </List>
-          </Popover>
-      <Navbar></Navbar>
+     <Navbar />
+      <SpeedDial
+        ariaLabel="SpeedDial openIcon example"
+        icon={<SpeedDialIcon openIcon={<AddIcon />} />}
+        onClose={handleOptionsClose}
+        onOpen={handleFabClick}
+        open={isOptionsOpen}
+        direction="up"
+        FabProps={{ ref: setFabAnchorEl }}
+        style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
+      >
+        {actions.map((action) => (
+          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
+        ))}
+      </SpeedDial>
       <br></br>
       <h1>Events</h1>
       <br></br>

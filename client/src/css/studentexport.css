@@ -1,0 +1,8 @@
+.buttonstyle button{
+    border: 1px solid red;
+    border-radius:20px; 
+    padding:8px; 
+    background-color: whitesmoke;
+    font-size: 1rem;
+    color: firebrick;
+}

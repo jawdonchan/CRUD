@@ -420,7 +420,7 @@ app.delete("/deleteUser/:id", (req,res)=>{
 //liheng - qr scanner
 app.put("/attendance/:id", (req, res) => {
     const adminNo = req.params.id;
-    const q = `UPDATE students SET Attendance = 'yes' WHERE AdmNo = "${adminNo}"`;
+    const q = `UPDATE students SET Attendance = 'yes' WHERE AdmNo = '${adminNo}'`;
     const completeQuery = q; // No need to replace '?' in this case
 
     // Log the complete SQL query
@@ -506,17 +506,39 @@ app.post('/insertStudent/:eventId', (req, res) => {
   const { adminNo } = req.body;
   const { eventId } = req.params;
 
-  const insertQuery = 'INSERT INTO emcee (AdmNo, Event) VALUES (?, ?)';
-  const values = [adminNo, eventId];
+  // Check if the AdmNo already exists
+  const checkQuery = 'SELECT COUNT(*) AS count FROM emcee WHERE AdmNo = ?';
+  const checkValues = [adminNo];
 
-  db.query(insertQuery, values, (err, data) => {
-    if (err) {
-      console.error('Error inserting student:', err);
+  db.query(checkQuery, checkValues, (checkErr, checkResults) => {
+    if (checkErr) {
+      console.error('Error checking AdmNo:', checkErr);
       return res.status(500).json({ error: 'Internal server error' });
     }
-    return res.json('Student has been inserted!');
+
+    const rowCount = checkResults[0].count;
+
+    // If AdmNo exists, send a response indicating that the student is already registered
+    if (rowCount > 0) {
+      return res.json('Student already exists for this event.');
+    }
+
+    // AdmNo doesn't exist, proceed to insert
+    const insertQuery =
+      'INSERT INTO emcee (AdmNo, Event) VALUES (?, ?)';
+    const insertValues = [adminNo, eventId];
+
+    db.query(insertQuery, insertValues, (insertErr, insertData) => {
+      if (insertErr) {
+        console.error('Error inserting student:', insertErr);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      return res.json('Student has been inserted!');
+    });
   });
 });
+
 
   
   app.post('/insertSeatcol', (req, res) => {

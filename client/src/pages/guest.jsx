@@ -39,13 +39,14 @@ const Guest = (props) => {
               try {
                 setIsLoading(true); // Set loading state to true
 
-                
+                console.log(result.text);
 
                 const response = await axios.put("http://localhost:8800/attendance/" + result.text);
+               
                 console.log('Axios Response:', response.data);
 
                 // Insert admin number into the student and seatcol tables
-                await axios.post("http://localhost:8800/insertStudent", { adminNo: result.text , event: eventid});
+                await axios.post("http://localhost:8800/insertStudent/" + eventid, { adminNo: result.text});
                 // await axios.post("http://localhost:8800/insertSeatcol", { adminNo: result.text });
 
                 setData(result.text);

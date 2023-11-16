@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { Typography, CircularProgress, Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
+
 
 const Guest = (props) => {
     const location = useLocation();
@@ -15,7 +18,11 @@ const Guest = (props) => {
     const handleBack = () => {
         navigate('/');
     }
-
+    
+    const [adminNo,setadminNo] = useState("");
+    const handleSubmit = ()=>{
+      handleQrResult(adminNo);  
+    }
     const handleQrResult = async (result, error) => {
         if (result) {
             let resultText ={ 
@@ -61,12 +68,14 @@ const Guest = (props) => {
     };
 
     return (
-        <Stack
+        <div>
+            <Stack 
+            divider={<Divider orientation="vertical" flexItem />}
+
             direction="row"
             spacing={3}
-            justifyContent="space-between"
+            justifyContent="space-around"
         >
-            <Button variant="outlined" onClick={handleBack}>Back</Button>
             <div>
                 <Stack 
                     direction="column"
@@ -91,8 +100,43 @@ const Guest = (props) => {
                     </Stack>
                 </Stack>
             </div>
-            <div></div>
+            <div>
+            <Stack
+                direction="column"
+                justifyContent="space-evenly"
+                alignItems="center"
+                spacing={2}
+            >
+               <div className='spacer'></div>
+               <br></br>
+
+                <Typography variant="h4" > Mannual Input</Typography>
+                    <form >
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Admin Number"
+                        onChange={(e)=> setadminNo(e.target.value)}
+                    />
+
+                </form>
+                <Button variant="contained" type="submit">
+                    Enter
+                </Button>
+                </Stack>
+               
+            </div>
+ 
         </Stack>
+        <style>
+         {`
+          .spacer{
+            height: 25vh;
+          }
+        `}
+    </style> 
+        </div>
+        
+        
     );
 }
 

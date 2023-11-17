@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -47,10 +47,70 @@ export default function Seating() {
   };
   const location = useLocation();
   const eventid = location.pathname.split("/")[2];
-  if(eventid !== undefined)
-  {
-    console.log(eventid);
-  }
+  const usedeventid = location.pathname.split("/")[3];
+  
+
+  useEffect(() => {
+    console.log(usedeventid);
+    const fetchS = async () => {
+      if (usedeventid !== undefined) {
+        try {
+          const data = await axios.get(`http://localhost:8800/eventsearch/${usedeventid}`);
+          const rowncol = data.data[0].rowxcol.split(',');
+          console.log("row" + rowncol[0]);
+          setRows(rowncol[0]);
+          setColumns(rowncol[1]);
+        } catch (err) {
+          console.log(err);
+        }
+  
+        try {
+          const category = await axios.get(`http://localhost:8800/seatingcategory/${usedeventid}`);
+          console.log(category.data);
+  
+          // Accumulate new categories in a temporary array
+          const newCategories = category.data.map(item => ({
+            name: item.name,
+            range: item.rowxcol,
+            color: item.color
+          }));
+          
+          for(let i = 0 ; i < category.data.length;i++)
+          {
+            console.log(category.data[i]);
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
+            const index1ST = alphabet.indexOf( category.data[i].rowxcol.split(',')[1]);
+            const index2ND = alphabet.indexOf( category.data[i].rowxcol.split(',')[3]);
+            console.log(index1ST);
+            console.log(index2ND);
+            for(let g = category.data[i].rowxcol.split(',')[0] ;g <= category.data[i].rowxcol.split(',')[2];g++ )
+            {
+              // console.log("for loop 1 "+newCategory.range.split(',')[0]);
+              for(let k = index1ST ; k < index2ND+1; k++)
+              {
+                // console.log(i+k);
+                let id = g+""+alphabet[k];
+                console.log(id);
+                document.getElementById(id).style.backgroundColor = category.data[i].color;
+         
+              }
+              
+            }
+          }
+  
+          // Update the state once with all new categories
+          setCategories([...categories, ...newCategories]);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+  
+    fetchS();
+  }, []); // Ensure categories is in the dependency array if it's used in the useEffect
+  
+  
+
   const defaultCategoryColor = 'gray'; // You can choose the desired default color
 
 
@@ -167,14 +227,30 @@ export default function Seating() {
       // console.log(rowxcol);
       const res2= await axios.put(`http://localhost:8800/seating/${eventid}/${rows}/${columns}`);
       console.log(res2);
-      for(let i = 0 ; i < categories.length; i++)
-      {
-        console.log(categories[i]);
-      const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
+
+        if(eventid == usedeventid)
+        {        
+          const deletecat = await axios.delete(`http://localhost:8800/seat/${eventid}`);
+          console.log(deletecat);      
+          for(let i = 0 ; i < categories.length; i++)
+      {         
+         console.log(categories[i]);
+
+          const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
       console.log(res);
       }
+        }
+        else{
+          for(let i = 0 ; i < categories.length; i++)
+          {
+          const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
+        console.log(res);
+        }
+        }
+        }
+    
       
-    }
+    
     catch(err){
 
     }
@@ -402,7 +478,8 @@ export default function Seating() {
           {`
           .seating-plan{
             overflow:scroll;
-            height:60vh
+            height:50vh;
+            width:95vw;
           }
           .floating{
             position:fixed;

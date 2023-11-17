@@ -36,7 +36,7 @@ function App() {
         <Route path="/choose" element={<Choose/>}></Route>
         <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/guest/:id" element={<Guest/>}></Route>
-        {/* <Route path="/seatingplan" element={<SeatingPlan/>}></Route> */}
+        <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
         <Route path="/seatingplan/:id" element={<SeatingPlan/>}></Route>
         <Route path="/seatingplan/:id/:eid" element={<SeatingPlan/>}></Route>
         <Route path="/chooseseating/:id" element={<ChooseSeating/>}></Route>

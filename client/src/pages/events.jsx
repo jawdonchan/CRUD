@@ -52,6 +52,22 @@ const Events = () => {
     handleOptionsClose();
   };
 
+  const handleSeat = async (id)  => {
+    try {
+      const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
+      console.log(res.data);
+      if(res.data != 0)
+      {
+navigate(`/seatingplan/${id+"/"+id}`);      }
+      else{
+        navigate(`/chooseseating/${id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+
   const handleDeleteEvent = async (eventId) => {
     try {
       await axios.delete(`http://localhost:8800/deleteEvent/${eventId}`);
@@ -112,9 +128,9 @@ const Events = () => {
                 <Link to={`/student/${event.id}`} className='no-underline-link'>
                   Student List
                 </Link>
-                <Link to={`/chooseseating/${event.id}`} className='no-underline-link'>
+                <Button onClick={() => handleSeat(event.id)} className='no-underline-link'>
                   Seating Plan
-                </Link>
+                </Button>
                 <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
                   Delete
                 </Button>

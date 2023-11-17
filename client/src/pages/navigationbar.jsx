@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate ,useLocation} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -10,13 +10,14 @@ import MenuItem from '@mui/material/MenuItem';
 export default function Navbar() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const location = useLocation();
+  const eventid = location.pathname.split("/")[2];
   const handleUsersClick = () => {
     navigate('/users');
   };
 
   const handleSeatingClick = () => {
-    navigate('/seatingplan');
+    navigate(`/chooseseating/${eventid}`);
   };
 
   const handleStudentlistClick = (event) => {

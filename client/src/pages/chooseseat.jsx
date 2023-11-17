@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate,useLocation } from 'react-router-dom';
 import Guests from './guest';
 import Login from './admin';
@@ -20,14 +20,14 @@ export default function ChooseSeating() {
     navigate(`/seatingsearch/${id}`);
   }
 
+  
   const handleCreateClick = async (id)  => {
     try {
       const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
       console.log(res.data);
       if(res.data != 0)
       {
-        Alert("There is a seating arrangement saved already");
-      }
+navigate(`/seatingplan/${eventid+"/"+eventid}`);      }
       else{
         navigate(`/seatingplan/${id}`);
       }

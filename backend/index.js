@@ -297,6 +297,15 @@ app.get("/user",(req,res)=>{
 // app.delete("/seat/:id", (req,res)=>{
 //     const seatId = req.params.id;
 //     const q = "DELETE from seating where id = ?"
+app.delete("/seat/:id", (req,res)=>{
+    const seatId = req.params.id;
+    const q = "DELETE from seating where event = ?"
+
+    db.query(q,[seatId], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Seats has been deleted!");
+    })
+})
 
 //     db.query(q,[seatId], (err,data)=>{
 //         if(err) return res.json(err)
@@ -597,6 +606,17 @@ app.post('/insertStudent', (req, res) => {
     })
   })
 
+  app.delete("/updateseat/:id", (req, res) => {
+    const eventid = req.params.id;
+    const q = "Delete seating SET name = IF(ISNULL(?),name), rowxcol = IF (ISNULL(?), rowxcol), color = IF (ISNULL(?), color)   WHERE event = ?";
+  
+    const values = [req.body.name, req.body.rowxcol,req.body.color];
+  
+    db.query(q, [...values, eventid], (err, data) => {
+      if (err) return res.json(err);
+      return res.json("Seating arrangment have been updated!");
+    });
+  });
   app.get("/seatingsearch/:id",(req,res)=>{
     const eventid = req.params.id;
 
@@ -608,6 +628,26 @@ app.post('/insertStudent', (req, res) => {
     })
   })
 
+  app.get("/seatingcategory/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    const q = "SELECT * FROM seating WHERE event = "+eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else {
+        return res.json(data);}
+    })
+  })
+
+  app.get("/seatingdata/",(req,res)=>{
+
+    const q = "SELECT * FROM seating";
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else {
+        return res.json(data);}
+    })
+  })
   app.get("/searchevent",(req,res)=> {
     const q = "SELECT * FROM event";
     db.query(q,(err,data)=>{

@@ -20,10 +20,12 @@ import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 const Students = () => {
   const [students, setStudents] = useState([]);
   const [awardFilters, setAwardFilters] = useState([]);
+  const navigate = useNavigate(); // Use useNavigate to navigate
+
   const [filter, setFilter] = useState('all');
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
@@ -90,10 +92,16 @@ const Students = () => {
     window.open('/FilterPage', '_blank');
     handleOptionsClose();
   };
+  const handleUpload = () =>
+  {
+    navigate(`/Excel/${eventid}`);
+  }
 
   const actions = [
     { icon: <CoPresentIcon />, name: 'Slide Show', onClick: handleFIlterClick },
     { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
+    { icon: <UploadFileIcon />, name: 'Upload Students', onClick: handleUpload },
+
   ];
 
   return (
@@ -189,11 +197,7 @@ const Students = () => {
           }
           .scroll {
             overflow-y:scroll;
-<<<<<<< Updated upstream
             height: 45vh;
-=======
-            height: 38vh;
->>>>>>> Stashed changes
           }
         `}
       </style>

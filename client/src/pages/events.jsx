@@ -122,9 +122,9 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
               <td>{event.time}</td>
               <td>
                 <Stack direction="column">
-                <Link to={`/Excel/${event.id}`} className="no-underline-link">
+                {/* <Link to={`/Excel/${event.id}`} className="no-underline-link">
                   Upload
-                </Link>
+                </Link> */}
                 <Link to={`/student/${event.id}`} className='no-underline-link'>
                   Student List
                 </Link>

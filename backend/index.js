@@ -294,9 +294,6 @@ app.get("/user",(req,res)=>{
   })
 })
 
-// app.delete("/seat/:id", (req,res)=>{
-//     const seatId = req.params.id;
-//     const q = "DELETE from seating where id = ?"
 app.delete("/seat/:id", (req,res)=>{
     const seatId = req.params.id;
     const q = "DELETE from seating where event = ?"
@@ -307,23 +304,7 @@ app.delete("/seat/:id", (req,res)=>{
     })
 })
 
-//     db.query(q,[seatId], (err,data)=>{
-//         if(err) return res.json(err)
-//         return res.json("Seats has been deleted!");
-//     })
-// })
 
-// app.put("/seat/:id", (req, res) => {
-//     const seatId = req.params.id;
-//     const q = "UPDATE seating SET seatcol = IFNULL(?, seatcol), year = IF (ISNULL(?), NULL, year) WHERE id = ?";
-  
-//     const values = [req.body.seatcol, req.body.year];
-  
-//     db.query(q, [...values, seatId], (err, data) => {
-//       if (err) return res.json(err);
-//       return res.json("Seats have been updated!");
-//     });
-//   });
   
 //updating student details
 app.put('/updateStudent/:id', (req, res) => {

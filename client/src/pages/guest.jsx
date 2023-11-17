@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import axios from 'axios';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { Typography, CircularProgress, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -9,6 +10,8 @@ import Divider from '@mui/material/Divider';
 
 
 const Guest = (props) => {
+    const location = useLocation();
+    const eventid = location.pathname.split("/")[2];
     const [data, setData] = useState('No result');
     const [isLoading, setIsLoading] = useState(true); // Add a loading state
     const navigate = useNavigate();
@@ -26,9 +29,9 @@ const Guest = (props) => {
                 value:String(result).replace(/^"|"$/g, ''),
                 writable:true
             }
-            console.log(resultText.value.length);
-            
-            if(resultText.length != 7) {
+            console.log("text length: "+resultText.value.length);
+            console.log("eventid:" + eventid);
+            if(resultText.value.length != 7) {
                 setIsLoading(false);
                 setData("Invalid Qr code" );
             }
@@ -36,12 +39,15 @@ const Guest = (props) => {
               try {
                 setIsLoading(true); // Set loading state to true
 
+                console.log(result.text);
+
                 const response = await axios.put("http://localhost:8800/attendance/" + result.text);
+               
                 console.log('Axios Response:', response.data);
 
                 // Insert admin number into the student and seatcol tables
-                await axios.post("http://localhost:8800/insertStudent", { adminNo: result.text });
-                await axios.post("http://localhost:8800/insertSeatcol", { adminNo: result.text });
+                await axios.post("http://localhost:8800/insertStudent/" + eventid, { adminNo: result.text});
+                // await axios.post("http://localhost:8800/insertSeatcol", { adminNo: result.text });
 
                 setData(result.text);
                 // Add a delay of 2 seconds (2000 milliseconds)
@@ -79,6 +85,7 @@ const Guest = (props) => {
                 >
                     <br></br>
                     <Typography variant="h4">Scan For Attendance</Typography>
+                   
                     <div style={{ width: 300 }}>
                         <QrReader
                             onResult={handleQrResult}

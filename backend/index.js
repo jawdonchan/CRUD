@@ -410,7 +410,7 @@ app.delete("/deleteUser/:id", (req,res)=>{
 //liheng - qr scanner
 app.put("/attendance/:id", (req, res) => {
     const adminNo = req.params.id;
-    const q = `UPDATE student SET Attendance = 'yes' WHERE adminNo = ${adminNo}`;
+    const q = `UPDATE students SET Attendance = 'yes' WHERE AdmNo = '${adminNo}'`;
     const completeQuery = q; // No need to replace '?' in this case
 
     // Log the complete SQL query
@@ -464,32 +464,72 @@ app.post("/api/login", (req, res) => {
 //     });
 //   });
 
-app.post('/insertStudent', (req, res) => {
-    const { adminNo } = req.body;
-    const firstTwoDigits = adminNo.slice(1, 3);
-    // Check the value of the student column added
-    let year = '';
-    if (firstTwoDigits === '21') {
-        year = 'year 1';
-    } else if (firstTwoDigits === '22') {
-        year = 'year 2';
-    } else if (firstTwoDigits === '23') {
-        year = 'year 3';
+// app.post('/insertStudent', (req, res) => {
+//     const { adminNo } = req.body;
+//     const { event } = req.body;
+//     // const firstTwoDigits = adminNo.slice(1, 3);
+//     // // Check the value of the student column added
+//     // let year = '';
+//     // if (firstTwoDigits === '21') {
+//     //     year = 'year 1';
+//     // } else if (firstTwoDigits === '22') {
+//     //     year = 'year 2';
+//     // } else if (firstTwoDigits === '23') {
+//     //     year = 'year 3';
+//     // }
+
+//     // Define the SQL query to insert a new student's admin number and year
+//     const insertQuery = 'INSERT INTO emcee (AdmNo, Event) VALUES (?, ?)';
+
+//     const values = [adminNo, event];
+
+//     db.query(insertQuery, values, (err, data) => {
+//         if (err) {
+//             console.error('Error inserting student:', err);
+//             return res.status(500).json({ error: 'Internal server error' });
+//         }
+//         return res.json('Student has been inserted!');
+//     });
+// });
+
+app.post('/insertStudent/:eventId', (req, res) => {
+  const { adminNo } = req.body;
+  const { eventId } = req.params;
+
+  // Check if the AdmNo already exists
+  const checkQuery = 'SELECT COUNT(*) AS count FROM emcee WHERE AdmNo = ?';
+  const checkValues = [adminNo];
+
+  db.query(checkQuery, checkValues, (checkErr, checkResults) => {
+    if (checkErr) {
+      console.error('Error checking AdmNo:', checkErr);
+      return res.status(500).json({ error: 'Internal server error' });
     }
 
-    // Define the SQL query to insert a new student's admin number and year
-    const insertQuery = 'INSERT INTO display (student, year) VALUES (?, ?)';
+    const rowCount = checkResults[0].count;
 
-    const values = [adminNo, year];
+    // If AdmNo exists, send a response indicating that the student is already registered
+    if (rowCount > 0) {
+      return res.json('Student already exists for this event.');
+    }
 
-    db.query(insertQuery, values, (err, data) => {
-        if (err) {
-            console.error('Error inserting student:', err);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-        return res.json('Student has been inserted!');
+    // AdmNo doesn't exist, proceed to insert
+    const insertQuery =
+      'INSERT INTO emcee (AdmNo, Event) VALUES (?, ?)';
+    const insertValues = [adminNo, eventId];
+
+    db.query(insertQuery, insertValues, (insertErr, insertData) => {
+      if (insertErr) {
+        console.error('Error inserting student:', insertErr);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      return res.json('Student has been inserted!');
     });
+  });
 });
+
+
   
   app.post('/insertSeatcol', (req, res) => {
     const { adminNo } = req.body;

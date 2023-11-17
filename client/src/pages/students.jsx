@@ -189,7 +189,11 @@ const Students = () => {
           }
           .scroll {
             overflow-y:scroll;
+<<<<<<< Updated upstream
             height: 45vh;
+=======
+            height: 38vh;
+>>>>>>> Stashed changes
           }
         `}
       </style>

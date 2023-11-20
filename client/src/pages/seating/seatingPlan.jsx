@@ -346,6 +346,7 @@ export default function Seating() {
         const backgroundColor = "gray";
         column.push(
           <div
+          onClick={()=> handleAnnotate(j+1+String.fromCharCode(65+i))}
             // onClick={() => handleOpenSeat(`${j + 1}${String.fromCharCode(65 + i)}`)}
             key={`seat-${divKey}`}
             className="seat"
@@ -353,7 +354,7 @@ export default function Seating() {
             style={{ backgroundColor }}
           >
             {`${j + 1}${String.fromCharCode(65 + i)}`}
-            <div className = "annotatediv"id = {`ann${j+1}${String.fromCharCode(65+i)}`} onClick={()=> handleAnnotate(j+1+String.fromCharCode(65+i))}></div>
+            <div className = "annotatediv"id = {`ann${j+1}${String.fromCharCode(65+i)}`} ></div>
           </div>
         );
       }

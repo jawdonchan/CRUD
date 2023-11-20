@@ -63,7 +63,7 @@ const MainPage = () => {
         <Button variant="contained" onClick={handleOpenModal}>
           Download Link
         </Button>
-      )}
+      )} 
 
       {userRole !== "Admin" && (
         <div>

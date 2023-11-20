@@ -56,10 +56,17 @@ export default function Seating() {
   }
 
   useEffect(() => {
-    console.log(usedeventid);
-    if(eventid !== undefined)
+    // console.log(usedeventid);
+    // console.log("eventid"+eventid);
+
+    if(eventid == "undefined")
     {
+      console.log("undefined");
       document.getElementById("plusbutton").style.display = "none";
+
+    }
+    else{
+
     }
     const fetchS = async () => {
       if (usedeventid !== undefined) {

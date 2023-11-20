@@ -17,7 +17,9 @@ export default function Navbar() {
   };
 
   const handleSeatingClick = () => {
-    navigate(`/chooseseating/${eventid}`);
+    // navigate(`/chooseseating/${eventid}`);
+    navigate(`/chooseseating/undefined`);
+
   };
 
   const handleStudentlistClick = (event) => {

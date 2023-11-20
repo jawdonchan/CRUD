@@ -495,8 +495,8 @@ export default function Seating() {
         <style>
           {`
           .annotatediv{
-            width:10px;
-            height:10px;
+            width:5px;
+            height:5px;
             border-radius:5px;
             z-index:2;
             position:relative;
@@ -547,8 +547,8 @@ export default function Seating() {
           }
 
           .seat {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;

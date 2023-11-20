@@ -114,6 +114,13 @@ h2,h3
   .default-style h3{
     font-size: 2.25rem;
   }
+  .style1 .tab-content{
+    margin: 9.5rem 0px 0rem 0px ;
+  }
+  .style1 .slick-dots
+  {
+    top: 15.5rem;
+  }
 }
 
 

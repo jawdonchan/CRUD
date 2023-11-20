@@ -57,6 +57,10 @@ export default function Seating() {
 
   useEffect(() => {
     console.log(usedeventid);
+    if(eventid !== undefined)
+    {
+      document.getElementById("plusbutton").style.display = "none";
+    }
     const fetchS = async () => {
       if (usedeventid !== undefined) {
         try {
@@ -405,7 +409,7 @@ export default function Seating() {
         <div className="category-annotations">
           {getCategoryAnnotations()}
         </div>
-        <div>
+        <div id = "plusbutton">
           <Fab
             className="floating"
             size="medium"
@@ -433,7 +437,7 @@ export default function Seating() {
               <ListItem button onClick={handleGuestClick}>
                 <ListItemText primary="Qr scanner" />
               </ListItem>
-              <ListItem button onClick={handleAddSeating}>
+              <ListItem button id = "savebtn"  onClick={handleAddSeating}>
                 <ListItemText primary="Save" />
               </ListItem>
 

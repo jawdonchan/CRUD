@@ -651,7 +651,7 @@ app.post('/insertStudent/:eventId', (req, res) => {
   app.get("/seatingsearch/:id",(req,res)=>{
     const eventid = req.params.id;
 
-    const q = "SELECT * FROM seating WHERE event = "+eventid;
+    const q = "SELECT * FROM event WHERE id = "+eventid +"and rowxcol is not null";
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {
@@ -689,6 +689,15 @@ app.post('/insertStudent/:eventId', (req, res) => {
   })
   app.get("/searcheventseat",(req,res)=> {
     const q = "SELECT * FROM event where rowxcol is not null";
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else return res.json(data);
+    })
+  })
+
+  app.get("/searcheventid/:id",(req,res)=> {
+    let id = req.params.id;
+    const q = `SELECT * FROM event where rowxcol is not null and (location like '%${id}%' or name like '%${id}%')`;
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else return res.json(data);

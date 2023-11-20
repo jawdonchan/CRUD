@@ -12,8 +12,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Annotations from './seatinglistannotation';
+import TextField from '@mui/material/TextField';
+
 
 const Seatinglist = () => {
+  const [search,setsearch] = useState("");
   const [eventlist,setEvent] = useState([]);
   const [seatingarrangement,setSeatingArrangment] = useState([]);
   const location = useLocation();
@@ -85,53 +88,80 @@ const Seatinglist = () => {
 
 
   useEffect(() => {
+    
+    if(eventid !== undefined)
+    {
+      var elems = document.getElementsByClassName('usebutton');
+      for (var i=0;i<elems.length;i+=1){
+      elems[i].style.display = 'none';
+      }
+
+    }
+
     const fetchSeating = async () => {
-      try {
-        const data = await axios.get(`http://localhost:8800/searcheventseat/`);
+      let data;
+      if(search != "")
+      {
+        data = await axios.get(`http://localhost:8800/searcheventid/${search}`);
+        setEvent(data.data);        
+
+      }
+      else{
+        try {
+        data = await axios.get(`http://localhost:8800/searcheventseat/`);
         setEvent(data.data);        
         // console.log("huh");
         // console.log(data.data);
+      
         
-        try{
-           const color = await axios.get(`http://localhost:8800/searchseating/`);
-        // console.log(color.data);
-        // console.log(color.data.length);        
-        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
-
-        for(let g = 0 ; g < color.data.length;g++){
-          // console.log("this is g" + g);
-          let index1ST = alphabet.indexOf( color.data[g].rowxcol.split(',')[1]) ;
-          let index2ND = alphabet.indexOf( color.data[g].rowxcol.split(',')[3]) +1;
-          // console.log(index1ST);
-          // console.log(index2ND);
-
-          for(let i = color.data[g].rowxcol.split(',')[0] ; i < color.data[g].rowxcol.split(',')[2];i++ )
-          {
-            for(let k = index1ST ; k < index2ND; k++)
-            {
-              // console.log(i+k);
-              let id = color.data[g].event+""+i+""+alphabet[k];
-              // console.log(id);
-              // console.log(color.data[g].color);
-              document.getElementById(id).style.backgroundColor = color.data[g].color;
-
-            }
-          }
-        }
-
-
-     
-      }
-      catch(err){
-        console.log(err);
-      }
       } catch (err) {
         console.log(err);
       }
+     }
+      
+      try{
+
+        for(let i = 0 ; i < eventlist.length ; i ++)
+        {
+           const color = await axios.get(`http://localhost:8800/seatingdata/${eventlist[i].id}`);
+     // console.log(color.data);
+     // console.log(color.data.length);        
+     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
+
+     for(let g = 0 ; g < color.data.length;g++){
+       // console.log("this is g" + g);
+       let index1ST = alphabet.indexOf( color.data[g].rowxcol.split(',')[1]) ;
+       let index2ND = alphabet.indexOf( color.data[g].rowxcol.split(',')[3]) +1;
+       // console.log(index1ST);
+       // console.log(index2ND);
+
+       for(let i = color.data[g].rowxcol.split(',')[0] ; i < color.data[g].rowxcol.split(',')[2];i++ )
+       {
+         for(let k = index1ST ; k < index2ND; k++)
+         {
+           // console.log(i+k);
+           let id = color.data[g].event+""+i+""+alphabet[k];
+           // console.log(id);
+           // console.log(color.data[g].color);
+           document.getElementById(id).style.backgroundColor = color.data[g].color;
+
+         }
+       }
+        }
+
+       
+     }
+
+
+  
+   }
+   catch(err){
+     console.log(err);
+   }
     };
 
     fetchSeating();
-  },[]);
+  },[search,eventlist]);
 
 
 
@@ -183,8 +213,10 @@ const Seatinglist = () => {
             <br></br>
             <br></br>
             <div>
-              <h1>Seating Arrangement</h1>
+            <TextField fullWidth label="Search" id="fullWidth"  value={search}
+            onChange={(e) => {setsearch(e.target.value);}}/>
             </div>
+            <br></br>
           </Stack>
         </Grid>
       </Grid>
@@ -224,8 +256,10 @@ const Seatinglist = () => {
                 <Stack direction="column" justifyContent="center"><Button variant="outlined" onClick={() => handleannoclick(event.id)}>Categories</Button>
                     <Stack id={`a${event.id}`} direction="column" justifyContent="start" alignItems="start" className = "annotate"></Stack></Stack>
                 </Stack>
-                <Stack direction = "row" justifyContent="start" alignItems="center"> 
-                    <Link to={`/seatingplan/${eventid}/${event.id}`} className="no-underline-link">Use</Link>
+                <Stack direction = "row" justifyContent="center" alignItems="center"> 
+                <div className="usebutton">
+                  <Link to={`/seatingplan/${eventid}/${event.id}`} className="no-underline-link">Use</Link>
+                </div>
                   </Stack> 
               </div>
                   <br></br><br></br>

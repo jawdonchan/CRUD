@@ -22,6 +22,7 @@ const Events = () => {
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
 
+
   useEffect(() => {
     const fetchALlEvents = async () => {
       try {

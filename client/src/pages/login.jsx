@@ -20,13 +20,25 @@ function Login() {
     try {
       const response = await axios.post("http://localhost:8800/api/login", { username, password });
       setMessage(response.data.message);
-      localStorage.setItem("username", username);
-      console.log("Stored username:", localStorage.getItem("username")); // Debugging line
+  
+      // Check if the response includes user information
+      if (response.data.user) {
+        const { username, role } = response.data.user;
+  
+        // Store username and role in sessionStorage
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("role", role);
+  
+        console.log("Stored username:", sessionStorage.getItem("username"));
+        console.log("Stored role:", sessionStorage.getItem("role"));
+      }
+  
       navigate('/events'); // Use navigate for programmatic navigation
     } catch (error) {
       setMessage("Login failed. Check your credentials.");
     }
   };
+  
 
   return (
     <div className="App">

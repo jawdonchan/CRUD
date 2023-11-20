@@ -126,7 +126,7 @@ const handleTabClick = (tab) => {
                   <div key={index}>
                     <h3>{student.FullName}</h3>
                     <h3>{student.AdmNo}</h3>
-                    <br></br><br></br>
+                    <br></br>
                     {/* Add more student data here */}
                   </div>
                 ))}

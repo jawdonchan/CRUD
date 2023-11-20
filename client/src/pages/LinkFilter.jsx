@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <h1>Welcome to the Home Page</h1>
+      <h1>Link Filter Page</h1>
       <label>Select a CSS Style:</label>
       <select value={selectedOption} onChange={handleOptionChange}>
         <option value="default">Default</option>

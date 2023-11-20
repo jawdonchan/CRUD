@@ -39,7 +39,7 @@ const MainPage = () => {
 
   useEffect(() => {
     // Check user role here, redirect or show error message as needed
-    if (userRole !== "admin") {
+    if (userRole !== "Admin") {
       // Redirect to another page or show an error message
       console.error("Access denied. User is not an admin.");
       // You can redirect using navigate('/some-other-page');
@@ -59,13 +59,13 @@ const MainPage = () => {
       <Navbar></Navbar>
       <h1>Excel Export Page</h1>
       
-      {userRole === "admin" && (
+      {userRole === "Admin" && (
         <Button variant="contained" onClick={handleOpenModal}>
           Download Link
         </Button>
       )}
 
-      {userRole !== "admin" && (
+      {userRole !== "Admin" && (
         <div>
           <p>Access denied. User is not an admin.</p>
           {/* You can redirect here as well if needed */}

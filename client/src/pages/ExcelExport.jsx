@@ -28,12 +28,23 @@
 // };
 
 // export default ExportStudentsToExcel;
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ExportModal from './ExportModal';
 import Navbar from './navigationbar';
+
 const MainPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const userRole = sessionStorage.getItem("role");
+
+  useEffect(() => {
+    // Check user role here, redirect or show error message as needed
+    if (userRole !== "admin") {
+      // Redirect to another page or show an error message
+      console.error("Access denied. User is not an admin.");
+      // You can redirect using navigate('/some-other-page');
+    }
+  }, [userRole]);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -48,13 +59,24 @@ const MainPage = () => {
       <Navbar></Navbar>
       <h1>Excel Export Page</h1>
       
-      <Button variant="contained" onClick={handleOpenModal}>
-       Download Link
-      </Button>
+      {userRole === "admin" && (
+        <Button variant="contained" onClick={handleOpenModal}>
+          Download Link
+        </Button>
+      )}
+
+      {userRole !== "admin" && (
+        <div>
+          <p>Access denied. User is not an admin.</p>
+          {/* You can redirect here as well if needed */}
+        </div>
+      )}
+
       <ExportModal isOpen={modalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
 
 export default MainPage;
+
 

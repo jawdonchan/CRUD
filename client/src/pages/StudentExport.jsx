@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'; // Import useHistory
 import axios from 'axios';
 import moment from 'moment';
 import Navbar from './navigationbar';
 import CircularProgress from '@mui/material/CircularProgress';
-import '../css/studentexport.css'
+import '../css/studentexport.css';
 
 const ExportStudentsToExcel = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,15 @@ const ExportStudentsToExcel = () => {
   }, []);
 
   const handleExportExcel = () => {
+    // Check if the user has the 'admin' role before exporting
+    const userRole = sessionStorage.getItem('role');
+    if (userRole !== 'Admin') {
+      console.log('Unauthorized access: Insufficient privileges');
+      // Handle unauthorized access (redirect to login page, show error message, etc.)
+      window.location.replace("http://localhost:3000/users");
+      return;
+    }
+
     setLoading(true);
 
     // Generate a timestamp in the format YYYY-MM-DD_HHMMSS
@@ -71,10 +81,8 @@ const ExportStudentsToExcel = () => {
         </div>
       ) : (
         <>
-          <div className='buttonstyle' style={{textAlign: 'center'}}>
-          <button onClick={handleExportExcel} >
-            Download Excel
-            </button>
+          <div className='buttonstyle' style={{ textAlign: 'center' }}>
+            <button onClick={handleExportExcel}>Download Excel</button>
           </div>
         </>
       )}

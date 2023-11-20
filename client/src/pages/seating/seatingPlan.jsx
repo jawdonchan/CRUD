@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Fab from '@mui/material/Fab';

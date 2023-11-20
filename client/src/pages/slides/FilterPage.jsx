@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
-import '../css/filterpage.css';
+import '../../css/filterpage.css';
 import { useLocation } from 'react-router-dom';
 
 const FilterPage = ({ match }) => {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Guests from './guest';
-import Login from './admin';
+import Guests from '../student/guest';
+import Login from '../admin';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Seats from './seats'; // Import the Seats component
-import Navbar from './navigationbar';
+import Seats from '../seating/seats'; // Import the Seats component
+import Navbar from '../navigationbar';
 import { createEvents } from '@react-three/fiber';
 
 export default function Choose() {

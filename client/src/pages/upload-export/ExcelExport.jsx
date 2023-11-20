@@ -31,7 +31,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ExportModal from './ExportModal';
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 
 const MainPage = () => {
   const [modalOpen, setModalOpen] = useState(false);

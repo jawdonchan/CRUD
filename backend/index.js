@@ -651,7 +651,7 @@ app.post('/insertStudent/:eventId', (req, res) => {
   app.get("/seatingsearch/:id",(req,res)=>{
     const eventid = req.params.id;
 
-    const q = "SELECT * FROM event WHERE id = "+eventid +"and rowxcol is not null";
+    const q = "SELECT * FROM event WHERE id = "+eventid +" and rowxcol is not null";
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {

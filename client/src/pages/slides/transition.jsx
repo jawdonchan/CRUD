@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useSpring, animated } from 'react-spring';
 import axios from 'axios';
-import '../css/transition.css';
+import '../../css/transition.css';
 
 function App() {
   const [students, setStudents] = useState([]);

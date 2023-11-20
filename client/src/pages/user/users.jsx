@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../css/seats.css';
-import Navbar from "./navigationbar";
+import '../../css/seats.css';
+import Navbar from "../navigationbar";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';

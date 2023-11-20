@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Seating from './seatingPlan';
+import Seating from './seating/seatingPlan';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Guest from './guest'; // Import your dashboard components here
-import Student from './students'; // Import your dashboard components here
+import Guest from './student/guest'; // Import your dashboard components here
+import Student from './student/students'; // Import your dashboard components here
 import Navbar from './navigationbar';
 export default function Dashboard() {
   const navigate = useNavigate();

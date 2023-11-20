@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate,useLocation } from 'react-router-dom';
-import Guests from './guest';
-import Login from './admin';
+import Guests from '../student/guest';
+import Login from '../admin';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Seats from './seats'; // Import the Seats component
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 import { createEvents } from '@react-three/fiber';
 import axios from 'axios';
 import { Alert } from '@mui/material';
@@ -25,7 +25,7 @@ export default function ChooseSeating() {
     try {
       const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
       console.log(res.data);
-      if(res.data != 0)
+      if(res.data.length != 0)
       {
 navigate(`/seatingplan/${eventid+"/"+eventid}`);      }
       else{

@@ -5,8 +5,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
-import "../css/styles.css"; // Import the CSS file
-import '../css/login.css';
+import "../../css/styles.css"; // Import the CSS file
+import '../../css/login.css';
 
 function Login() {
   const [username, setUsername] = useState("");

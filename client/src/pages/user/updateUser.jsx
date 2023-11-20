@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../css/update.css';
+import '../../css/update.css';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import RadioGroup from '@mui/material/RadioGroup';

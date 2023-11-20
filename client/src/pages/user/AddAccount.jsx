@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Stack, FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 
 const AddAccount = () => {
   const [account, setAccount] = useState({

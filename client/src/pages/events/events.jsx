@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../css/seats.css';
-import Navbar from "./navigationbar";
+import '../../css/seats.css';
+import Navbar from "../navigationbar";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
@@ -56,12 +56,14 @@ const Events = () => {
   };
 
   const handleSeat = async (id)  => {
+    console.log(id);
     try {
       const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
+      console.log("data length");
       console.log(res.data);
-      if(res.data != 0)
+      if(res.data > 0 )
       {
-navigate(`/seatingplan/${id+"/"+id}`);      }
+      navigate(`/seatingplan/${id+"/"+id}`);      }
       else{
         navigate(`/chooseseating/${id}`);
       }
@@ -93,13 +95,7 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
      <Navbar />
      <br></br>
       
-     <TextField  label="Search Event"
-        variant="outlined"
-        fullWidth
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
-        style={{ marginBottom: '20px' , marginTop: '20px' ,width: '50%'}}
-      />
+    
       <SpeedDial
         ariaLabel="SpeedDial openIcon example"
         icon={<SpeedDialIcon openIcon={<AddIcon />} />}
@@ -114,7 +110,13 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}
       </SpeedDial>
-      
+       <TextField  label="Search Event"
+        variant="outlined"
+        fullWidth
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
+        style={{ marginBottom: '20px' , marginTop: '20px' ,width: '28vw'}}
+      />
      
       <div className='scroll'>
 <table className='seats-table'>

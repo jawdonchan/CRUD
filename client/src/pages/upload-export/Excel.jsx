@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../css/excel.css';
+import '../../css/excel.css';
 
 const ExcelFileUpload = () => {
   const [file, setFile] = useState(null);

@@ -3,15 +3,14 @@ import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Link } from 'react-router-dom';
-import '../css/seats.css';
-import Navbar from './navigationbar';
+import '../../css/seats.css';
+import Navbar from '../navigationbar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import Annotations from './seatinglistannotation';
 import TextField from '@mui/material/TextField';
 
 
@@ -89,7 +88,7 @@ const Seatinglist = () => {
 
   useEffect(() => {
     
-    if(eventid !== undefined)
+    if(eventid == "undefined")
     {
       var elems = document.getElementsByClassName('usebutton');
       for (var i=0;i<elems.length;i+=1){
@@ -213,7 +212,7 @@ const Seatinglist = () => {
             <br></br>
             <br></br>
             <div>
-            <TextField fullWidth label="Search" id="fullWidth"  value={search}
+            <TextField fullWidth label="Search event name or location" id="fullWidth"  value={search}
             onChange={(e) => {setsearch(e.target.value);}}/>
             </div>
             <br></br>
@@ -222,7 +221,7 @@ const Seatinglist = () => {
       </Grid>
       <br></br>
       <div className='scroll'>
-        <Grid container direction = "row" justifyContent="space-around" alignItems="flex-start" spacing={{xd:2,md:3}}>
+        <Grid container direction = "row" justifyContent="space-evenly" alignItems="center" >
           {eventlist.map((event) => (
             
             <Grid item xs={4} >
@@ -307,7 +306,10 @@ const Seatinglist = () => {
             overflow-y:scroll;
             overflow-x: hidden;
             height: 63vh;
-            width: 100vw;
+            width: 95vw;
+            position:relative;
+            left:5vw;
+            padding:2px;
           }
           .seat {
             width: 5px;

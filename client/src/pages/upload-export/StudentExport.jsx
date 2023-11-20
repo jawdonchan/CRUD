@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 import axios from 'axios';
 import moment from 'moment';
-import Navbar from './navigationbar';
+import Navbar from '../navigationbar';
 import CircularProgress from '@mui/material/CircularProgress';
-import '../css/studentexport.css';
+import '../../css/studentexport.css';
 
 const ExportStudentsToExcel = () => {
   const [loading, setLoading] = useState(true);

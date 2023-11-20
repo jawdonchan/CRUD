@@ -1,28 +1,26 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Seats from "./pages/seats";
-import Add from "./pages/add";
-import Update from "./pages/update";
-import Student from "./pages/students";
-import Choose from './pages/Choose'; 
-import Admin from './pages/admin'; 
-import Guest from './pages/guest'; 
-import SeatingPlan from './pages/seatingPlan'; 
-import Login from './pages/login';
-import AddAccount from "./pages/AddAccount";
-import AddStudent from "./pages/addStudent";
-import UpdateStudent from "./pages/updateStudent";
-import Transition from "./pages/transition";
-import Users from "./pages/users";
-import FilterPage from "./pages/FilterPage";
-import LinkFilter from "./pages/LinkFilter";
-import UpdateUser from "./pages/updateUser";
-import CreateEvent from "./pages/createevent";
-import Events from "./pages/events.jsx";
-import Excel from "./pages/Excel";
-import ExcelExport from "./pages/ExcelExport";
-import StudentExport from "./pages/StudentExport";
-import ChooseSeating from "./pages/chooseseat.jsx";
-import Seatinglist from "./pages/seatinglist.jsx";
+import Seats from "./pages/seating/seats.jsx";
+import Add from "./pages/unknown/add.jsx";
+import Update from "./pages/seating/update";
+import Student from "./pages/student/students";
+import Choose from './pages/events/Choose'; 
+import Guest from './pages/student/guest'; 
+import SeatingPlan from './pages/seating/seatingPlan'; 
+import Login from './pages/user/login';
+import AddAccount from "./pages/user/AddAccount";
+import UpdateStudent from "./pages/student/updateStudent";
+import Transition from "./pages/slides/transition";
+import Users from "./pages/user/users";
+import FilterPage from "./pages/slides/FilterPage";
+import LinkFilter from "./pages/slides/LinkFilter";
+import UpdateUser from "./pages/user/updateUser";
+import CreateEvent from "./pages/events/createevent";
+import Events from "./pages/events/events.jsx";
+import Excel from "./pages/upload-export/Excel";
+import ExcelExport from "./pages/upload-export/ExcelExport";
+import StudentExport from "./pages/upload-export/StudentExport";
+import ChooseSeating from "./pages/seating/chooseseat.jsx";
+import Seatinglist from "./pages/seating/seatinglist.jsx";
 
 function App() {
   return (
@@ -34,7 +32,6 @@ function App() {
         <Route path="/update/:id" element={<Update/>}></Route>
         <Route path="/student/:id" element={<Student/>}></Route>
         <Route path="/choose" element={<Choose/>}></Route>
-        <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/guest/:id" element={<Guest/>}></Route>
         <Route path="/seatingplan" element={<SeatingPlan/>}></Route>
         <Route path="/seatingplan/:id" element={<SeatingPlan/>}></Route>
@@ -42,7 +39,7 @@ function App() {
         <Route path="/chooseseating/:id" element={<ChooseSeating/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/addaccount" element={<AddAccount/>}></Route>
-        <Route path="/addstudent" element={<AddStudent/>}></Route>
+        {/* <Route path="/addstudent" element={<AddStudent/>}></Route> */}
         <Route path="/updateStudent/:id" element={<UpdateStudent/>}></Route>
         <Route path="/seats" element={<Seats/>}></Route>
         <Route path="/seatingsearch/:id" element={<Seatinglist/>}></Route>

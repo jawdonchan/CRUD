@@ -92,7 +92,6 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
     <div>
      <Navbar />
      <br></br>
-     <h1>Events</h1>
       
      <TextField  label="Search Event"
         variant="outlined"
@@ -163,7 +162,7 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
     {`
           .scroll {
             overflow-y:scroll;
-            height:72vh;
+            height:65vh;
           }
 
           .floating{

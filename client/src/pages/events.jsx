@@ -14,10 +14,12 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
+import { TextField } from '@mui/material';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate(); // Use useNavigate to navigate
+  const [searchInput, setSearchInput] = useState('');
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
@@ -81,9 +83,23 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
     { icon: <EventIcon />, name: 'Create Event', onClick: handleFIlterClick },
     // Add more actions as needed
   ];
+//search bar
+  const filteredEvents = events.filter((event) =>
+  event.name.toLowerCase().includes(searchInput.toLowerCase())
+);
   return (
     <div>
      <Navbar />
+     <br></br>
+     <h1>Events</h1>
+      
+     <TextField  label="Search Event"
+        variant="outlined"
+        fullWidth
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
+        style={{ marginBottom: '20px' , marginTop: '20px' ,width: '50%'}}
+      />
       <SpeedDial
         ariaLabel="SpeedDial openIcon example"
         icon={<SpeedDialIcon openIcon={<AddIcon />} />}
@@ -98,9 +114,8 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}
       </SpeedDial>
-      <br></br>
-      <h1>Events</h1>
-      <br></br>
+      
+     
       <div className='scroll'>
 <table className='seats-table'>
         <thead>
@@ -114,7 +129,7 @@ navigate(`/seatingplan/${id+"/"+id}`);      }
           </tr>
         </thead>
         <tbody>
-          {events.map((event) => (
+          {filteredEvents.map((event) => (
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.location}</td>

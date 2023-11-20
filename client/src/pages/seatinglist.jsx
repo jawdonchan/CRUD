@@ -306,7 +306,7 @@ const Seatinglist = () => {
           .scroll {
             overflow-y:scroll;
             overflow-x: hidden;
-            height: 70vh;
+            height: 63vh;
             width: 100vw;
           }
           .seat {

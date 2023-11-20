@@ -500,7 +500,7 @@ export default function Seating() {
             border-radius:5px;
             z-index:2;
             position:relative;
-            right:2vw;
+            right:1vw;
             top:1vh;
           }
           .seating-plan{

@@ -24,24 +24,65 @@ const Seatinglist = () => {
   const [selectedSeat, setSelectedSeat] = useState(null); // New state for selected seat
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [catbutton,setcatbutton] = useState(false);
 
+  const handleannoclick = async (event) =>{
+    if(catbutton == false)
+    {
+      try{
+        const q = await  axios.get(`http://localhost:8800/seatingdata/${event}`);
+        console.log(q.data);
+        console.log(q.data.length);
+        for(let l = 0 ; l < q.data.length; l++)
+        {
+      
+            let og = document.getElementById(`a${q.data[l].event}`).innerHTML;
+            console.log("update"+og);
+            let newid = "ann" + q.data[l].name+l;
+          document.getElementById(`a${q.data[l].event}`).innerHTML = `${og}<div class = "gridanno"><div class = "annotatecircle" id = "${event}${q.data[l].name}"></div><div>${q.data[l].name}</div></div>`;
+          document.getElementById(`${event}${q.data[l].name}`).style.backgroundColor= q.data[l].color;
+            console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
+          
+        
+        }
+      }
 
+      catch(err){
+        console.log(err);
+      }
+      setcatbutton(true);
+    }
+    
+    else{
+      try{
+        const q = await  axios.get(`http://localhost:8800/seatingdata/${event}`);
+        console.log(q.data);
+        console.log(q.data.length);
+        for(let l = 0 ; l < q.data.length; l++)
+        {
+      
+            let og = document.getElementById(`a${q.data[l].event}`).innerHTML;
+            console.log("update"+og);
+            let newid = "ann" + q.data[l].name+l;
+          document.getElementById(`a${q.data[l].event}`).innerHTML = ``;
+            console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
+          
+        
+        }
+      }
 
+      catch(err){
+        console.log(err);
+      }
+      setcatbutton(false);
+    }
+  }
 
 
   const handleFabClick = (event) => {
     setFabAnchorEl(event.currentTarget);
   };
-  // const fetchSeats = async (endpoint) => {
-  //   console.log("fetching seating");
-  //   try {
-  //     const res = await axios.get(endpoint);
-  //     console.log("endpoint btw: " + endpoint);
-  //     // console.log(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+
 
   useEffect(() => {
     const fetchSeating = async () => {
@@ -78,27 +119,6 @@ const Seatinglist = () => {
           }
         }
 
-        try{
-              const q = await  axios.get(`http://localhost:8800/seatingdata/`);
-              console.log(q.data);
-              console.log(q.data.length);
-              for(let l = 0 ; l < q.data.length; l++)
-              {
-             
-                //   let og = document.getElementById(`a${q.data[l].event}`).innerHTML;
-                //    console.log("update"+og);
-                //    let newid = "ann" + q.data[l].name+l;
-                // document.getElementById(`a${q.data[l].event}`).innerHTML = `${og}<div>${q.data[l].name}</div>`;
-                // document.getElementById(`a${q.data[l].event}`).style.backgroundColor= q.data[l].color;
-                //   console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
-                
-               
-              }
-            }
-        
-            catch(err){
-              console.log(err);
-            }
 
      
       }
@@ -111,7 +131,7 @@ const Seatinglist = () => {
     };
 
     fetchSeating();
-  }, []);
+  },[]);
 
 
 
@@ -119,55 +139,6 @@ const Seatinglist = () => {
 
     navigate(`/seatingplan/${eventid}/${eid}`);
   };
-
-  // const createAnnotation = async (event) =>{      
-  //   const a = [];
-  //   try{
-  //     const q = await  axios.get(`http://localhost:8800/seatingdata/${event}`);
-  //     console.log(q.data);
-  //     for(let i = 0 ; i < q.data.length; i++)
-  //     {
-  //       a.push(
-  //         <Stack direction="row">
-  //           <div id={event+q.data[i].name}></div>
-  //           <div>{q.data[i].name}</div>
-  //         </Stack>
-  //       );
-  //     }
-  //   }
-
-  //   catch(err){
-  //     console.log(err);
-  //   }
-  //   return a;
-  // };
- 
-  // const createAnnotation = (event) => {
-  //   const [annotations, setAnnotations] = useState([]);
-  
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(`http://localhost:8800/seatingdata/${event}`);
-  //         const data = response.data;
-  
-  //         const annotationArray = data.map((item) => (
-  //           <div key={event + item.name}>
-  //             <div>{item.name}</div>
-  //           </div>
-  //         ));
-  
-  //         setAnnotations(annotationArray);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     };
-  
-  //     fetchData();
-  //   }, [event]); // useEffect will run whenever the 'event' prop changes
-  
-  //   return <div>{annotations}</div>;
-  // };
   
   const createSeatingPlan = (event,rowxcol) => {
     let rowncol = rowxcol.split(',');
@@ -226,33 +197,36 @@ const Seatinglist = () => {
               <Card key={event.id} sx={{ maxWidth: 350, minHeight: 60 }}>
               <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
                 <Stack direction = "row" alignItems="center" justifyContent="center">
-                    <Stack id={`a${event.id}`} className = "annotate"></Stack>
                   </Stack>
                   <div>                 
-
-                <Stack direction="column" spacing={3}>
+                <Stack direction="row" justifyContent="space-around">
+                  <Stack direction="column" spacing={3}>
                   
-                  <Stack direction = "row" justifyContent="center" alignItems="center"> 
+                  <Stack direction = "row" justifyContent="start" alignItems="start"> 
                     <label>Event name: </label>
                     <div>{event.name}</div>
                   </Stack>
-                  <Stack direction = "row" justifyContent="center" alignItems="center"> 
+                  <Stack direction = "row" justifyContent="start" alignItems="center"> 
                   <label>Event location: </label>
                   <div>{event.location}</div>
                   </Stack>
-                  <Stack direction = "row" justifyContent="center" alignItems="center"> 
+                  <Stack direction = "row" justifyContent="start" alignItems="center"> 
                   <label>Event date: </label>                 
                   <div>{event.date}</div>
                   </Stack>
-                  <Stack direction = "row" justifyContent="center" alignItems="center"> 
+                  <Stack direction = "row" justifyContent="start" alignItems="center"> 
                   <label>Event Time: </label>
                   <div>{event.time}</div>
                   </Stack>
-                  <Stack direction = "row" justifyContent="center" alignItems="center"> 
-                    <Link to={`/seatingplan/${eventid}/${event.id}`} className="no-underline-link">Use</Link>
-                  </Stack>
+                 
                   <Stack direction="column">{}</Stack>
                 </Stack>
+                <Stack direction="column" justifyContent="center"><Button variant="outlined" onClick={() => handleannoclick(event.id)}>Categories</Button>
+                    <Stack id={`a${event.id}`} direction="column" justifyContent="start" alignItems="start" className = "annotate"></Stack></Stack>
+                </Stack>
+                <Stack direction = "row" justifyContent="start" alignItems="center"> 
+                    <Link to={`/seatingplan/${eventid}/${event.id}`} className="no-underline-link">Use</Link>
+                  </Stack> 
               </div>
                   <br></br><br></br>
             </Card>
@@ -264,14 +238,24 @@ const Seatinglist = () => {
       </div>
           <style>
     {`
-
-
+          .gridanno{
+            display:flex;
+            align-items:flex-start;
+            gap:3px;
+          }
+          .annotatecircle{
+            width:15px;
+            height:15px;
+            border-radius:7px;
+            margin-top:6px;
+            margin-left:20px;
+          }
           .annotate{
 
-            z-index=3;
-            position:relative;
-            bottom:20vh;            
-            background:gray;
+            //z-index=3;
+            //position:relative;
+            //bottom:20vh;            
+            //background:gray;
             width:100px;
           }
           .seating-plan{

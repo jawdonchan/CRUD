@@ -49,6 +49,11 @@ export default function Seating() {
   const eventid = location.pathname.split("/")[2];
   const usedeventid = location.pathname.split("/")[3];
   
+  const handleAnnotate = (id) =>{
+    console.log("id" + id);
+    const newid = "ann"+id;
+    document.getElementById(newid).style.backgroundColor = "red";
+  }
 
   useEffect(() => {
     console.log(usedeventid);
@@ -330,13 +335,14 @@ export default function Seating() {
         const backgroundColor = "gray";
         column.push(
           <div
-            onClick={() => handleOpenSeat(`${j + 1}${String.fromCharCode(65 + i)}`)}
+            // onClick={() => handleOpenSeat(`${j + 1}${String.fromCharCode(65 + i)}`)}
             key={`seat-${divKey}`}
             className="seat"
             id={`${j + 1}${String.fromCharCode(65 + i)}`}
             style={{ backgroundColor }}
           >
             {`${j + 1}${String.fromCharCode(65 + i)}`}
+            <div className = "annotatediv"id = {`ann${j+1}${String.fromCharCode(65+i)}`} onClick={()=> handleAnnotate(j+1+String.fromCharCode(65+i))}></div>
           </div>
         );
       }
@@ -476,6 +482,15 @@ export default function Seating() {
 
         <style>
           {`
+          .annotatediv{
+            width:10px;
+            height:10px;
+            border-radius:5px;
+            z-index:2;
+            position:relative;
+            right:2vw;
+            top:1vh;
+          }
           .seating-plan{
             overflow:scroll;
             height:50vh;

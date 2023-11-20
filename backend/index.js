@@ -660,9 +660,10 @@ app.post('/insertStudent/:eventId', (req, res) => {
     })
   })
 
-  app.get("/seatingdata/",(req,res)=>{
+  app.get("/seatingdata/:id",(req,res)=>{
+    const eventid = req.params.id;
 
-    const q = "SELECT * FROM seating";
+    const q = `SELECT * FROM seating where event = ${eventid}`;
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {

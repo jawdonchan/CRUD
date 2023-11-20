@@ -29,9 +29,9 @@ export default function Navbar() {
   };
 
   const handleLogoutClick = () => {
-    localStorage.removeItem('username');
-
-    if (!localStorage.getItem('username')) {
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
+    if (!sessionStorage.getItem('username')) {
       navigate('/login');
     }
   };

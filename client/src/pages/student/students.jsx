@@ -89,12 +89,13 @@ const Students = () => {
 
   const handleFIlterClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/FilterPage', '_blank');
+    window.open('/LinkFilter', '_blank');
     handleOptionsClose();
   };
   const handleUpload = () =>
   {
     navigate(`/Excel/${eventid}`);
+
   }
 
   const actions = [

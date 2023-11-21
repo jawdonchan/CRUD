@@ -24,7 +24,7 @@ const Users = () => {
       try {
         const res = await axios.get("http://localhost:8800/accounts");
         setUsers(res.data);
-        console.log("users get : " + res.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -112,16 +112,16 @@ const Users = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.idaccounts}>
+            <tr key={user.id}>
               <td>{user.username}</td>
               <td>{user.role}</td>
               <td>
-                <Link to={`/updateUser/${user.idaccounts}`} className="no-underline-link">
+                <Link to={`/updateUser/${user.id}`} className="no-underline-link">
                   Update
                 </Link>
               </td>
               <td>
-                <Button onClick={() => handleDeleteUser(user.idaccounts)}>
+                <Button onClick={() => handleDeleteUser(user.id)}>
                   Delete
                 </Button>
                 

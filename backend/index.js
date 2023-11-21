@@ -294,6 +294,15 @@ app.get("/user",(req,res)=>{
   })
 })
 
+app.get("/user/:id",(req,res)=>{
+  let userid = req.params.id;
+  const q  = "Select * from users where id = "+ userid;
+  db.query(q,(err,data)=>{
+    if(err) return res.json(res)
+    return res.json(data)
+  })
+})
+
 app.delete("/seat/:id", (req,res)=>{
     const seatId = req.params.id;
     const q = "DELETE from seating where event = ?"
@@ -583,6 +592,30 @@ app.post('/insertStudent/:eventId', (req, res) => {
         }
     })
   })
+
+  app.put('/updateEvent/:id', (req, res) => {
+    const eventid = req.params.id;
+    const { name, location, date,time } = req.body;
+
+    // Define the SQL query to update student information with IFNULL
+    const updateQuery = `UPDATE event
+                          SET
+                            name = IFNULL(?, name),
+                            location = IFNULL(?, location),
+                            date = IFNULL(?, date),
+                            time = IFNULL(?,time)
+                          WHERE id = ?`;
+
+    const values = [name, location, date, time,eventid];
+
+    db.query(updateQuery, values, (err, data) => {
+      if (err) {
+        console.error('Error updating event:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      return res.json('Event has been updated!');
+    });
+});
 
   app.delete("/deleteEvent/:id", (req,res)=>{
     const eventid = req.params.id;

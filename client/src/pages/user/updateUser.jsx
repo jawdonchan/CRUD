@@ -26,7 +26,7 @@ const UpdateUser = () => {
         const userData = response.data;
         console.log("User data");
         console.log(userData);
-        setUser(userData);
+        setUser(userData[0]);
       } catch (error) {
         console.error(error);
       }

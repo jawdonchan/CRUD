@@ -139,9 +139,9 @@ const Events = () => {
               <td>{event.time}</td>
               <td>
                 <Stack direction="column">
-                {/* <Link to={`/Excel/${event.id}`} className="no-underline-link">
-                  Upload
-                </Link> */}
+                <Link to={`/updateevent/${event.id}`} className="no-underline-link">
+                  Update details
+                </Link>
                 <Link to={`/student/${event.id}`} className='no-underline-link'>
                   Student List
                 </Link>

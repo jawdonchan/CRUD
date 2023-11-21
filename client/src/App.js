@@ -21,6 +21,7 @@ import ExcelExport from "./pages/upload-export/ExcelExport";
 import StudentExport from "./pages/upload-export/StudentExport";
 import ChooseSeating from "./pages/seating/chooseseat.jsx";
 import Seatinglist from "./pages/seating/seatinglist.jsx";
+import UpdateEvent from "./pages/events/updateEvent.jsx"
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/events" element={<Choose/>}></Route>
         <Route path="/createevent" element={<CreateEvent/>}></Route>
         <Route path="/event" element={<Events/>}></Route>
+        <Route path="/updateevent/:id" element={<UpdateEvent/>}></Route>
         <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
         <Route path="/Excel/:id" element={<Excel/>}></Route>
         <Route path="/ExcelExport" element={<ExcelExport/>}></Route>

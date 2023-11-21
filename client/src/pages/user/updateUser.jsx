@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Navbar from '../navigationbar';
 
 const UpdateUser = () => {
   const [user, setUser] = useState({
@@ -18,6 +19,7 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userId = location.pathname.split("/")[2];
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -62,7 +64,9 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="update-form">
+    <div>
+      <Navbar/>
+      <div className="update-form">
       <h1>Update User</h1>
       <div>
         <div>
@@ -116,6 +120,8 @@ const UpdateUser = () => {
         Update
       </button>
     </div>
+    </div>
+   
   );
 };
 

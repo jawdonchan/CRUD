@@ -12,6 +12,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Denied from '../user/access-denied';
+var hash = require('object-hash');
+
 
 
 const Users = () => {
@@ -21,10 +23,21 @@ const Users = () => {
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const userRole = sessionStorage.getItem("role");
+  const [hashed,setHash] = useState([]);
+
   useEffect(() => {
+    setHash(hash.MD5("Admin"));
     const fetchAllUsers = async () => {
-      try {
-        const res = await axios.get("http://localhost:8800/accounts");
+      try { 
+        let res; 
+        if(userRole === hashed)
+        {
+         res= await axios.get("http://localhost:8800/accounts");
+        }
+        else{
+        res = await axios.get("http://localhost:8800/accountsteacher");
+
+        }
         setUsers(res.data);
         console.log(res.data);
       } catch (err) {
@@ -104,7 +117,7 @@ const Users = () => {
       <h1>Users</h1>
         <br></br>
       {/* || userRole === "user" */}
-      {userRole === "Admin"  && (
+      {userRole === hashed  && (
        
         <div className='scroll'>
 <table className='seats-table'>

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import "../../css/styles.css"; // Import the CSS file
 import '../../css/login.css';
+var hash = require('object-hash');
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -29,9 +30,9 @@ function Login() {
 
       if (response.data.user) {
         const { username, role } = response.data.user;
-
+        const newrole= hash.MD5(role);
         sessionStorage.setItem("username", username);
-        sessionStorage.setItem("role", role);
+        sessionStorage.setItem("role", newrole);
 
         console.log("Stored username:", sessionStorage.getItem("username"));
         console.log("Stored role:", sessionStorage.getItem("role"));

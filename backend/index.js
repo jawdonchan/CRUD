@@ -293,6 +293,13 @@ app.get("/user",(req,res)=>{
     return res.json(data)
   })
 })
+app.get("/userteacher",(req,res)=>{
+  const q  = "Select * from users where role != 'Teacher'"
+  db.query(q,(err,data)=>{
+    if(err) return res.json(res)
+    return res.json(data)
+  })
+})
 
 app.get("/user/:id",(req,res)=>{
   let userid = req.params.id;
@@ -361,6 +368,20 @@ app.get("/accounts",(req,res)=> {
   })
 })
 
+app.get("/accountsteacher",(req,res)=> {
+  const q = "select id,username,role from users where role == 'Student'"
+  db.query(q,(err,data) => {
+    if(err) {
+      console.log(err);
+      return res.json(err);
+    }
+    else{
+      console.log(data);
+      return res.json(data)
+    }
+  })
+})
+
 
 
 
@@ -392,7 +413,7 @@ app.put('/updateUser/:id', (req, res) => {
                           username = IFNULL(?, username),
                           password = IFNULL(?, password),
                           role = IFNULL(?, role)
-                        WHERE idaccounts = ?`;
+                        WHERE id = ?`;
 
   const values = [username, password, role, userID];
 

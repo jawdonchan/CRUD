@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/update.css';
 import Stack from '@mui/material/Stack';
 import { TextField } from '@mui/material';
+import Navbar from "../navigationbar";
 
 const UpdateEvent = () => {
   const [event, setevent] = useState({
@@ -61,8 +62,12 @@ const UpdateEvent = () => {
     }
   };
 
+
   return (
-    <div className="update-form">
+    <div>
+      <Navbar/>
+          <div className="update-form">
+
       <h1>Update Event</h1>
       <div>
         <div>            
@@ -114,6 +119,8 @@ const UpdateEvent = () => {
         Update
       </button>
     </div>
+    </div>
+
   );
 };
 

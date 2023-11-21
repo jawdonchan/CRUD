@@ -15,6 +15,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { TextField } from '@mui/material';
+var hash = require('object-hash');
+
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -23,9 +25,13 @@ const Events = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
+  const userRole = sessionStorage.getItem("role");
+  const [hashed,setHash] = useState([]);
 
 
   useEffect(() => {
+    setHash(hash.MD5("Admin"));
+
     const fetchALlEvents = async () => {
       try {
         const res = await axios.get("http://localhost:8800/events");
@@ -36,7 +42,7 @@ const Events = () => {
       }
     };
     fetchALlEvents();
-  }, []);
+  }, [userRole]);
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
@@ -97,6 +103,7 @@ const Events = () => {
       
     
       <SpeedDial
+      className='hidden'
         ariaLabel="SpeedDial openIcon example"
         icon={<SpeedDialIcon openIcon={<AddIcon />} />}
         onClose={handleOptionsClose}
@@ -139,18 +146,24 @@ const Events = () => {
               <td>{event.time}</td>
               <td>
                 <Stack direction="column">
-                <Link to={`/updateevent/${event.id}`} className="no-underline-link">
+                  {userRole === hashed && (<div className ="hidden"> <Link  to={`/updateevent/${event.id}`} className="no-underline-link">
                   Update details
-                </Link>
+                </Link></div>)}
+                  
+               
                 <Link to={`/student/${event.id}`} className='no-underline-link'>
                   Student List
                 </Link>
                 <Button onClick={() => handleSeat(event.id)} className='no-underline-link'>
                   Seating Plan
                 </Button>
-                <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
+                {userRole === hashed && (
+                <div className = "hidden">
+                    <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
                   Delete
                 </Button>
+                </div>)}
+              
                 </Stack>
                
               </td>

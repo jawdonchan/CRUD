@@ -67,7 +67,7 @@ const UpdateEvent = () => {
       <div>
         <div>            
           <label>Name:</label>
-          <Stack direction='row' >
+          <Stack direction='row' justifyContent={"center"} alignContent={"center"}>
             <TextField
               type="text"
               name="name"
@@ -79,7 +79,7 @@ const UpdateEvent = () => {
         </div>
         <div>            
           <label>Location:</label>
-          <Stack direction='row' >
+          <Stack direction='row' justifyContent={"center"} alignContent={"center"}>
             <TextField
               type="text"
               name="location"
@@ -91,13 +91,13 @@ const UpdateEvent = () => {
         </div>
         <div>            
           <label>Date:</label>
-          <Stack direction="row">
+          <Stack direction='row' justifyContent={"center"} alignContent={"center"}>
           <input type="date" name="date" value = {event.date}onChange={handleChange}/>
           </Stack>
         </div>
         <div>            
           <label>Time:</label>
-          <Stack direction='row' justifyContent={"flex-end"}>
+          <Stack direction='row' justifyContent={"center"} alignContent={"center"}>
             <TextField
               type="text"
               name="time"

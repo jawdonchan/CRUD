@@ -9,28 +9,27 @@ import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Link } from 'react-router-dom';
 import '../../css/seats.css';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import Popover from '@mui/material/Popover';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Navbar from '../navigationbar';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+var hash = require('object-hash');
+
 const Students = () => {
   const [students, setStudents] = useState([]);
   const [awardFilters, setAwardFilters] = useState([]);
   const navigate = useNavigate(); // Use useNavigate to navigate
-
+  const [studentrole,setstudentrole] = useState([]);
   const [filter, setFilter] = useState('all');
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const location = useLocation();
   const eventid = location.pathname.split("/")[2];
+  const userRole = sessionStorage.getItem("role");
+
 
   const fetchStudents = async (endpoint) => {
     console.log("fetching students");
@@ -45,6 +44,8 @@ const Students = () => {
   };
 
   useEffect(() => {
+    setstudentrole(hash.MD5("Student"));
+
     const fetchAwardFilters = async () => {
       try {
         const awardFilterRes = await axios.get(`http://localhost:8800/studentawardfilter/${eventid}`);
@@ -105,6 +106,11 @@ const Students = () => {
 
   ];
 
+  const modifiedactions = [
+    { icon: <CoPresentIcon />, name: 'Slide Show', onClick: handleFIlterClick },
+    { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
+  ]
+
   return (
     <div>
       <Navbar />
@@ -118,7 +124,13 @@ const Students = () => {
         FabProps={{ ref: setFabAnchorEl }}
         style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
       >
-        {actions.map((action) => (
+        {studentrole == userRole && 
+          modifiedactions.map((action) => (
+            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
+          ))
+          }
+        { studentrole != userRole &&
+        actions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}
       </SpeedDial>

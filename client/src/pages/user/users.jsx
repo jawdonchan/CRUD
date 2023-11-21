@@ -11,6 +11,8 @@ import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Denied from '../user/access-denied';
+
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -18,7 +20,7 @@ const Users = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
-
+  const userRole = sessionStorage.getItem("role");
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
@@ -61,6 +63,7 @@ const Users = () => {
 
   return (
     <div>
+      
       <Fab
             className="floating"
             size="medium"
@@ -70,7 +73,7 @@ const Users = () => {
           >
             <AddIcon />
           </Fab>
-
+  
           <Popover
             open={isOptionsOpen}
             anchorEl={fabAnchorEl}
@@ -99,8 +102,11 @@ const Users = () => {
       <Navbar></Navbar>
       <br></br>
       <h1>Users</h1>
-      <br></br>
-      <div className='scroll'>
+        <br></br>
+      {/* || userRole === "user" */}
+      {userRole === "Admin"  && (
+       
+        <div className='scroll'>
 <table className='seats-table'>
         <thead>
           <tr>
@@ -131,6 +137,15 @@ const Users = () => {
         </tbody>
       </table>
       </div>
+      )}
+       {userRole !== "Admin" && (
+        <div>
+          {/* <p>Access denied. User is not an admin.</p> */}
+          <Denied></Denied>
+          {/* You can redirect here as well if needed */}
+        </div>
+      )}
+      
       <style>
     {`
           .scroll {

@@ -36,7 +36,7 @@ export default function Navbar() {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('role');
     if (!sessionStorage.getItem('username')) {
-      navigate('/login');
+      navigate('/');
     }
   };
 

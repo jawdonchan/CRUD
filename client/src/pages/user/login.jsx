@@ -34,8 +34,8 @@ function Login() {
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("role", newrole);
 
-        console.log("Stored username:", sessionStorage.getItem("username"));
-        console.log("Stored role:", sessionStorage.getItem("role"));
+        // console.log("Stored username:", sessionStorage.getItem("username"));
+        // console.log("Stored role:", sessionStorage.getItem("role"));
 
         // Set login state to trigger animation
         setIsLoggedIn(true);

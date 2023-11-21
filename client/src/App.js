@@ -22,6 +22,7 @@ import StudentExport from "./pages/upload-export/StudentExport";
 import ChooseSeating from "./pages/seating/chooseseat.jsx";
 import Seatinglist from "./pages/seating/seatinglist.jsx";
 import UpdateEvent from "./pages/events/updateEvent.jsx"
+import AccessDenied from "./pages/user/access-denied.jsx"
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/Excel/:id" element={<Excel/>}></Route>
         <Route path="/ExcelExport" element={<ExcelExport/>}></Route>
         <Route path="/StudentExport" element={<StudentExport/>}></Route>
+        <Route path="/AccessDenied" element={<AccessDenied/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

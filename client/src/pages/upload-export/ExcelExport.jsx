@@ -32,7 +32,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ExportModal from './ExportModal';
 import Navbar from '../navigationbar';
-
+import Denied from '../user/access-denied';
 const MainPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = sessionStorage.getItem("role");
@@ -67,7 +67,8 @@ const MainPage = () => {
 
       {userRole !== "Admin" && (
         <div>
-          <p>Access denied. User is not an admin.</p>
+          {/* <p>Access denied. User is not an admin.</p> */}
+          <Denied></Denied>
           {/* You can redirect here as well if needed */}
         </div>
       )}

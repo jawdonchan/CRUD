@@ -30,7 +30,7 @@ const Users = () => {
     const fetchAllUsers = async () => {
       try { 
         let res; 
-        if(userRole === hashed)
+        if(userRole == hashed)
         {
          res= await axios.get("http://localhost:8800/accounts");
         }

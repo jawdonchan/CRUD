@@ -369,7 +369,7 @@ app.get("/accounts",(req,res)=> {
 })
 
 app.get("/accountsteacher",(req,res)=> {
-  const q = "select id,username,role from users where role == 'Student'"
+  const q = "select id,username,role from users where role = 'Student'"
   db.query(q,(err,data) => {
     if(err) {
       console.log(err);

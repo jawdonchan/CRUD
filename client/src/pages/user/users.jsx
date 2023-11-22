@@ -27,6 +27,8 @@ const Users = () => {
 
   useEffect(() => {
     setHash(hash.MD5("Admin"));
+    console.log("hashed role : " + hashed);
+    console.log("og role : " + userRole); 
     const fetchAllUsers = async () => {
       try { 
         let res; 
@@ -45,7 +47,7 @@ const Users = () => {
       }
     };
     fetchAllUsers();
-  }, []);
+  }, [hashed]);
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
@@ -151,7 +153,7 @@ const Users = () => {
       </table>
       </div>
       )}
-       {userRole !== "Admin" && (
+       {userRole !== hashed && (
         <div>
           {/* <p>Access denied. User is not an admin.</p> */}
           <Denied></Denied>

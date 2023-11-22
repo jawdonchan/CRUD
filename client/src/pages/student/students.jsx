@@ -124,12 +124,12 @@ const Students = () => {
         FabProps={{ ref: setFabAnchorEl }}
         style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
       >
-        {studentrole == userRole && 
+        {studentrole === userRole && 
           modifiedactions.map((action) => (
             <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
           ))
           }
-        { studentrole != userRole &&
+        { studentrole !== userRole &&
         actions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}

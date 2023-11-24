@@ -138,6 +138,66 @@ export default function Seating() {
     setOpen(false);
   };
 
+ 
+  const mouseenter = (index)=>{
+      for (let i  = 0 ; i < categories.length ; i ++) {
+        let category = categories[i];
+        console.log(category);
+        if (category.range != null) {
+          console.log(category.range);
+          const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
+          const range = category.range.split(',');
+    
+          for (let g = range[0]; g <= range[2]; g++) {
+            console.log("for loop 1 " + range[0]);
+            for (let k = alphabet.indexOf(range[1]); k <= alphabet.indexOf(range[3]); k++) {
+              let id = g + alphabet[k];
+              console.log(id);
+              if(index == id)
+              {
+                
+                let annoid = "category"+i;
+                console.log("found it"+annoid);
+                document.getElementById(annoid).style["boxShadow"] = "0 0 5px #999999";
+
+              }
+            }
+          }
+        }
+    
+      }
+
+  };
+
+  const mouseleave = (index)=>{
+    for (let i  = 0 ; i < categories.length ; i ++) {
+      let category = categories[i];
+      console.log(category);
+      if (category.range != null) {
+        console.log(category.range);
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';
+        const range = category.range.split(',');
+  
+        for (let g = range[0]; g <= range[2]; g++) {
+          console.log("for loop 1 " + range[0]);
+          for (let k = alphabet.indexOf(range[1]); k <= alphabet.indexOf(range[3]); k++) {
+            let id = g + alphabet[k];
+            console.log(id);
+            if(index == id)
+            {
+              
+              let annoid = "category"+i;
+              console.log("found it"+annoid);
+              document.getElementById(annoid).style["boxShadow"] = "";
+
+            }
+          }
+        }
+      }
+  
+    }
+
+};
   const handleRowsChange = (event) => {
     setRows(event.target.value);
   };
@@ -312,7 +372,7 @@ export default function Seating() {
 
   const getCategoryAnnotations = () => {
     return categories.map((category, index) => (
-      <div key={`annotation-${index}`} className="category-annotation">
+      <div id = {`category${index}`} key={`annotation-${index}`} className="category-annotation">
         <Stack
         direction="column"
         alignContent='center'
@@ -346,6 +406,10 @@ export default function Seating() {
         const backgroundColor = "gray";
         column.push(
           <div
+          onMouseEnter={() => mouseenter(j+1+String.fromCharCode(65+i))}
+         
+         onMouseLeave={() => mouseleave(j+1+String.fromCharCode(65+i))}
+
           onClick={()=> handleAnnotate(j+1+String.fromCharCode(65+i))}
             // onClick={() => handleOpenSeat(`${j + 1}${String.fromCharCode(65 + i)}`)}
             key={`seat-${divKey}`}
@@ -503,10 +567,16 @@ export default function Seating() {
             right:1vw;
             top:1vh;
           }
+
           .seating-plan{
             overflow:scroll;
             height:50vh;
             width:95vw;
+          }
+
+
+          .seating-plan::-webkit-scrollbar {
+            display:none;
           }
           .floating{
             position:fixed;
@@ -517,8 +587,19 @@ export default function Seating() {
             display: flex;
             justify-content: center;
             gap: 15px;
+            overflow:auto;
+            width:100vw;
+            padding:5px;
+
+          }
+          .category-annotations::-webkit-scrollbar{
+            display:none;
           }
 
+          .category-annotation{
+            border-radius:5px;
+            padding:5px;
+          }
           .seating-plan {
             display: flex;
             margin-top: 20px;

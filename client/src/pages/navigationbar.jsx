@@ -10,6 +10,7 @@ var hash = require('object-hash');
 export default function Navbar() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [hashRole,sethashrole] = useState('90eb20f1400db82ab874744e47836dc6');
   const location = useLocation();
   const eventid = location.pathname.split("/")[2];
   const userRole = sessionStorage.getItem("role");
@@ -45,14 +46,12 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-   const hashRole = hash.MD5("Admin");
+   sethashrole(hash.MD5("Admin"));
     if(userRole !== hashRole)
     {
       document.getElementById("hiddennav").style.display = "none";
-      
-
     }
-  },[userRole])
+  },[userRole,userRole])
 
   return (
     <AppBar position="static">

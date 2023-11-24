@@ -129,12 +129,12 @@ const Seatinglist = () => {
 
      for(let g = 0 ; g < color.data.length;g++){
        // console.log("this is g" + g);
-       let index1ST = alphabet.indexOf( color.data[g].rowxcol.split(',')[1]) ;
+       let index1ST = alphabet.indexOf( color.data[g].rowxcol.split(',')[1]);
        let index2ND = alphabet.indexOf( color.data[g].rowxcol.split(',')[3]) +1;
        // console.log(index1ST);
        // console.log(index2ND);
 
-       for(let i = color.data[g].rowxcol.split(',')[0] ; i < color.data[g].rowxcol.split(',')[2];i++ )
+       for(let i = color.data[g].rowxcol.split(',')[0] ; i <= color.data[g].rowxcol.split(',')[2];i++ )
        {
          for(let k = index1ST ; k < index2ND; k++)
          {
@@ -283,13 +283,20 @@ const Seatinglist = () => {
             margin-top:6px;
             margin-left:20px;
           }
-          .annotate{
 
-            //z-index=3;
+          .annotate{
+            overflow:auto;
+            max-height:28vh;
+            max-width: 22vw;
+            z-index=3;
             //position:relative;
             //bottom:20vh;            
             //background:gray;
             width:100px;
+          }
+
+          .annotate::-webkit-scrollbar{
+            display:none;
           }
           .seating-plan{
             position:relative;

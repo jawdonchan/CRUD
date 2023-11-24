@@ -27,8 +27,8 @@ const Users = () => {
 
   useEffect(() => {
     setHash(hash.MD5("Admin"));
-    console.log("hashed role : " + hashed);
-    console.log("og role : " + userRole); 
+    // console.log("hashed role : " + hashed);
+    // console.log("og role : " + userRole); 
     const fetchAllUsers = async () => {
       try { 
         let res; 

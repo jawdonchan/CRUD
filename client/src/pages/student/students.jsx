@@ -90,8 +90,10 @@ const Students = () => {
 
   const handleFIlterClick = () => {
     // Handle the first option - Open in a new tab
-    window.open('/LinkFilter', '_blank');
-    handleOptionsClose();
+    // window.open('/LinkFilter', '_blank');
+    // handleOptionsClose();
+
+    navigate(`/LinkFilter/${eventid}`);
   };
   const handleUpload = () =>
   {

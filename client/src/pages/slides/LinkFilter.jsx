@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useLocation} from 'react-router-dom';
 import Navbar from "../navigationbar";
+
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState('default'); // Default CSS style option
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+  const location = useLocation();
+  const eventId = location.pathname.split("/")[2];
+  const handleGoToFilterPage = () => {
+    // Get the event ID from the URL parameters
+   
+
+    // Store the event ID in session storage
+    if (eventId) {
+      sessionStorage.setItem('eventId', eventId);
+    } else {
+      console.error('Event ID not found in URL parameters.');
+    }
   };
 
   return (
@@ -19,7 +33,8 @@ const Home = () => {
         <option value="style2">Style 2</option>
         {/* Add more style options here */}
       </select>
-      <Link to={`/FilterPage?style=${selectedOption}`}>
+      {/* Add onClick handler to store the event ID in session storage before navigating */}
+      <Link to={`/FilterPage?style=${selectedOption}`} onClick={handleGoToFilterPage}>
         <button>Go to Filter Page</button>
       </Link>
     </div>

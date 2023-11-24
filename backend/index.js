@@ -295,6 +295,16 @@ app.get("/students", (req,res)=>{
     })
 })
 
+//filter students based on events
+app.get("/students/:id", (req,res)=>{
+  let studid = req.params.id;
+  const q = "SELECT * from students where Event = " + studid
+  db.query(q,(err,data)=>{
+      if(err) return res.json(err)
+      return res.json(data)
+  })
+})
+
 app.get("/user",(req,res)=>{
   const q  = "Select * from users"
   db.query(q,(err,data)=>{

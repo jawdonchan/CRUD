@@ -11,6 +11,7 @@ const FilterPage = ({ match }) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const style = queryParams.get('style'); 
+  const eventId = sessionStorage.getItem('eventId');
   //tab
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
@@ -50,7 +51,7 @@ const handleTabClick = (tab) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/students');
+        const response = await axios.get(`http://localhost:8800/students/${eventId}`);
         setStudentData(response.data);
       } catch (error) {
         console.error('Error fetching student data:', error);

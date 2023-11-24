@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import "../../css/styles.css"; // Import the CSS file
 import '../../css/login.css';
+import SphereAnimation from '../sphere';
 var hash = require('object-hash');
 
 function Login() {
@@ -54,19 +55,22 @@ function Login() {
     <div className={`AppLogin ${isLoggedIn ? "fade-out" : ""}`}>
       <Stack spacing={5} alignItems="center">
         <br />
+        {/* <SphereAnimation /> */}
         <Typography variant="h4">Login Page</Typography>
         <br />
         <form className="loginform" onSubmit={handleLogin}>
           <Stack spacing={3} alignItems="center">
-            <TextField className="usernamef"
+            <TextField
+              className="usernamef"
               required
               id="outlined-required"
               label="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-
-            <TextField className="passwordf"
+  
+            <TextField
+              className="passwordf"
               id="outlined-password-input"
               label="Password"
               type="password"
@@ -75,18 +79,20 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Stack direction="row" spacing={8}>
-              <Button className="guestbtn"  onClick={handleGuestClick}>Guest</Button>
+              <Button className="guestbtn" onClick={handleGuestClick}>
+                Guest
+              </Button>
               <Button className="loginbtn" variant="contained" type="submit">
                 Login
               </Button>
             </Stack>
           </Stack>
         </form>
-
+  
         <p>{message}</p>
       </Stack>
     </div>
   );
-}
+  }  
 
 export default Login;

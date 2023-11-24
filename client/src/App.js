@@ -23,6 +23,7 @@ import ChooseSeating from "./pages/seating/chooseseat.jsx";
 import Seatinglist from "./pages/seating/seatinglist.jsx";
 import UpdateEvent from "./pages/events/updateEvent.jsx"
 import AccessDenied from "./pages/user/access-denied.jsx"
+import Sphere from "./pages/sphere.jsx"
 
 function App() {
   return (
@@ -53,11 +54,12 @@ function App() {
         <Route path="/createevent" element={<CreateEvent/>}></Route>
         <Route path="/event" element={<Events/>}></Route>
         <Route path="/updateevent/:id" element={<UpdateEvent/>}></Route>
-        <Route path="/LinkFilter" element={<LinkFilter/>}></Route>
+        <Route path="/LinkFilter/:id" element={<LinkFilter/>}></Route>
         <Route path="/Excel/:id" element={<Excel/>}></Route>
         <Route path="/ExcelExport" element={<ExcelExport/>}></Route>
         <Route path="/StudentExport" element={<StudentExport/>}></Route>
         <Route path="/AccessDenied" element={<AccessDenied/>}></Route>
+        <Route path="/Sphere" element={<Sphere/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

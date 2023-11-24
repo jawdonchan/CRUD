@@ -5,11 +5,12 @@ import moment from 'moment';
 import Navbar from '../navigationbar';
 import CircularProgress from '@mui/material/CircularProgress';
 import '../../css/studentexport.css';
-
+var hash = require('object-hash');
 const ExportStudentsToExcel = () => {
   const [loading, setLoading] = useState(true);
-
+  const [hashed,setHash] = useState([]);
   useEffect(() => {
+    setHash(hash.MD5("Admin"));
     // Simulate loading delay
     const loadingTimeout = setTimeout(() => {
       setLoading(false);
@@ -23,7 +24,7 @@ const ExportStudentsToExcel = () => {
   const handleExportExcel = () => {
     // Check if the user has the 'admin' role before exporting
     const userRole = sessionStorage.getItem('role');
-    if (userRole !== 'Admin') {
+    if (userRole !== hashed) {
       console.log('Unauthorized access: Insufficient privileges');
       // Handle unauthorized access (redirect to login page, show error message, etc.)
       window.location.replace("http://localhost:3000/users");
@@ -43,7 +44,7 @@ const ExportStudentsToExcel = () => {
 
     // Make a GET request to your server to trigger the export
     axios
-      .get('http://localhost:8800/export-students-excel', {
+      .get('http://localhost:8800/export-students-excel/2', {
         responseType: 'arraybuffer',
       })
       .then((response) => {

@@ -115,10 +115,19 @@ app.post('/upload/:id', upload.single('file'), (req, res) => {
   }
 });
 
+app.get('/emcee-list', (req,res) => {
+  const q = 'Select * from emcee';
+  db.query(q,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+})
+})
+
 // Export data with specific column names
-app.get('/export-students-excel', (req, res) => {
+app.get('/export-students-excel/:id', (req, res) => {
   // Define your SQL query to fetch student data
-  const q = 'SELECT Stage, Award, FlipFlop, AdmNo, FullName, TutGrp, Status, Top, Event FROM students';
+  let id = req.params.id;
+  const q = 'SELECT id, AdmNo, Seating, Event FROM emcee where Event = ' + id;
 
   // Execute the query to fetch the data from the students table
   db.query(q, (err, data) => {
@@ -130,14 +139,14 @@ app.get('/export-students-excel', (req, res) => {
     try {
       // Create a new Excel workbook
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Students Data');
+      const worksheet = workbook.addWorksheet('Emcee Data');
 
       // Add header row
-      worksheet.addRow(['Stage', 'Award', 'FlipFlop', 'AdmNo', 'FullName', 'TutGrp', 'Status', 'Top', 'Event']);
+      worksheet.addRow(['id', 'AdmNo', 'Seating', 'Event']);
 
       // Add student data rows
       data.forEach(row => {
-        worksheet.addRow([row.Stage, row.Award, row.FlipFlop, row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Top, row.Event]);
+        worksheet.addRow([row.id, row.AdmNo, row.Seating, row.Event]);
       });
 
       // Create a buffer to store the Excel file

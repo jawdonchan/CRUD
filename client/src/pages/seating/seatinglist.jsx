@@ -206,7 +206,6 @@ const Seatinglist = () => {
       <Navbar />
     
       <Grid container spacing={2} >
-      <Grid xs={4}></Grid>
         <Grid xs={4}>
           <Stack direction='column' justifyContent={'space-around'}>
             <br></br>
@@ -224,7 +223,7 @@ const Seatinglist = () => {
         <Grid container direction = "row" justifyContent="space-evenly" alignItems="center" >
           {eventlist.map((event) => (
             
-            <Grid item xs={4} >
+            <Grid item xs="auto" >
               <Card key={event.id} sx={{ maxWidth: 350, minHeight: 60 }}>
               <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
                 <Stack direction = "row" alignItems="center" justifyContent="center">

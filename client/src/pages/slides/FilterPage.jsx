@@ -28,7 +28,7 @@ const FilterPage = ({ match }) => {
     arrows: false, // Hide the arrows on the display
     // Enable variable width for better arrow key navigation
     swipeToSlide: true, // Enable swiping to navigate slides
-   // Enable dragging to navigate slides
+    // draggable: true, // Enable dragging to navigate slides
     keyboard: true, // Enable keyboard navigation
   };
 
@@ -66,18 +66,9 @@ const handleTabClick = (tab) => {
         console.error('Error fetching student data:', error);
       }
     };
-  
+
     fetchStudentData();
-  
-    // Cleanup function to remove eventId from sessionStorage when the component is no longer needed
-    return () => {
-      // You may want to keep this check to avoid accidentally removing the eventId
-      if (sessionStorage.getItem('eventId') === eventId) {
-        sessionStorage.removeItem('eventId');
-      }
-    };
-  }, [eventId]);
-  
+  }, []);
   //change css style
   useEffect(() => {
     // Apply the CSS class based on the selected style

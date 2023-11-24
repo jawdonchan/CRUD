@@ -16,6 +16,8 @@ const FilterPage = ({ match }) => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState('url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg)'); // Set your default background image URL here
+  
+
   // Slider settings
   const sliderSettings = {
     dots: true,
@@ -23,7 +25,14 @@ const FilterPage = ({ match }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false, // Hide the arrows on the display
+    // Enable variable width for better arrow key navigation
+    swipeToSlide: true, // Enable swiping to navigate slides
+   // Enable dragging to navigate slides
+    keyboard: true, // Enable keyboard navigation
   };
+
+ 
   const tabBackgroundImages = {
     tab1: 'url(https://i.pinimg.com/originals/f3/3a/4c/f33a4c8f3506265c396565a3cc4ecf27.jpg)', // Change to your image URL
     tab2: 'url(https://i.pinimg.com/originals/c3/06/40/c306407ea7ea891e9ed4cd535911945a.jpg)', // Change to your image URL
@@ -57,9 +66,18 @@ const handleTabClick = (tab) => {
         console.error('Error fetching student data:', error);
       }
     };
-
+  
     fetchStudentData();
-  }, []);
+  
+    // Cleanup function to remove eventId from sessionStorage when the component is no longer needed
+    return () => {
+      // You may want to keep this check to avoid accidentally removing the eventId
+      if (sessionStorage.getItem('eventId') === eventId) {
+        sessionStorage.removeItem('eventId');
+      }
+    };
+  }, [eventId]);
+  
   //change css style
   useEffect(() => {
     // Apply the CSS class based on the selected style

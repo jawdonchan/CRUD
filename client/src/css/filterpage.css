@@ -28,11 +28,11 @@ h2,h3
   transition: opacity 0.15s ease;
 }
 .filter-page:hover .tab-container {
-  opacity: 1;
+  opacity: 0.15;
 }
 
 .tab-container button {
-  padding: 10px 15px;
+  padding: 10px 10px;
   background-color: #ccc;
   border: none;
   cursor: pointer;
@@ -103,6 +103,7 @@ h2,h3
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */
+   
   }
   .default-style .tab-content{
     margin: 0rem 0px 10rem 0px ;
@@ -144,7 +145,7 @@ h2,h3
   }
   .slick-dots {
     position: absolute;
-    bottom: -19.5rem;
+    bottom: -15.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; /* Add z-index to make sure dots are visible */

@@ -12,15 +12,17 @@ const Home = () => {
   const eventId = location.pathname.split("/")[2];
   const handleGoToFilterPage = () => {
     // Get the event ID from the URL parameters
-   
-
+    console.log('Event ID from URL:', eventId);
+  
     // Store the event ID in session storage
     if (eventId) {
       sessionStorage.setItem('eventId', eventId);
+      console.log('Event ID stored in session storage:', eventId);
     } else {
       console.error('Event ID not found in URL parameters.');
     }
   };
+  
 
   return (
     <div>

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../navigationbar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/excel.css';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -47,12 +49,18 @@ const ExcelFileUpload = () => {
 
   return (
     <div className="container">
-      <Navbar />
+      <Navbar />        
+      <br></br><br></br><br></br>
+      <Stack direction="column" alignItems={"center"} justifyContent={"center"}>
       <h2>Upload Excel File</h2>
-      <label className='excels' htmlFor="fileInput">Select File</label>
+      <div className='Button'>
+        <label className='excels' htmlFor="fileInput">Select File</label>
       <input type="file" id="fileInput" accept=".xlsx, .xls" onChange={handleFileChange} />
       {file && <p>Selected File: {file.name}</p>} {/* Display the file name */}
-      <button className='excelbtn' onClick={handleFileUpload}>Upload</button>
+      <Button className='excelbtn' onClick={handleFileUpload}>Upload</Button>
+      </div>
+      </Stack>
+
     </div>
   );
 };

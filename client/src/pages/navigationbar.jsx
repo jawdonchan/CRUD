@@ -76,7 +76,7 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Dashboard
         </Typography>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 5 }}>
           {hashRole}
         </Typography>
         <div></div>

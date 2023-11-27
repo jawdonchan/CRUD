@@ -11,3 +11,6 @@
     z-index: 1; /* Ensure that the content is above the background */
   }
   
+  .Button {
+    max-width: 130px;
+  }

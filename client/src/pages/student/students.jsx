@@ -148,8 +148,8 @@ const Students = () => {
             </div>
           </Stack>
         </Grid>
-        <Grid xs={3}>
-          <FormControl>
+        <Grid xs={4}>
+          <FormControl style={{marginTop: 50}}>
             <FormLabel id="demo-radio-buttons-group-label">Filter</FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
@@ -171,7 +171,7 @@ const Students = () => {
         </Grid>
       </Grid>
       <br></br>
-      <div className='scroll'>
+      <div className='scroll' style={{marginTop: -50, height: 550}}>
         <table className='seats-table'>
           <thead>
             <tr>

@@ -56,7 +56,9 @@ const ExcelFileUpload = () => {
       <div className='Button'>
         <label className='excels' htmlFor="fileInput">Select File</label>
       <input type="file" id="fileInput" accept=".xlsx, .xls" onChange={handleFileChange} />
+      <div style={{width: 550, marginLeft: -200}}>
       {file && <p>Selected File: {file.name}</p>} {/* Display the file name */}
+      </div>
       <Button className='excelbtn' onClick={handleFileUpload}>Upload</Button>
       </div>
       </Stack>

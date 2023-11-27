@@ -73,10 +73,10 @@ export default function Navbar() {
     <AppBar position="static">
       <Toolbar>
         {/* <Stack  direction="row" alignItems={"space-between"} justifyContent={"center"}> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 0.5 }}>
           Dashboard
         </Typography>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 5 }}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 4.5 }}>
           {hashRole}
         </Typography>
         <div></div>

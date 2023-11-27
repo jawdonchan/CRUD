@@ -501,55 +501,6 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-  
-//qr inserting 2 tables
-// app.post('/insertStudent', (req, res) => {
-//     const { adminNo } = req.body;
-   
-//     //checking if adminNo starts with '21'
-    
-
-//     // Define the SQL query to insert a new student's admin number
-//     const insertQuery = 'INSERT INTO display (student) VALUES (?)';
-  
-//     const values = [adminNo];
-  
-//     db.query(insertQuery, values, (err, data) => {
-//       if (err) {
-//         console.error('Error inserting student:', err);
-//         return res.status(500).json({ error: 'Internal server error' });
-//       }
-//       return res.json('Student has been inserted!');
-//     });
-//   });
-
-// app.post('/insertStudent', (req, res) => {
-//     const { adminNo } = req.body;
-//     const { event } = req.body;
-//     // const firstTwoDigits = adminNo.slice(1, 3);
-//     // // Check the value of the student column added
-//     // let year = '';
-//     // if (firstTwoDigits === '21') {
-//     //     year = 'year 1';
-//     // } else if (firstTwoDigits === '22') {
-//     //     year = 'year 2';
-//     // } else if (firstTwoDigits === '23') {
-//     //     year = 'year 3';
-//     // }
-
-//     // Define the SQL query to insert a new student's admin number and year
-//     const insertQuery = 'INSERT INTO emcee (AdmNo, Event) VALUES (?, ?)';
-
-//     const values = [adminNo, event];
-
-//     db.query(insertQuery, values, (err, data) => {
-//         if (err) {
-//             console.error('Error inserting student:', err);
-//             return res.status(500).json({ error: 'Internal server error' });
-//         }
-//         return res.json('Student has been inserted!');
-//     });
-// });
 
 app.post('/insertStudent/:eventId', (req, res) => {
   const { adminNo } = req.body;
@@ -791,6 +742,19 @@ app.post('/insertStudent/:eventId', (req, res) => {
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else {
+        return res.json(data);
+      }
+    })
+  })
+
+
+  app.get("/eventcollaborator/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    const q = "SELECT username,role from event_staff inner join users on users.id = event_staff.user_id where event_id = " + eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
         return res.json(data);
       }
     })

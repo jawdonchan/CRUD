@@ -27,6 +27,8 @@ const Events = () => {
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const userRole = sessionStorage.getItem("role");
   const [hashed,setHash] = useState([]);
+  const [collabbutton,setcollabbutton] = useState(false);
+
 
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Events = () => {
         console.log(err);
       }
     };
+  
     fetchALlEvents();
   }, [userRole]);
   const handleFilterChange = (event) => {
@@ -77,6 +80,61 @@ const Events = () => {
       console.log(err);
     }
   };
+
+const handleCollabClick = async (event) =>{
+    if(collabbutton == false)
+    {
+      try{
+        const q = await  axios.get(`http://localhost:8800/eventcollaborator/${event}`);
+        console.log(q.data);
+        console.log(q.data.length);
+        for(let l = 0 ; l < q.data.length; l++)
+        {
+      
+            let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
+            console.log("update"+og);
+            //let newid = "ann" + q.data[l].name+l;
+          document.getElementById(`collab${q.data[l].eventid}`).innerHTML = `${og}<div class = "gridcollab"><div>${q.data[l].username}</div></div>`;
+          // document.getElementById(`${event}${q.data[l].name}`).style.backgroundColor= q.data[l].color;
+            // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
+          
+        
+        }
+      }
+
+      catch(err){
+        console.log(err);
+      }
+      document.getElementById(`addButton${event}`).style.display = 'block';
+      setcollabbutton(true);
+    }
+    
+    else{
+      try{
+        const q = await  axios.get(`http://localhost:8800/eventcollaborator/${event}`);
+        console.log(q.data);
+        console.log(q.data.length);
+        for(let l = 0 ; l < q.data.length; l++)
+        {
+      
+            let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
+            console.log("update"+og);
+            //let newid = "ann" + q.data[l].name+l;
+          document.getElementById(`collab${q.data[l].eventid}`).innerHTML = ``;
+            // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
+          
+        
+        }
+      }
+
+      catch(err){
+        console.log(err);
+      }
+      document.getElementById(`addButton${event}`).style.display = 'none';
+      setcollabbutton(false);
+    }
+  }
+
   
 
   const handleDeleteEvent = async (eventId) => {
@@ -134,7 +192,7 @@ const Events = () => {
             <th>date</th>
             <th>time</th>
             <th>Links</th>
- 
+            <th>Collaborators</th>
           </tr>
         </thead>
         <tbody>
@@ -167,6 +225,13 @@ const Events = () => {
                 </Stack>
                
               </td>
+              <td>
+                <Stack direction="column" justifyContent="center">
+                <Button variant="outlined" onClick={() => handleCollabClick(event.id)} >Collaborators</Button>  
+                    <Stack id={`collab${event.id}`} direction="column" justifyContent="start" alignItems="start" className = "annotate"></Stack>
+                <Button id = {`addButton${event.id}`} className='addCollab'>Add Collaborators</Button>
+                  </Stack>
+              </td>
 
             </tr>
           ))}
@@ -175,6 +240,9 @@ const Events = () => {
       </div>
       <style>
     {`
+          .addCollab{
+            display:none;
+          }
           .scroll {
             overflow-y:scroll;
             height:65vh;

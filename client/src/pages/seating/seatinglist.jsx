@@ -226,14 +226,13 @@ const Seatinglist = () => {
       <div className='scroll'>
         <Grid container direction = "row" justifyContent="space-evenly" alignItems="center" >
           {eventlist.map((event) => (
-            
+          <div className='cards'>
             <Grid item xs='auto' >
               <Card key={event.id} sx={{ maxWidth: 400, minHeight: 60 }}>
-                <div className='cards'>
                   <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
                 <Stack direction = "row" alignItems="center" justifyContent="center">
                   </Stack>
-                  <div>                 
+                  <div className='cards'>                 
                 <Stack direction="row" justifyContent="space-around">
                   <Stack direction="column" spacing={3}>
                   
@@ -266,11 +265,11 @@ const Seatinglist = () => {
                   </Stack> 
               </div>
                   <br></br><br></br>
-                </div>
               
             </Card>
             </Grid>
-           
+            </div>
+
           ))}
         </Grid>
 
@@ -280,6 +279,7 @@ const Seatinglist = () => {
 
           .cards {
             padding:7px;
+            margin:5px;
           }
           .gridanno{
             display:flex;

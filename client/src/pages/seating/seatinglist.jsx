@@ -228,8 +228,9 @@ const Seatinglist = () => {
           {eventlist.map((event) => (
             
             <Grid item xs='auto' >
-              <Card key={event.id} sx={{ maxWidth: 350, minHeight: 60 }}>
-              <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
+              <Card key={event.id} sx={{ maxWidth: 400, minHeight: 60 }}>
+                <div className='cards'>
+                  <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
                 <Stack direction = "row" alignItems="center" justifyContent="center">
                   </Stack>
                   <div>                 
@@ -265,6 +266,8 @@ const Seatinglist = () => {
                   </Stack> 
               </div>
                   <br></br><br></br>
+                </div>
+              
             </Card>
             </Grid>
            
@@ -274,6 +277,10 @@ const Seatinglist = () => {
       </div>
           <style>
     {`
+
+          .cards {
+            padding:7px;
+          }
           .gridanno{
             display:flex;
             align-items:flex-start;
@@ -305,7 +312,11 @@ const Seatinglist = () => {
             position:relative;
             //top:7vh;
             height:150px;
-            overflow:hidden;
+            overflow:scroll;
+          }
+
+          .seating-plan::-webkit-scrollbar{
+            display:none;
           }
           .floating{
             position:fixed;

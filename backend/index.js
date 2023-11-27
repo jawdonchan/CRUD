@@ -224,7 +224,7 @@ app.get('/export-sample-excel', (req, res) => {
 app.get("/studentsfilter/:id/:id2", (req,res) => {
   let id = req.params.id;
   let id2 = req.params.id2;
-  console.log(id);
+  // console.log(id);
   if(id == "all")
   {
     const q = `Select * from students where Event = `+ id2;

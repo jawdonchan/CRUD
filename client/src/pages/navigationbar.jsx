@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+
 var hash = require('object-hash');
 export default function Navbar() {
   const navigate = useNavigate();
@@ -46,8 +48,22 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-   sethashrole(hash.MD5("Admin"));
-    if(userRole !== hashRole)
+   const admin = hash.MD5("Admin");
+   const Student = hash.MD5("Student");
+   const Teacher = hash.MD5("Teacher");
+   if(userRole == admin)
+   {
+    sethashrole("Admin");
+   }
+   else if(userRole == Teacher)
+   {
+    sethashrole("Teacher");
+   }
+   else{
+    sethashrole("Student");
+   }
+   
+    if(userRole !== admin)
     {
       document.getElementById("hiddennav").style.display = "none";
     }
@@ -56,10 +72,16 @@ export default function Navbar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        {/* <Stack  direction="row" alignItems={"space-between"} justifyContent={"center"}> */}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Dashboard
         </Typography>
-        <Button color="inherit" id = "hiddennav" onClick={handleUsersClick}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
+          {hashRole}
+        </Typography>
+        <div></div>
+        <div>
+          <Button color="inherit" id = "hiddennav" onClick={handleUsersClick}>
           User List
         </Button>
         {/* <Button color="inherit" onClick={handleStudentlistClick}>
@@ -82,6 +104,10 @@ export default function Navbar() {
         <Button color="inherit" onClick={handleLogoutClick}>
           Logout
         </Button>
+        </div>
+        {/* </Stack> */}
+        
+        
       </Toolbar>
     </AppBar>
   );

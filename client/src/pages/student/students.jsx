@@ -32,12 +32,12 @@ const Students = () => {
 
 
   const fetchStudents = async (endpoint) => {
-    console.log("fetching students");
+    // console.log("fetching students");
     try {
       const res = await axios.get(endpoint);
-      console.log("endpoint btw: " + endpoint);
+      // console.log("endpoint btw: " + endpoint);
       setStudents(res.data);
-      // console.log(res.data);
+      // // console.log(res.data)
     } catch (err) {
       console.log(err);
     }
@@ -50,7 +50,7 @@ const Students = () => {
       try {
         const awardFilterRes = await axios.get(`http://localhost:8800/studentawardfilter/${eventid}`);
         const awardFilters = awardFilterRes.data;
-        console.log(awardFilters);
+        // console.log(awardFilters);
         setAwardFilters(awardFilters);
       } catch (err) {
         console.log(err);
@@ -63,7 +63,7 @@ const Students = () => {
   useEffect(() => {
     // Fetch students when the component mounts
     const endpoint = `http://localhost:8800/studentsfilter/${filter}/${eventid}`;
-    console.log("this is the endpoint:" + endpoint);
+    // console.log("this is the endpoint:" + endpoint);
     fetchStudents(endpoint);
   }, [filter]);
 

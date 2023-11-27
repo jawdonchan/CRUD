@@ -38,4 +38,20 @@
   .excelbtn button:hover {
     background-color: #0056b3;
   }
-  
+  /* Add these styles to your existing CSS file */
+
+.excels {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007BFF; /* You can change the background color as needed */
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.excels:hover {
+  background-color: #0056b3; /* Change the hover background color */
+}
+
+/* Add any other styles you may need for the button */

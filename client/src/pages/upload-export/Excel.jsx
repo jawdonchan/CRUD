@@ -3,9 +3,11 @@ import Navbar from '../navigationbar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/excel.css';
 
+
+
 const ExcelFileUpload = () => {
   const [file, setFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -33,6 +35,8 @@ const ExcelFileUpload = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Uploaded data:', data);
+        // Redirect to the events page after successful upload
+        navigate(`/event`);
       } else {
         console.error('File upload failed.');
       }

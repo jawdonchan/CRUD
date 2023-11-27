@@ -79,8 +79,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Stack direction="row" spacing={8}>
-              <Button className="guestbtn" onClick={handleGuestClick}>
-                Guest
+              <Button className="guestbtn" >
               </Button>
               <Button className="loginbtn" variant="contained" type="submit">
                 Login

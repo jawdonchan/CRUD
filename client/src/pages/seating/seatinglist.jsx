@@ -206,13 +206,17 @@ const Seatinglist = () => {
       <Navbar />
     
       <Grid container spacing={2} >
+        <Grid xs={4}></Grid>
         <Grid xs={4}>
           <Stack direction='column' justifyContent={'space-around'}>
             <br></br>
             <br></br>
             <div>
+              <Stack direction="row" justifyContent={'center'} alignContent={'center'}>
             <TextField fullWidth label="Search event name or location" id="fullWidth"  value={search}
-            onChange={(e) => {setsearch(e.target.value);}}/>
+            onChange={(e) => {setsearch(e.target.value);}}/>                
+              </Stack>
+
             </div>
             <br></br>
           </Stack>
@@ -223,7 +227,7 @@ const Seatinglist = () => {
         <Grid container direction = "row" justifyContent="space-evenly" alignItems="center" >
           {eventlist.map((event) => (
             
-            <Grid item xs="auto" >
+            <Grid item xs='auto' >
               <Card key={event.id} sx={{ maxWidth: 350, minHeight: 60 }}>
               <div className='seating-plan' >{createSeatingPlan(event, event.rowxcol)}</div>
                 <Stack direction = "row" alignItems="center" justifyContent="center">

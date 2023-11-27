@@ -41,13 +41,13 @@ const Users = () => {
 
         }
         setUsers(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchAllUsers();
-  }, [hashed]);
+  }, [hashed,users]);
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };

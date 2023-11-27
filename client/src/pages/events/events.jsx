@@ -15,6 +15,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { TextField } from '@mui/material';
+
 var hash = require('object-hash');
 
 
@@ -202,36 +203,33 @@ const handleCollabClick = async (event) =>{
               <td>{event.location}</td>
               <td>{event.date}</td>
               <td>{event.time}</td>
-              <td>
-                <Stack direction="column">
-                  {userRole === hashed && (<div className ="hidden"> <Link  to={`/updateevent/${event.id}`} className="no-underline-link">
-                  Update details
-                </Link></div>)}
-                  
-               
-                <Link to={`/student/${event.id}`} className='no-underline-link'>
-                  Student List
-                </Link>
-                <Button onClick={() => handleSeat(event.id)} className='no-underline-link'>
-                  Seating Plan
-                </Button>
-                {userRole === hashed && (
-                <div className = "hidden">
-                    <Button onClick={() => handleDeleteEvent(event.id)} className='no-underline-link'>
-                  Delete
-                </Button>
-                </div>)}
-              
-                </Stack>
-               
-              </td>
-              <td>
-                <Stack direction="column" justifyContent="center">
-                <Button variant="outlined" onClick={() => handleCollabClick(event.id)} >Collaborators</Button>  
-                    <Stack id={`collab${event.id}`} direction="column" justifyContent="start" alignItems="start" className = "annotate"></Stack>
-                <Button id = {`addButton${event.id}`} className='addCollab'>Add Collaborators</Button>
-                  </Stack>
-              </td>
+              <td style={{ padding: 10, fontWeight: 'bold' }}>
+      <Stack direction="column">
+        {userRole === hashed && (
+          <div className="hidden">
+            <Button component={Link} to={`/updateevent/${event.id}`} className="no-underline-link">
+              Update details
+            </Button>
+          </div>
+        )}
+
+        <Button component={Link} to={`/student/${event.id}`} className="no-underline-link">
+          Student List
+        </Button>
+
+        <Button onClick={() => handleSeat(event.id)} className="no-underline-link">
+          Seating Plan
+        </Button>
+
+        {userRole === hashed && (
+          <div className="hidden">
+            <Button onClick={() => handleDeleteEvent(event.id)} className="no-underline-link">
+              Delete
+            </Button>
+          </div>
+        )}
+      </Stack>
+    </td>
 
             </tr>
           ))}
@@ -245,7 +243,7 @@ const handleCollabClick = async (event) =>{
           }
           .scroll {
             overflow-y:scroll;
-            height:65vh;
+            height:69vh;
           }
 
           .floating{
@@ -253,6 +251,11 @@ const handleCollabClick = async (event) =>{
             bottom:60px;
             right:60px;
           }
+          .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
         `}
     </style>
       

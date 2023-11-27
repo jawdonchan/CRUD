@@ -279,7 +279,7 @@ const Seatinglist = () => {
     {`
 
           .cards {
-            padding:7px;
+            padding:15px;
           }
           .gridanno{
             display:flex;

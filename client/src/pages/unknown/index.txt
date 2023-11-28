@@ -1,0 +1,115 @@
+import XlsxPopulate from 'xlsx-populate';
+// Load environment variables from .env
+dotenv.config();
+
+const app = express();
+
+const db = mysql.createConnection({
+    return res.json(data)
+  })
+})
+
+app.get("/user/:username",(req,res)=>{
+  const username = req.params.username;
+  const q  = "Select * from users where username like '%" + username +"'";
+  db.query(q,(err,data)=>{
+    if(err) return res.json(res)
+    return res.json(data)
+  })
+})
+
+app.get("/userteacher",(req,res)=>{
+  const q  = "Select * from users where role != 'Teacher'"
+  db.query(q,(err,data)=>{
+  app.get("/eventcollaborator/:id",(req,res)=>{
+    const eventid = req.params.id;
+
+    const q = "SELECT username,role from event_staff inner join users on users.id = event_staff.user_id where event_id = " + eventid;
+    const q ="select * from event_staff inner join users on event_staff.user_id = users.id where  event_staff.event_id = "+eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  })
+
+  
+
+  app.get("/searcheventcollaborator/:id/:eventid",(req,res) => {
+    const eventid = req.params.eventid;
+    const id = req.params.id;
+
+    const q ="select * from event_staff where event_id =" + eventid + "and user_id = " + id ;
+    ;
+
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  })
+
+  app.get("/checkeventcollab/:username/:eventid",(req,res) => {
+    const eventid = req.params.eventid;
+    const username = req.params.username;
+
+    const q ='select count(*) as count from event_staff inner join users on event_staff.user_id = users.id where  event_staff.event_id = '+ eventid+' and username = "'+ username+ '"';
+
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  })
+
+
+  app.post("/addeventstaff/:eventid/:userid", (req,res)=>{
+    const eventid = req.params.eventid;
+    const userid =req.params.userid;
+    const q = `INSERT INTO event_staff (event_id,user_id) values (${eventid},${userid})`;
+    
+    db.query(q, (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event staff has been added!")
+  
+        }
+    })
+  })
+
+  app.post("/addeventstaff/:eventid/:userid", (req,res)=>{
+    const eventid = req.params.eventid;
+    const userid =req.params.userid;
+    const q = `INSERT INTO event_staff (event_id,user_id) values (${eventid},${userid})`;
+    
+    db.query(q, (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event staff has been added!")
+  
+        }
+    })
+  })
+
+  app.delete("/deleteeventstaff/:eventid/:userid", (req,res)=>{
+    const eventid = req.params.eventid;
+    const userid =req.params.userid;
+    const q = `delete from event_staff where event_id = ${eventid} and user_id = ${userid}`;
+    console.log(q);
+    db.query(q, (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event staff has been deleted!")
+  
+        }
+    })
+  })

@@ -31,6 +31,7 @@ const Events = () => {
   const [filter, setFilter] = useState('all'); // Default filter
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const userRole = sessionStorage.getItem("role");
+  const username = sessionStorage.getItem("username");
   const [hashed,setHash] = useState([]);
   const [collabbutton,setcollabbutton] = useState(false);
   const [collaborators,setCollaborators] = useState(null);
@@ -60,6 +61,21 @@ const Events = () => {
         const res = await axios.get("http://localhost:8800/events");
         setEvents(res.data);
         // console.log("users get : " + res.data);
+        for(let i = 0 ; i < res.data.length; i++)
+        {
+          let checked =  await checkeventuser(res.data[i].id);
+          if(checked === true)
+          {
+            console.log("its true");
+            // document.getElementById("")
+          }
+          else{
+            console.log("not true")
+            document.getElementById(`hiddenupdatebtn${res.data[i].id}`).style.display = "none";
+            document.getElementById(`hiddendeletebtn${res.data[i].id}`).style.display = "none";
+
+          }
+        }
       } catch (err) {
         console.log(err);
       }
@@ -149,6 +165,8 @@ const Events = () => {
       // setSelectedEventId(null);
       setSearchCollaboratorInput('');
       setCollaboratorOptions([]);
+      window.location.reload();
+
     };
 
     const handleCollaboratorSelection = async (collaboratorId) => {
@@ -270,7 +288,22 @@ const handleCollabClick = async (event) =>{
   }
 
   
-
+const checkeventuser = async (eventid) => {
+  try{
+    let check = await axios.get(`http://localhost:8800/checkeventcollab/${username}/${eventid}`);
+    console.log(check.data[0].count);
+    if(check.data[0].count != 0)
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  catch(error){
+    console.log(error);
+  }
+}
   const handleDeleteEvent = async (eventId) => {
     try {
       await axios.delete(`http://localhost:8800/deleteEvent/${eventId}`);
@@ -339,7 +372,7 @@ const handleCollabClick = async (event) =>{
               <td style={{ padding: 10, fontWeight: 'bold' }}>
       <Stack direction="column">
         {hashed !== "Student" && (
-          <div className="hidden">
+          <div className={`hidden`} id={`hiddenupdatebtn${event.id}`}> 
             <Button component={Link} to={`/updateevent/${event.id}`} className="no-underline-link">
               Update details
             </Button>
@@ -355,7 +388,7 @@ const handleCollabClick = async (event) =>{
         </Button>
 
         {hashed !== "Student" && (
-          <div className="hidden">
+          <div className="hidden" id={`hiddendeletebtn${event.id}`}>
             <Button onClick={() => handleDeleteEvent(event.id)} className="no-underline-link">
               Delete
             </Button>

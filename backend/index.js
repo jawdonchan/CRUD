@@ -401,6 +401,20 @@ app.get("/accountsteacher",(req,res)=> {
   })
 })
 
+app.get("/checkeventcollab/:username/:eventid",(req,res) => {
+  const eventid = req.params.eventid;
+  const username = req.params.username;
+
+  const q ='select count(*) as count from event_staff inner join users on event_staff.user_id = users.id where  event_staff.event_id = '+ eventid+' and username = "'+ username+ '"';
+
+  db.query(q,(err,data)=>{
+    if(err) return res.json(err);
+    else{
+      return res.json(data);
+    }
+  })
+})
+
 
 
 
@@ -753,6 +767,20 @@ app.post('/insertStudent/:eventId', (req, res) => {
     const eventid = req.params.id;
 
     const q = "SELECT user_id, username,role from event_staff inner join users on users.id = event_staff.user_id where event_id = " + eventid;
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  })
+
+  app.get("/checkeventcollab/:username/:eventid",(req,res) => {
+    const eventid = req.params.eventid;
+    const username = req.params.username;
+
+    const q ='select count(*) as count from event_staff inner join users on event_staff.user_id = users.id where  event_staff.event_id = '+ eventid+' and username = "'+ username+ '"';
+
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{

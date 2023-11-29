@@ -56,7 +56,7 @@ function Login() {
       <Stack spacing={5} alignItems="center">
         <br />
         {/* <SphereAnimation /> */}
-        <Typography variant="h4">Login Page</Typography>
+        <Typography className="titlelogin" variant="h4">Login Page</Typography>
         <br />
         <form className="loginform" onSubmit={handleLogin}>
           <Stack spacing={3} alignItems="center">

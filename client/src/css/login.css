@@ -6,6 +6,8 @@
     justify-content: center;
     padding: 8vh;
     z-index: 2;
+    height: 65vh;
+    background: linear-gradient(135deg, #ffffff, #3498db);
     /* height: 100vh; */
   }
   /* Adjust the z-index for the login form */
@@ -26,6 +28,8 @@
         align-items: center;
         justify-content: center;
         z-index: 2;
+        height: 65vh;
+        background: linear-gradient(135deg, #ffffff, #3498db);
         padding: 18.5vh;
         /* height: 100vh; */
       }
@@ -60,11 +64,39 @@
     background-color: #45a049;
   }
   
-  Typography {
-    margin-bottom: 20px;
+  .titlelogin {
+    /* margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace; */
+    font-weight: 500;
+    color: seashell;
   }
   
   p {
     color: #ff0000;
     margin-top: 10px;
   }
+
+
+ 
+  
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .loginform {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+ 
+  
+  .loginbtn {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+
+  

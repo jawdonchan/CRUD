@@ -320,9 +320,9 @@ app.get("/userteacher",(req,res)=>{
   })
 })
 
-app.get("/user/:id",(req,res)=>{
-  let userid = req.params.id;
-  const q  = "Select * from users where id = "+ userid;
+app.get("/user/:username",(req,res)=>{
+  const username = req.params.username;
+  const q  = "Select * from users where username like '%" + username +"'";
   db.query(q,(err,data)=>{
     if(err) return res.json(res)
     return res.json(data)
@@ -584,6 +584,7 @@ app.post('/insertStudent/:eventId', (req, res) => {
     })
   })
 
+
   app.put('/updateEvent/:id', (req, res) => {
     const eventid = req.params.id;
     const { name, location, date,time } = req.body;
@@ -751,11 +752,43 @@ app.post('/insertStudent/:eventId', (req, res) => {
   app.get("/eventcollaborator/:id",(req,res)=>{
     const eventid = req.params.id;
 
-    const q = "SELECT username,role from event_staff inner join users on users.id = event_staff.user_id where event_id = " + eventid;
+    const q = "SELECT user_id, username,role from event_staff inner join users on users.id = event_staff.user_id where event_id = " + eventid;
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{
         return res.json(data);
       }
+    })
+  })
+
+  app.post("/addeventstaff/:eventid/:userid", (req,res)=>{
+    const eventid = req.params.eventid;
+    const userid =req.params.userid;
+    const q = `INSERT INTO event_staff (event_id,user_id) values (${eventid},${userid})`;
+    
+    db.query(q, (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event staff has been added!")
+  
+        }
+    })
+  })
+
+  app.delete("/deleteeventstaff/:eventid/:userid", (req,res)=>{
+    const eventid = req.params.eventid;
+    const userid =req.params.userid;
+    const q = `delete from event_staff where event_id = ${eventid} and user_id = ${userid}`;
+    console.log(q);
+    db.query(q, (err,data)=>{
+        if(err) 
+        {return res.json(err)}
+        else{
+          console.log(data);
+          return res.json("Event staff has been deleted!")
+  
+        }
     })
   })

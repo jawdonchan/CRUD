@@ -15,6 +15,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { TextField } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
+
+
 
 var hash = require('object-hash');
 
@@ -29,11 +33,27 @@ const Events = () => {
   const userRole = sessionStorage.getItem("role");
   const [hashed,setHash] = useState([]);
   const [collabbutton,setcollabbutton] = useState(false);
+  const [collaborators,setCollaborators] = useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [searchCollaboratorInput, setSearchCollaboratorInput] = useState('');
+  const [collaboratorOptions, setCollaboratorOptions] = useState([]);
+  const [addCollabAnchorEl, setAddCollabAnchorEl] = useState(null);
+
 
 
 
   useEffect(() => {
     setHash(hash.MD5("Admin"));
+    if(userRole == hash.MD5("Admin")){
+      setHash("Admin");
+    }
+    else if(userRole == hash.MD5("Teacher")){
+      setHash("Teacher");
+    }
+    else{
+      setHash("Student");
+    }
+
 
     const fetchALlEvents = async () => {
       try {
@@ -44,9 +64,36 @@ const Events = () => {
         console.log(err);
       }
     };
+    const fetchUsers = async () => {
+    
+    
+      if(searchCollaboratorInput !== null){
+          //console.log("there is input");
+          try {
+            const res = await axios.get(`http://localhost:8800/user/${searchCollaboratorInput}`);
+            // params: { query: searchCollaboratorInput },
+            setCollaboratorOptions(null);
+            setCollaboratorOptions(res.data); 
+            // console.log("search");
+            // console.log(res.data);
+            const eventuser = await axios.get(`http://localhost:8800/eventcollaborator/${selectedEventId}`);
+        // console.log(eventuser.data);
+        for(let l = 0 ; l < eventuser.data.length; l++)
+        {
+          document.getElementById(`tick${eventuser.data[l].user_id}`).style.display= "block";
   
+        }
+          }
+          catch (err) {
+            console.log(err);
+          }
+        }
+      } 
+      fetchUsers();
+
     fetchALlEvents();
-  }, [userRole]);
+  }, [userRole,searchCollaboratorInput,collaborators]);
+  
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
@@ -65,6 +112,68 @@ const Events = () => {
     handleOptionsClose();
   };
 
+  const handleAddCollaboratorsClick = async (event) => {
+    console.log("eventid"+ event);
+    // setSelectedEventId(event);
+    console.log("selected:"+selectedEventId);    
+    console.log(searchCollaboratorInput);
+    setAddCollabAnchorEl(true);
+    if(searchCollaboratorInput == "")
+    {
+      try {
+      const res = await axios.get(`http://localhost:8800/user`);
+        // params: { query: searchCollaboratorInput },
+      setCollaboratorOptions(res.data); 
+      // console.log(res.data);
+      
+      const eventuser = await axios.get(`http://localhost:8800/eventcollaborator/${selectedEventId}`);
+      // console.log(eventuser.data);
+      for(let l = 0 ; l < eventuser.data.length; l++)
+      {
+        document.getElementById(`tick${eventuser.data[l].user_id}`).style.display= "block";
+          // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
+        
+      
+      }
+      }
+      catch (err) {
+      console.log(err);
+    }
+    }
+
+    };
+    const handleAddCollaboratorsClose = () => {    
+      //console.log("closed");
+      document.getElementById(`contributebutton${selectedEventId}`).click();
+      setAddCollabAnchorEl(null);
+      // setSelectedEventId(null);
+      setSearchCollaboratorInput('');
+      setCollaboratorOptions([]);
+    };
+
+    const handleCollaboratorSelection = async (collaboratorId) => {
+
+      if(document.getElementById(`tick${collaboratorId}`).style.display == "block")
+      {
+        document.getElementById(`listitem${collaboratorId}`).onClick=error(`${collaboratorId}`);
+      }
+      else{
+        //console.log("selected:"+selectedEventId+"collabid:"+collaboratorId);
+  
+        try{      
+        const userid = collaboratorId;
+       // console.log(userid);
+          const q = await axios.post(`http://localhost:8800/addeventstaff/${selectedEventId}/`+userid);
+         // console.log(q);
+          handleAddCollaboratorsClose();
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+      }
+    };
+  
   const handleSeat = async (id)  => {
     console.log(id);
     try {
@@ -82,7 +191,26 @@ const Events = () => {
     }
   };
 
+  function deleteEventStaff(eventId, userId) {
+    try {
+      axios.delete(`http://localhost:8800/deleteeventstaff/${eventId}/${userId}`);
+      // Optionally, you can refresh the page or update the UI after successful deletion
+       window.location.reload();
+      // console.log()
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const error = (collaboratorId) => {
+    document.getElementById(`error${collaboratorId}`).style.display = "block";
+  }
 const handleCollabClick = async (event) =>{
+    const dropdown = document.getElementsByClassName("collabList");
+    for(let i=0 ;i<dropdown.length;i++)
+    {
+      dropdown[i].style.display="none";
+    }
     if(collabbutton == false)
     {
       try{
@@ -91,11 +219,12 @@ const handleCollabClick = async (event) =>{
         console.log(q.data.length);
         for(let l = 0 ; l < q.data.length; l++)
         {
-      
-            let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
-            console.log("update"+og);
+              setCollaborators(q.data);
+
+            //let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
+            //console.log("update"+og);
             //let newid = "ann" + q.data[l].name+l;
-          document.getElementById(`collab${q.data[l].eventid}`).innerHTML = `${og}<div class = "gridcollab"><div>${q.data[l].username}</div></div>`;
+          //document.getElementById(`collab${q.data[l].eventid}`).innerHTML = `${og}<div class = "gridcollab"><div>${q.data[l].username}</div></div>`;
           // document.getElementById(`${event}${q.data[l].name}`).style.backgroundColor= q.data[l].color;
             // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
           
@@ -107,7 +236,9 @@ const handleCollabClick = async (event) =>{
         console.log(err);
       }
       document.getElementById(`addButton${event}`).style.display = 'block';
+      document.getElementById(`collab${event}`).style.display = 'block';
       setcollabbutton(true);
+      setSelectedEventId(event);
     }
     
     else{
@@ -132,6 +263,8 @@ const handleCollabClick = async (event) =>{
         console.log(err);
       }
       document.getElementById(`addButton${event}`).style.display = 'none';
+      document.getElementById(`collab${event}`).style.display = 'none';
+      setSelectedEventId(null);
       setcollabbutton(false);
     }
   }
@@ -205,7 +338,7 @@ const handleCollabClick = async (event) =>{
               <td>{event.time}</td>
               <td style={{ padding: 10, fontWeight: 'bold' }}>
       <Stack direction="column">
-        {userRole === hashed && (
+        {hashed !== "Student" && (
           <div className="hidden">
             <Button component={Link} to={`/updateevent/${event.id}`} className="no-underline-link">
               Update details
@@ -221,7 +354,7 @@ const handleCollabClick = async (event) =>{
           Seating Plan
         </Button>
 
-        {userRole === hashed && (
+        {hashed !== "Student" && (
           <div className="hidden">
             <Button onClick={() => handleDeleteEvent(event.id)} className="no-underline-link">
               Delete
@@ -230,31 +363,111 @@ const handleCollabClick = async (event) =>{
         )}
       </Stack>
     </td>
+    <td>
+                <Stack direction="column" justifyContent="center" >
+                <Button id={`contributebutton${event.id}`} variant="outlined" onClick={() => handleCollabClick(event.id)} >Collaborators</Button>  
+                      <div id={`collab${event.id}`} className = "collabList">
+                      {collaborators && collaborators.map((collaborator)=>(
+                        <div key={collaborator.user_id}>
+                          <Stack direction={"row"} justifyContent={"space-between"}><DeleteIcon className='deletebtn' onClick={() => deleteEventStaff(selectedEventId,collaborator.user_id)}></DeleteIcon> <div>{collaborator.username}</div>  [{collaborator.role}] </Stack>
+                        </div>
+                      ))}                
+                      <Button id = {`addButton${event.id}`} className='addCollab' onClick={()=>handleAddCollaboratorsClick(event.id)}>Add Collaborators</Button>
+                    </div>
+                  </Stack>
+              </td>
 
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedEventId && (
+        <Popover className='popup'
+          open={addCollabAnchorEl}
+          // anchorEl={addCollabAnchorEl}
+          onClose={handleAddCollaboratorsClose}
+        >
+          <div style={{ padding: '20px', width: '300px' }}>
+            <TextField
+              label="Search Collaborators"
+              variant="outlined"
+              fullWidth
+              value={searchCollaboratorInput}
+              onChange={(e) => setSearchCollaboratorInput(e.target.value)}
+            />
+            <List className =  "searchcollabscroll"style={{ marginTop: '10px' }}>
+              {collaboratorOptions.map((collaborator) => (
+                <ListItem
+                  id={`listitem${collaborator.id}`}
+                  button
+                  key={collaborator.id}
+                  onClick={() => handleCollaboratorSelection(collaborator.id)}
+                >
+                  <ListItemText primary={`${collaborator.username} [${collaborator.role}]`} />
+                  <div id={`error${collaborator.id}`} className='error'>Already Added !!!!</div>
+                  <DoneIcon id = {`tick${collaborator.id}`} className="hiddenticks"></DoneIcon>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Popover>)}
       </div>
       <style>
     {`
-          .addCollab{
-            display:none;
-          }
-          .scroll {
-            overflow-y:scroll;
-            height:69vh;
-          }
+ .deletebtn{
+  size:20px;
+}
+.deletebtn:hover{
+  color:red;
+}
 
-          .floating{
-            position:fixed;
-            bottom:60px;
-            right:60px;
-          }
-          .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
-            font-weight: bold;
-            font-size: 18px;
-        }
+
+.error{
+  display:none;
+  color:red;
+}
+.searchcollabscroll{
+  overflow:scroll;
+}
+
+.searchcollabscroll::-webkit-scrollbar{
+  display:none;
+}
+
+.hiddenticks{
+  display:none;
+  color:green
+}
+      .popup{
+        position:absolute;
+        left:35vw;
+        top:35vh;
+      }
+      .addCollab{
+        display:none;
+        
+
+      }
+      .collabList{
+        display:none;
+        font-size:15px;
+        overflow:scroll;
+      }
+      .collabList::-webkit-scrollbar{
+        display:none;
+      }
+      .scroll {
+        overflow-y:scroll;
+        bottom:60px;
+        right:60px;
+        height:65vh;
+      }
+      .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+      .no-underline-link{
+        font-weight: bold;
+        font-size: 18px;
+        font-size: 15px;
+    }
         
         `}
     </style>

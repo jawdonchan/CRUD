@@ -108,7 +108,7 @@ const Events = () => {
       fetchUsers();
 
     fetchALlEvents();
-  }, [userRole,searchCollaboratorInput,collaborators]);
+  }, [userRole,searchCollaboratorInput,addCollabAnchorEl,collaborators]);
   
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -229,6 +229,8 @@ const handleCollabClick = async (event) =>{
     {
       dropdown[i].style.display="none";
     }
+    
+
     if(collabbutton == false)
     {
       try{
@@ -238,24 +240,21 @@ const handleCollabClick = async (event) =>{
         for(let l = 0 ; l < q.data.length; l++)
         {
               setCollaborators(q.data);
-
-            //let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
-            //console.log("update"+og);
-            //let newid = "ann" + q.data[l].name+l;
-          //document.getElementById(`collab${q.data[l].eventid}`).innerHTML = `${og}<div class = "gridcollab"><div>${q.data[l].username}</div></div>`;
-          // document.getElementById(`${event}${q.data[l].name}`).style.backgroundColor= q.data[l].color;
-            // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
-          
-        
         }
       }
 
       catch(err){
         console.log(err);
       }
-      document.getElementById(`addButton${event}`).style.display = 'block';
-      document.getElementById(`collab${event}`).style.display = 'block';
-      setcollabbutton(true);
+      let checked =  await checkeventuser(event);
+      console.log(checked);
+      if(checked === true || hashed == "Admin")
+      {
+        console.log("button checked true");
+        document.getElementById(`addButton${event}`).style.display = 'block';
+      }
+            document.getElementById(`collab${event}`).style.display = 'block';
+       setcollabbutton(true);
       setSelectedEventId(event);
     }
     
@@ -267,9 +266,9 @@ const handleCollabClick = async (event) =>{
         for(let l = 0 ; l < q.data.length; l++)
         {
       
-            let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
-            console.log("update"+og);
-            //let newid = "ann" + q.data[l].name+l;
+          //   let og = document.getElementById(`collab${q.data[l].eventid}`).innerHTML;
+          //   console.log("update"+og);
+          //   //let newid = "ann" + q.data[l].name+l;
           document.getElementById(`collab${q.data[l].eventid}`).innerHTML = ``;
             // console.log(`${q.data[l].name} + " "+ ${q.data[l].color}`);
           
@@ -280,8 +279,15 @@ const handleCollabClick = async (event) =>{
       catch(err){
         console.log(err);
       }
-      document.getElementById(`addButton${event}`).style.display = 'none';
+      let checked =  await checkeventuser(event);
+    if(checked === true)
+    {
+      // document.getElementById(`addButton${event}`).style.display = 'none';
       document.getElementById(`collab${event}`).style.display = 'none';
+    }
+    else{
+      document.getElementById(`collab${event}`).style.display = 'none';
+    }
       setSelectedEventId(null);
       setcollabbutton(false);
     }

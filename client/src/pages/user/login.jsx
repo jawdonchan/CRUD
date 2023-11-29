@@ -53,6 +53,7 @@ function Login() {
 
   return (
     <div className={`AppLogin ${isLoggedIn ? "fade-out" : ""}`}>
+       <div className="bg-container"> {/* Add this container for the background animation */}
       <Stack spacing={5} alignItems="center">
         <br />
         {/* <SphereAnimation /> */}
@@ -90,6 +91,7 @@ function Login() {
   
         <p>{message}</p>
       </Stack>
+      </div>
     </div>
   );
   }  

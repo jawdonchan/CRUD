@@ -253,7 +253,15 @@ const handleCollabClick = async (event) =>{
         console.log("button checked true");
         document.getElementById(`addButton${event}`).style.display = 'block';
       }
-            document.getElementById(`collab${event}`).style.display = 'block';
+      else{
+        let deletebtn = document.getElementsByClassName(`deletebtn${event}`);
+        console.log(deletebtn);
+        for(let j=0;j<deletebtn.length;j++){
+          deletebtn[j].innerHTML="-";
+        }
+
+      }
+      document.getElementById(`collab${event}`).style.display = 'block';
        setcollabbutton(true);
       setSelectedEventId(event);
     }
@@ -408,7 +416,7 @@ const checkeventuser = async (eventid) => {
                       <div id={`collab${event.id}`} className = "collabList">
                       {collaborators && collaborators.map((collaborator)=>(
                         <div key={collaborator.user_id}>
-                          <Stack direction={"row"} justifyContent={"space-between"}><DeleteIcon className='deletebtn' onClick={() => deleteEventStaff(selectedEventId,collaborator.user_id)}></DeleteIcon> <div>{collaborator.username}</div>  [{collaborator.role}] </Stack>
+                          <Stack direction={"row"} justifyContent={"space-between"}><div className={`deletebtn${event.id}`} ><DeleteIcon className={`deletebtn deletebtn${event.id}`}  onClick={() => deleteEventStaff(selectedEventId,collaborator.user_id)}></DeleteIcon></div> <div>{collaborator.username}</div>  [{collaborator.role}] </Stack>
                         </div>
                       ))}                
                       <Button id = {`addButton${event.id}`} className='addCollab' onClick={()=>handleAddCollaboratorsClick(event.id)}>Add Collaborators</Button>

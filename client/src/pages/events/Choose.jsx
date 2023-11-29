@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Guests from '../student/guest';
 import Login from '../admin';
@@ -7,9 +7,19 @@ import Button from '@mui/material/Button';
 import Seats from '../seating/seats'; // Import the Seats component
 import Navbar from '../navigationbar';
 import { createEvents } from '@react-three/fiber';
+var hash = require('object-hash');
 
 export default function Choose() {
+  const userRole = sessionStorage.getItem("role");
   const navigate = useNavigate();
+
+  useEffect (() =>{
+    if(userRole == hash.MD5("Student"))
+  {
+    navigate('/event');
+  }
+  },[userRole])
+  
 
   const handleCreateClick = () => {
     navigate('/createevent');

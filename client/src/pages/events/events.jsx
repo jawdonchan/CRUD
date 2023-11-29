@@ -53,6 +53,7 @@ const Events = () => {
     }
     else{
       setHash("Student");
+      document.getElementById("hiddenspeed").style.display = "none";
     }
 
 
@@ -70,9 +71,11 @@ const Events = () => {
             // document.getElementById("")
           }
           else{
-            console.log("not true")
+            console.log("not true");
+            console.log(`hiddenstudentlist${res.data[i].id}`);
             document.getElementById(`hiddenupdatebtn${res.data[i].id}`).style.display = "none";
             document.getElementById(`hiddendeletebtn${res.data[i].id}`).style.display = "none";
+            document.getElementById(`hiddenstudentlist${res.data[i].id}`).style.display = "none";
 
           }
         }
@@ -340,9 +343,11 @@ const checkeventuser = async (eventid) => {
      <Navbar />
      <br></br>
       
-    
+      <div      
+      id='hiddenspeed'        
+      style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
+      >
       <SpeedDial
-      className='hidden'
         ariaLabel="SpeedDial openIcon example"
         icon={<SpeedDialIcon openIcon={<AddIcon />} />}
         onClose={handleOptionsClose}
@@ -350,12 +355,13 @@ const checkeventuser = async (eventid) => {
         open={isOptionsOpen}
         direction="up"
         FabProps={{ ref: setFabAnchorEl }}
-        style={{ position: 'fixed', bottom: 16, right: 16 }} // Set position to bottom right
       >
         {actions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}
       </SpeedDial>
+      </div>
+      
        <TextField  label="Search Event"
         variant="outlined"
         fullWidth
@@ -392,10 +398,13 @@ const checkeventuser = async (eventid) => {
             </Button>
           </div>
         )}
-
-        <Button component={Link} to={`/student/${event.id}`} className="no-underline-link">
+        
+        <div id={`hiddenstudentlist${event.id}`}>
+          <Button component={Link} to={`/student/${event.id}`} className="no-underline-link">
           Student List
         </Button>
+        </div>
+        
 
         <Button onClick={() => handleSeat(event.id)} className="no-underline-link">
           Seating Plan

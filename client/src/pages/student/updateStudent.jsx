@@ -45,7 +45,7 @@ const UpdateStudent = () => {
 
     try {
       await axios.put(`http://localhost:8800/updateStudent/${studentId}`, student);
-      navigate("/admin"); // Redirect to the students page after updating
+      navigate("/events"); // Redirect to the students page after updating
     } catch (error) {
       console.error(error);
     }

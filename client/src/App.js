@@ -24,6 +24,8 @@ import Seatinglist from "./pages/seating/seatinglist.jsx";
 import UpdateEvent from "./pages/events/updateEvent.jsx"
 import AccessDenied from "./pages/user/access-denied.jsx"
 import Sphere from "./pages/sphere.jsx"
+import Chart from "./pages/chart/excelchart.jsx"
+import SqlChart from "./pages/chart/sqlchart.jsx"
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function App() {
         <Route path="/StudentExport" element={<StudentExport/>}></Route>
         <Route path="/AccessDenied" element={<AccessDenied/>}></Route>
         <Route path="/Sphere" element={<Sphere/>}></Route>
+        <Route path="/Charts" element={<Chart/>}></Route>
+        <Route path="/SQLChart/:id" element={<SqlChart/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

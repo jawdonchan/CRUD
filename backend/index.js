@@ -8,6 +8,7 @@ import XLSX from 'xlsx';
 import fs from 'fs';
 import ExcelJS from 'exceljs';
 import XlsxPopulate from 'xlsx-populate';
+import CanvasRenderService from 'chartjs-node-canvas';
 // Load environment variables from .env
 dotenv.config();
 
@@ -27,6 +28,9 @@ const db = mysql.createConnection({
 
 app.use(express.json())
 app.use(cors())
+
+//chart with excel
+
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -820,3 +824,50 @@ app.post('/insertStudent/:eventId', (req, res) => {
         }
     })
   })
+
+  //finding excel file
+  app.post('/api/upload-excel', upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded.' });
+      }
+  
+      const workbook = new ExcelJS.Workbook();
+      const buffer = req.file.buffer; // Access the buffer of the uploaded file
+      await workbook.xlsx.load(buffer);
+  
+      const worksheet = workbook.getWorksheet(1);
+      const data = [];
+  
+      worksheet.eachRow((row, rowNumber) => {
+        data.push(row.values);
+      });
+  
+      res.json(data);
+    } catch (error) {
+      console.error('Error reading uploaded Excel file:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+  //creating chart
+  app.get('/api/chart', async (req, res) => {
+    try {
+      const width = 800;
+      const height = 400;
+  
+      const canvasRenderService = new CanvasRenderService(width, height);
+      const configuration = {
+        type: 'bar',
+        data: {
+          // Your chart data goes here
+        },
+      };
+  
+      const imageBuffer = await canvasRenderService.renderToBuffer(configuration);
+      res.contentType('image/png').end(imageBuffer, 'binary');
+    } catch (error) {
+      console.error('Error generating chart:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });

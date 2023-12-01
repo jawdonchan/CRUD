@@ -77,18 +77,28 @@ return () => {
   const getPublicUrl = (filePath) => new URL(filePath, window.location.origin).toString();
 
   const handleDownloadTemplate = async () => {
-    setIsDownloading(true); // Set isDownloading to true when starting the download
-
+    setIsDownloading(true);
+  
     try {
-      const templateUrl = getPublicUrl('/templates/Dir_List_Attendance_Template.xlsx');
-      await downloadFile(templateUrl, 'Dir_List_Attendance_Template.xlsx');
+      // Endpoint to export sample Excel file
+      const templateEndpoint = 'http://localhost:8800/export-sample-excel';
+  
+      // Create an invisible link and trigger a click event to initiate the download
+      const a = document.createElement('a');
+      a.href = templateEndpoint;
+      a.download = 'template_excel_file.xlsx';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     } catch (error) {
       console.error('Error downloading file:', error);
     } finally {
-      setIsDownloading(false); // Set isDownloading back to false when the download is complete or encounters an error
-      setIsModalOpen(false); // Close the modal
+      setIsDownloading(false);
+      setIsModalOpen(false);
     }
   };
+  
 
   return (
     <div className="container">

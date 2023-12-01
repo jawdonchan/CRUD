@@ -186,22 +186,22 @@ app.get('/export-sample-excel', (req, res) => {
   try {
     // Create a new Excel workbook
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Sample Data');
+    const worksheet = workbook.addWorksheet('Template');
 
     // Add header row
-    worksheet.addRow(['Stage', 'Award', 'FlipFlop', 'AdmNo', 'FullName', 'TutGrp', 'Status', 'Top', 'Event']);
+    worksheet.addRow(['Stage', 'Award', 'FlipFlop', 'AdmNo', 'FullName', 'TutGrp', 'Status','Attendance', 'Top', 'Event']);
 
     // Add sample data rows
-    sampleData.forEach(row => {
-      worksheet.addRow([row.Stage, row.Award, row.FlipFlop, row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Top, row.Event]);
-    });
+    // sampleData.forEach(row => {
+    //   worksheet.addRow([row.Stage, row.Award, row.FlipFlop, row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Top, row.Event]);
+    // });
 
     // Create a buffer to store the Excel file
     workbook.xlsx.writeBuffer()
       .then(buffer => {
         // Set response headers for Excel file download
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', 'attachment; filename=sample-data-export.xlsx');
+        res.setHeader('Content-Disposition', 'attachment; filename=template-data-upload.xlsx');
 
         // Send the Excel file to the client
         res.end(buffer);
@@ -302,7 +302,7 @@ app.get("/students", (req,res)=>{
 //filter students based on events
 app.get("/students/:id", (req,res)=>{
   let studid = req.params.id;
-  const q = "SELECT * from students where Event = " + studid
+  const q = "SELECT * from students where Event = " + studid + " And Status != 'No'";
   db.query(q,(err,data)=>{
       if(err) return res.json(err)
       return res.json(data)

@@ -292,7 +292,7 @@ app.get("/studentawardfilter/:id",(req,res)=>
 })
 //khai chers student list
 app.get("/students", (req,res)=>{
-    const q = "SELECT * from students"
+    const q = "SELECT * from students where eve"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -304,6 +304,7 @@ app.get("/students/:id", (req,res)=>{
   let studid = req.params.id;
   const q = "SELECT * from students where Event = " + studid + " And Status != 'No'";
   db.query(q,(err,data)=>{
+    console.log("slides");
       if(err) return res.json(err)
       return res.json(data)
   })
@@ -870,4 +871,19 @@ app.post('/insertStudent/:eventId', (req, res) => {
       console.error('Error generating chart:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
+  });
+
+  app.get('/api/emcee/:eventid', async (req, res) => {
+    const eventid = req.params.eventid;
+
+    const q = `   SELECT DIsTINCT(emcee.AdmNo), students.FullName,students.Award  from students inner join emcee on students.AdmNo = emcee.AdmNo where emcee.Event = ${eventid} And Attendance = 'yes' order by emcee.id asc
+
+    `
+    console.log(q);
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
   });

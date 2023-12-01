@@ -60,7 +60,7 @@ const handleTabClick = (tab) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/students/${eventId}`);
+        const response = await axios.get(`http://localhost:8800/api/emcee/${eventId}`);
         setStudentData(response.data);
       } catch (error) {
         console.error('Error fetching student data:', error);

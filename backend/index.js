@@ -334,6 +334,16 @@ app.get("/user/:username",(req,res)=>{
   })
 })
 
+app.get("/users/:id", (req,res)=>{
+  const userid = req.params.id;
+  const q = "select * from users where id = " + userid
+
+  db.query(q, (err,data)=>{
+      if(err) return res.json(err)
+      return res.json(data);
+  })
+})
+
 app.delete("/seat/:id", (req,res)=>{
     const seatId = req.params.id;
     const q = "DELETE from seating where event = ?"
@@ -343,8 +353,6 @@ app.delete("/seat/:id", (req,res)=>{
         return res.json("Seats has been deleted!");
     })
 })
-
-
   
 //updating student details
 app.put('/updateStudent/:id', (req, res) => {

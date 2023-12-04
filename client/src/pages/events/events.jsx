@@ -44,7 +44,7 @@ const Events = () => {
 
 
   useEffect(() => {
-    setHash(hash.MD5("Admin"));
+    // setHash(hash.MD5("Admin"));
     if(userRole == hash.MD5("Admin")){
       setHash("Admin");
     }
@@ -111,7 +111,7 @@ const Events = () => {
       fetchUsers();
 
     fetchALlEvents();
-  }, [userRole,searchCollaboratorInput,addCollabAnchorEl,collaborators]);
+  }, [userRole,searchCollaboratorInput,addCollabAnchorEl,collaborators,hashed]);
   
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -251,7 +251,7 @@ const handleCollabClick = async (event) =>{
       }
       let checked =  await checkeventuser(event);
       console.log(checked);
-      if(checked === true || hashed == "Admin")
+      if(checked === true || hashed === "Admin")
       {
         console.log("button checked true");
         document.getElementById(`addButton${event}`).style.display = 'block';

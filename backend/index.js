@@ -386,7 +386,21 @@ app.get("/accounts",(req,res)=> {
       return res.json(err);
     }
     else{
-      console.log(data);
+      // console.log(data);
+      return res.json(data)
+    }
+  })
+})
+
+app.get("/accountsadmin",(req,res)=> {
+  const q = "select id,username,role from users where username != 'admin' and role != 'admin'"
+  db.query(q,(err,data) => {
+    if(err) {
+      console.log(err);
+      return res.json(err);
+    }
+    else{
+      // console.log(data);
       return res.json(data)
     }
   })

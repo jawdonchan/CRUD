@@ -24,6 +24,8 @@ const Users = () => {
   const [fabAnchorEl, setFabAnchorEl] = useState(null);
   const userRole = sessionStorage.getItem("role");
   const [hashed,setHash] = useState([]);
+  const username = sessionStorage.getItem("username");
+
 
   useEffect(() => {
     setHash(hash.MD5("Admin"));
@@ -34,7 +36,14 @@ const Users = () => {
         let res; 
         if(userRole == hashed)
         {
-         res= await axios.get("http://localhost:8800/accounts");
+          if(username == "admin")
+          {
+            res= await axios.get("http://localhost:8800/accounts");
+          }
+          else{
+            res= await axios.get("http://localhost:8800/accountsadmin");
+
+          }
         }
         else{
         res = await axios.get("http://localhost:8800/accountsteacher");
@@ -47,7 +56,7 @@ const Users = () => {
       }
     };
     fetchAllUsers();
-  }, [hashed,users]);
+  }, [hashed,users,username]);
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };

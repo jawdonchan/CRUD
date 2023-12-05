@@ -50,7 +50,10 @@ h2,h3
   /* Updated styles for the dropdown */
   .tab-dropdown {
     position: relative;
-    display: inline-block;
+    display:flex;
+    /* width: 88%; */
+    height: 7.5vh;
+  
   }
 
   .tab-dropdown .dropdown-content {

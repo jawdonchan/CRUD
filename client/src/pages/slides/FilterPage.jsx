@@ -15,6 +15,7 @@ const FilterPage = ({ match }) => {
   //tab
   const [activeTab, setActiveTab] = useState('tab1');
   const [studentData, setStudentData] = useState([]);
+  const [isdata, setisdata] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState('url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg)'); // Set your default background image URL here
   
 
@@ -60,15 +61,22 @@ const handleTabClick = (tab) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/api/emcee/${eventId}`);
-        setStudentData(response.data);
+        const response = await axios.get(`http://localhost:8800/students/${eventId}`);
+        if (response.data !== null){
+          setisdata(true);
+          setStudentData(response.data);
+        }
+        
       } catch (error) {
         console.error('Error fetching student data:', error);
       }
     };
 
     fetchStudentData();
-  }, []);
+  }, [isdata]);
+
+
+  
   //change css style
   useEffect(() => {
     // Apply the CSS class based on the selected style
@@ -97,31 +105,31 @@ const handleTabClick = (tab) => {
           onClick={() => setActiveTab('tab1')}
           className={activeTab === 'tab1' ? 'active' : ''}
         >
-          Tab 1
+          All Students
         </button>
         <button
           onClick={() => setActiveTab('tab2')}
           className={activeTab === 'tab2' ? 'active' : ''}
         >
-          Tab 2
+          Good Progress
         </button>
         <button
           onClick={() => setActiveTab('tab3')}
           className={activeTab === 'tab3' ? 'active' : ''}
         >
-          Tab 3
+         Director List Year 1
         </button>
         <button
           onClick={() => setActiveTab('tab4')}
           className={activeTab === 'tab4' ? 'active' : ''}
         >
-          Tab 4
+          Director List Year 2
         </button>
         <button
           onClick={() => setActiveTab('tab5')}
           className={activeTab === 'tab5' ? 'active' : ''}
         >
-          Tab 5
+          Director List Year 3
         </button>
       </div>
       </div>
@@ -132,7 +140,7 @@ const handleTabClick = (tab) => {
             <h3>All Students</h3>
             {studentData.length > 0 ? (
               <Slider {...sliderSettings}>
-                {studentData.map((student, index) => (
+                {isdata !== false && studentData.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
                     <h3>{student.AdmNo}</h3>
@@ -142,7 +150,7 @@ const handleTabClick = (tab) => {
                 ))}
               </Slider>
             ) : (
-              <p>Loading student data...</p>
+              <p>No students data is found.</p>
             )}
           </div>
         )}
@@ -152,9 +160,10 @@ const handleTabClick = (tab) => {
             <h3>Students with "Good Progress" Award</h3>
             {studentsWithGoodProgress.length > 0 ? (
               <Slider {...sliderSettings}>
-                {studentsWithGoodProgress.map((student, index) => (
+                {isdata !== false && studentsWithGoodProgress.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
+                    <h3>{student.AdmNo}</h3>
                     {/* Add more student data here */}
                   </div>
                 ))}
@@ -170,9 +179,10 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 1" Award</h3>
             {studentsDir1.length > 0 ? (
               <Slider {...sliderSettings}>
-                {studentsDir1.map((student, index) => (
+                {isdata !== false && studentsDir1.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
+                    <h3>{student.AdmNo}</h3>
                     {/* Add more student data here */}
                   </div>
                 ))}
@@ -188,9 +198,10 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 2" Award</h3>
             {studentsDir2.length > 0 ? (
               <Slider {...sliderSettings}>
-                {studentsDir2.map((student, index) => (
+                {isdata !== false && studentsDir2.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
+                    <h3>{student.AdmNo}</h3>
                     {/* Add more student data here */}
                   </div>
                 ))}
@@ -206,9 +217,10 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 3" Award</h3>
             {studentsDir3.length > 0 ? (
               <Slider {...sliderSettings}>
-                {studentsDir3.map((student, index) => (
+                {isdata !== false && studentsDir3.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
+                    <h3>{student.AdmNo}</h3>
                     {/* Add more student data here */}
                   </div>
                 ))}

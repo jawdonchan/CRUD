@@ -6,6 +6,13 @@ import axios from 'axios';
 import '../../css/filterpage.css';
 import { useLocation } from 'react-router-dom';
 
+const BlankSlide = () => (
+  <div>
+    <h3></h3>
+  </div>
+);
+
+
 const FilterPage = ({ match }) => {
   //style
   const location = useLocation();
@@ -22,7 +29,7 @@ const FilterPage = ({ match }) => {
   // Slider settings
   const sliderSettings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -136,10 +143,12 @@ const handleTabClick = (tab) => {
       <div className="tab-content">
         {activeTab === 'tab1' && (
           <div>
-            <h2>Tab 1 Content with Student Data</h2>
-            <h3>All Students</h3>
+            <h2>All Students</h2>
+            <h3>Students Award</h3>
+            
             {studentData.length > 0 ? (
               <Slider {...sliderSettings}>
+                <div><h3>All Students</h3></div>
                 {isdata !== false && studentData.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
@@ -148,6 +157,7 @@ const handleTabClick = (tab) => {
                     {/* Add more student data here */}
                   </div>
                 ))}
+                <BlankSlide />
               </Slider>
             ) : (
               <p>No students data is found.</p>
@@ -160,6 +170,8 @@ const handleTabClick = (tab) => {
             <h3>Students with "Good Progress" Award</h3>
             {studentsWithGoodProgress.length > 0 ? (
               <Slider {...sliderSettings}>
+                {/* CoverSlide */}
+                <div><h3>Good Progress</h3></div>
                 {isdata !== false && studentsWithGoodProgress.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
@@ -167,6 +179,8 @@ const handleTabClick = (tab) => {
                     {/* Add more student data here */}
                   </div>
                 ))}
+                {/* Add a blank slide */}
+              <BlankSlide />
               </Slider>
             ) : (
               <p>No students with "Good Progress" award found.</p>
@@ -179,6 +193,7 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 1" Award</h3>
             {studentsDir1.length > 0 ? (
               <Slider {...sliderSettings}>
+                <div><h3>Director List Year 1</h3></div>
                 {isdata !== false && studentsDir1.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
@@ -186,6 +201,7 @@ const handleTabClick = (tab) => {
                     {/* Add more student data here */}
                   </div>
                 ))}
+                <BlankSlide />
               </Slider>
             ) : (
               <p>No students with "Director List Year 1" award found.</p>
@@ -198,6 +214,7 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 2" Award</h3>
             {studentsDir2.length > 0 ? (
               <Slider {...sliderSettings}>
+                 <div><h3>Director List Year 2</h3></div>
                 {isdata !== false && studentsDir2.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
@@ -205,6 +222,7 @@ const handleTabClick = (tab) => {
                     {/* Add more student data here */}
                   </div>
                 ))}
+                <BlankSlide />
               </Slider>
             ) : (
               <p>No students with "Director List Year 2" award found.</p>
@@ -217,6 +235,7 @@ const handleTabClick = (tab) => {
             <h3>Students with "Director List Year 3" Award</h3>
             {studentsDir3.length > 0 ? (
               <Slider {...sliderSettings}>
+                 <div><h3>Director List Year 3</h3></div>
                 {isdata !== false && studentsDir3.map((student, index) => (
                   <div key={index}>
                     <h3>{student.FullName}</h3>
@@ -224,6 +243,7 @@ const handleTabClick = (tab) => {
                     {/* Add more student data here */}
                   </div>
                 ))}
+                <BlankSlide />
               </Slider>
             ) : (
               <p>No students with "Director List Year 3" award found.</p>

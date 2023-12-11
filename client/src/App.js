@@ -26,6 +26,8 @@ import AccessDenied from "./pages/user/access-denied.jsx"
 import Sphere from "./pages/sphere.jsx"
 import Chart from "./pages/chart/excelchart.jsx"
 import SqlChart from "./pages/chart/sqlchart.jsx"
+import React from 'react';
+
 
 function App() {
   return (

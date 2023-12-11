@@ -7,7 +7,8 @@ module.exports = {
 
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, '/dist')
+        path: path.join(__dirname, '/dist'),
+        publicPath: '/'
        
     },
 
@@ -40,7 +41,10 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
       devServer: {
+        static: path.join(__dirname, 'dist'),
         port: 3000,
+        hot: true,
+        historyApiFallback: true,
         // other devServer configurations
       },
     };

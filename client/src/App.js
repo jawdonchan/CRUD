@@ -27,6 +27,8 @@ import Sphere from "./pages/sphere.jsx"
 import Chart from "./pages/chart/excelchart.jsx"
 import SqlChart from "./pages/chart/sqlchart.jsx"
 import BarChart from "./pages/chart/dashboard.jsx";
+import React from 'react';
+
 
 function App() {
   return (

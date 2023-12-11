@@ -909,3 +909,28 @@ app.post('/insertStudent/:eventId', (req, res) => {
       }
     })
   });
+
+  app.get('/dashboardtotalstudent', async (req, res) => {
+
+    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null group by students.event`
+    //console.log(q);
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  });
+
+  app.get('/dashboardattendedstudent', async (req, res) => {
+
+    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'yes' group by students.event
+`
+    //console.log(q);
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err);
+      else{
+        return res.json(data);
+      }
+    })
+  });

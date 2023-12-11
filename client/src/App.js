@@ -26,6 +26,7 @@ import AccessDenied from "./pages/user/access-denied.jsx"
 import Sphere from "./pages/sphere.jsx"
 import Chart from "./pages/chart/excelchart.jsx"
 import SqlChart from "./pages/chart/sqlchart.jsx"
+import BarChart from "./pages/chart/dashboard.jsx";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
         <Route path="/Sphere" element={<Sphere/>}></Route>
         <Route path="/Charts" element={<Chart/>}></Route>
         <Route path="/SQLChart/:id" element={<SqlChart/>}></Route>
+        <Route path="/dashboard" element={<BarChart/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

@@ -38,11 +38,13 @@ function BarChart() {
                 try{
                     const res2 = await axios.get("http://localhost:8800/dashboardattendedstudent");
                 setattendedstudents(res2.data);
-                                setEventdata({
-                    labels: res1.data.map((event) => event.name),
+                if(attendedstudents.length > 0)
+                {
+                    setEventdata({
+                    labels: totalstudents.map((event) => event.name),
                     datasets: [
                         {
-                            label: "Total Students",
+                            label:  "Total Students Expected to Attend",
                             data: totalstudents.map((event) => event.count),
                             backgroundColor: [
                                 'rgba(75,192,192,1)',
@@ -56,8 +58,8 @@ function BarChart() {
                         //}
                         },
                         {
-                            label: "Total Students 2",
-                            data: attendedstudents.data.map((event) => event.count),
+                            label: "Attended Students",
+                            data: attendedstudents.map((event) => event.count),
                             backgroundColor: [
                                 'rgba(75,192,182,1)',
                                 "#ecf0f1",
@@ -71,6 +73,30 @@ function BarChart() {
                         
                     ]
                 });
+                }
+                else{
+                    setEventdata({
+                        labels: totalstudents.map((event) => event.name),
+                        datasets: [
+                            {
+                                label: "Total Students Expected to Attend",
+                                data: totalstudents.map((event) => event.count),
+                                backgroundColor: [
+                                    'rgba(75,192,192,1)',
+                                    "#ecf0f1",
+                                    "#50AF95",
+                                    "#f3ba2f",
+                                    "#271d0",
+                                ],
+                                borderColor: "black",
+                                borderWidth: 2,
+                            //}
+                            },
+                            
+                        ]
+                    });
+                }
+       
                 }
                 catch(err){
                     console.log(err);

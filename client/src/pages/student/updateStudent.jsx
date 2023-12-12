@@ -18,9 +18,11 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/students/${studentId}`);
-        const studentData = response.data;
+        const response = await axios.get(`http://localhost:8800/updategetstudents/${studentId}`);
+        console.log(response.data[0]);
+        let studentData = response.data[0];
         setStudent(studentData);
+        console.log("student award" + student.Award);
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +47,7 @@ const UpdateStudent = () => {
 
     try {
       await axios.put(`http://localhost:8800/updateStudent/${studentId}`, student);
-      navigate("/events"); // Redirect to the students page after updating
+      navigate(`/event`); // Redirect to the students page after updating
     } catch (error) {
       console.error(error);
     }
@@ -132,19 +134,19 @@ const UpdateStudent = () => {
               <input
             type="radio"
             name="Attendance"
-            value="Present"
-            checked={student.Attendance === "Present"}
+            value="Yes"
+            checked={student.Attendance === "Yes"}
             onChange={handleChange}
-          /> Present
+          /> Yes
             </div>
             <div>
               <input
                 type="radio"
                 name="Attendance"
-                value="Absent"
-                checked={student.Attendance === "Absent"}
+                value="No"
+                checked={student.Attendance === "No"}
                 onChange={handleChange}
-              /> Absent
+              /> No
             </div>
           </Stack>
           

@@ -310,6 +310,16 @@ app.get("/students/:id", (req,res)=>{
   })
 })
 
+app.get("/updategetstudents/:id", (req,res)=>{
+  let studid = req.params.id;
+  const q = "SELECT * from students where id = " + studid;
+  db.query(q,(err,data)=>{
+    console.log(data);
+      if(err) return res.json(err)
+      return res.json(data)
+  })
+})
+
 app.get("/user",(req,res)=>{
   const q  = "Select * from users"
   db.query(q,(err,data)=>{
@@ -912,7 +922,7 @@ app.post('/insertStudent/:eventId', (req, res) => {
 
   app.get('/dashboardtotalstudent', async (req, res) => {
 
-    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null group by students.event`
+    const q = ` select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' group by students.event`
     //console.log(q);
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
@@ -924,7 +934,7 @@ app.post('/insertStudent/:eventId', (req, res) => {
 
   app.get('/dashboardattendedstudent', async (req, res) => {
 
-    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'yes' group by students.event
+    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and students.Status = 'Yes' group by students.event
 `
     //console.log(q);
     db.query(q,(err,data)=>{

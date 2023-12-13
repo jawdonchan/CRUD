@@ -27,8 +27,8 @@ export default function Navbar() {
 
   };
 
-  const handleStudentlistClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleDashBoardClick = (event) => {
+    navigate('/dashboard');
   };
 
   const handleEventsClick = () => {
@@ -81,6 +81,9 @@ export default function Navbar() {
         </Typography>
         <div></div>
         <div>
+         <Button color="inherit" onClick={handleDashBoardClick}>
+          Dashboard
+        </Button> 
           <Button color="inherit" id = "hiddennav" onClick={handleUsersClick}>
           User List
         </Button>

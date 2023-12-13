@@ -4,11 +4,14 @@ import axios from 'axios';
 import Navbar from "../navigationbar";
 import Stack from '@mui/material/Stack';
 import { Typography } from "@mui/material";
+import { TextField } from '@mui/material';
+
 
 
 function BarChart() {
     const [totalstudents, setTotalStudents] = useState([]);
     const [attendedstudents, setattendedstudents] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
 
 
     const [eventdata, setEventdata] = useState({
@@ -32,7 +35,9 @@ function BarChart() {
 
     useEffect(() => {
         const fetchTotalStudents = async () => {
-            try {
+            if(searchInput === "")
+            {
+              try {
                 const res1 = await axios.get("http://localhost:8800/dashboardtotalstudent");
                 setTotalStudents(res1.data);
                 try{
@@ -106,16 +111,96 @@ function BarChart() {
 
             } catch (err) {
                 console.log(err);
+            }  
             }
+            else{
+                try {
+                    const res1 = await axios.get("http://localhost:8800/dashboardtotalstudent/"+searchInput);
+                    setTotalStudents(res1.data);
+                    try{
+                        const res2 = await axios.get("http://localhost:8800/dashboardattendedstudent/"+searchInput);
+                    setattendedstudents(res2.data);
+                    if(attendedstudents.length > 0)
+                    {
+                        setEventdata({
+                        labels: totalstudents.map((event) => event.name),
+                        datasets: [
+                            {
+                                label:  "Total Students Expected to Attend",
+                                data: totalstudents.map((event) => event.count),
+                                backgroundColor: [
+                                    'rgba(75,192,192,1)',
+                                    "#ecf0f1",
+                                    "#50AF95",
+                                    "#f3ba2f",
+                                    "#271d0",
+                                ],
+                                borderColor: "black",
+                                borderWidth: 2,
+                            //}
+                            },
+                            {
+                                label: "Attended Students",
+                                data: attendedstudents.map((event) => event.count),
+                                backgroundColor: [
+                                    'rgba(75,192,182,1)',
+                                    "#ecf0f1",
+                                    "#50AF95",
+                                    "#f3ba2f",
+                                    "#271d0",
+                                ],
+                                borderColor: "black",
+                                borderWidth: 2,
+                            }
+                            
+                        ]
+                    });
+                    }
+                    else{
+                        setEventdata({
+                            labels: totalstudents.map((event) => event.name),
+                            datasets: [
+                                {
+                                    label: "Total Students Expected to Attend",
+                                    data: totalstudents.map((event) => event.count),
+                                    backgroundColor: [
+                                        'rgba(75,192,192,1)',
+                                        "#ecf0f1",
+                                        "#50AF95",
+                                        "#f3ba2f",
+                                        "#271d0",
+                                    ],
+                                    borderColor: "black",
+                                    borderWidth: 2,
+                                //}
+                                },
+                                
+                            ]
+                        });
+                    }
+           
+                    }
+                    catch(err){
+                        console.log(err);
+    
+                    }
+                    // Move the initialization of labels and data here
+    
+                } catch (err) {
+                    console.log(err);
+                }  
+            }
+            
         };
 
         fetchTotalStudents();
-    }, [totalstudents,attendedstudents]);
+    }, [totalstudents,attendedstudents,searchInput]);
 
     return (
      <div>
         <Navbar></Navbar>
         <div className="dashboard">
+            
             <Typography variant="h5">Number of Students Attended</Typography>
         <br></br><br></br>
             <Stack direction="column" alignItems={"center"}>
@@ -123,13 +208,20 @@ function BarChart() {
                 <Line data={eventdata} />;
                 </div>
             </Stack>
+            <TextField  label="Search Event"
+            className="outlined-basic"
+        variant="outlined"
+        fullWidth
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
+      />
         </div>
         <style>
             {`
             .dashboard{
                 margin:10px;
                width: 100%;
-                height:60vh;
+                height:80vh;
                 overflow:scroll;
                 padding:5px;
                 //border:2px solid black;
@@ -141,6 +233,9 @@ function BarChart() {
             .Graph{
                 min-height:50vh;
                 min-width:50vw;
+            }
+            .outlined-basic{
+                width: 30vw;
             }
             `}
         </style>

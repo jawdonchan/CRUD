@@ -1,0 +1,50 @@
+/* linkfilter.css */
+
+.link-filter-page {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+.link-filter-container {
+  margin: 50px 150px 0px 150px;
+   justify-content: center;
+   align-items: center;
+    padding: 150px 0px 150px 0px;
+    
+}
+.link-filter-container:hover{
+    border: 2px solid black;
+    border-radius: 20px;
+    
+}
+.link-filter-container {
+    text-align: center;
+  }
+  
+  .link-filter-container h1 {
+    margin: 0; /* Remove default margin to prevent unwanted space */
+    transition: margin-left 0.5s; /* Added transition for margin-left */
+  }
+  
+  .link-filter-container h1:hover {
+    margin-left: -700px; /* Move to the left by 10 pixels on hover */
+  }
+  .buttoncontainer
+  {
+    margin: 20px;
+  }
+  .buttoncontainer .filter-link{
+    
+    padding: 10px;
+    border: 2px solid teal;
+    border-radius: 40px;
+    background-color:whitesmoke;
+    color: blueviolet;
+    text-decoration: none;
+    font-size: large;
+    font-weight:lighter;
+  }
+  .buttoncontainer .filter-link:hover{
+    background-color: cornsilk;
+  }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link , useLocation} from 'react-router-dom';
 import Navbar from "../navigationbar";
+import '../../css/linkfilter.css';
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState('default'); // Default CSS style option
@@ -25,20 +26,25 @@ const Home = () => {
   
 
   return (
-    <div>
-      <Navbar></Navbar>
-      <h1>Link Filter Page</h1>
-      <label>Select a CSS Style:</label>
-      <select value={selectedOption} onChange={handleOptionChange}>
-        <option value="default">Default</option>
-        <option value="style1">Style 1</option>
-        <option value="style2">Style 2</option>
-        {/* Add more style options here */}
-      </select>
-      {/* Add onClick handler to store the event ID in session storage before navigating */}
-      <Link to={`/FilterPage?style=${selectedOption}`} onClick={handleGoToFilterPage}>
-        <button>Go to Filter Page</button>
-      </Link>
+    <div className="link-filter-page">
+      <Navbar />
+      <div className="link-filter-container">
+        <h1>Slides Link Filter</h1>
+        <label>Select a CSS Style:</label>
+        <select value={selectedOption} onChange={handleOptionChange}>
+          <option value="default">Default</option>
+          <option value="style1">Top</option>
+          <option value="style2">Bottom</option>
+          {/* Add more style options here */}
+        </select>
+        {/* Add onClick handler to store the event ID in session storage before navigating */}
+        <br></br>
+        <div className='buttoncontainer'>
+        <Link to={`/FilterPage?style=${selectedOption}`} onClick={handleGoToFilterPage} className="filter-link">
+          Go to Filter Page
+        </Link>
+        </div>
+      </div>
     </div>
   );
 };

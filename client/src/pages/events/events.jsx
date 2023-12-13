@@ -84,6 +84,7 @@ const Events = () => {
         console.log(err);
       }
     };
+   
     const fetchUsers = async () => {
     
     
@@ -112,6 +113,7 @@ const Events = () => {
       fetchUsers();
 
     fetchALlEvents();
+    
   }, [userRole,searchCollaboratorInput,addCollabAnchorEl,collaborators,hashed]);
   
   const handleFilterChange = (event) => {

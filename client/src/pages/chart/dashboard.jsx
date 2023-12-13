@@ -63,7 +63,9 @@ function BarChart() {
                         //}
                         },
                         {
+
                             label: "Attended Students",
+
                             data: attendedstudents.map((event) => event.count),
                             backgroundColor: [
                                 'rgba(75,192,182,1)',

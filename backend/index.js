@@ -13,7 +13,8 @@ import CanvasRenderService from 'chartjs-node-canvas';
 dotenv.config();
 
 const app = express();
-
+const port = 8800;
+const ip = '0.0.0.0';
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -388,12 +389,14 @@ app.put('/updateStudent/:id', (req, res) => {
     });
 });
 
-app.listen(8800, () => {
-    console.log("connected to crud app!");
+// app.listen(3001, ip,() => {
+//     console.log("connected to crud app!");
+// });
+
+
+app.listen(port, ip, () => {
+  console.log(`Server is running on http://${ip}:${port}`);
 });
-
-
-
 
 
 app.get("/accounts",(req,res)=> {

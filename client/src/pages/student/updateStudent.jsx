@@ -109,8 +109,8 @@ const UpdateStudent = () => {
               <input
             type="radio"
             name="Status"
-            value="Attending"
-            checked={student.Status === "Attending"}
+            value="Yes"
+            checked={student.Status === "Yes"}
             onChange={handleChange}
           /> Attending
             </div>
@@ -118,8 +118,8 @@ const UpdateStudent = () => {
               <input
             type="radio"
             name="Status"
-            value="Not Attending"
-            checked={student.Status === "Not Attending"}
+            value="Yes"
+            checked={student.Status === "No"}
             onChange={handleChange}
           /> Not Attending
             </div>

@@ -207,7 +207,7 @@ function BarChart() {
         <br></br><br></br>
             <Stack direction="column" alignItems={"center"}>
                 <div className="Graph">
-                <Line data={eventdata} />;
+                <Line data={eventdata} />
                 </div>
             </Stack>
             <TextField  label="Search Event"

@@ -118,7 +118,7 @@ const UpdateStudent = () => {
               <input
             type="radio"
             name="Status"
-            value="Yes"
+            value="No"
             checked={student.Status === "No"}
             onChange={handleChange}
           /> Not Attending

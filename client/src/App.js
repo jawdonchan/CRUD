@@ -27,6 +27,7 @@ import Sphere from "./pages/sphere.jsx"
 import Chart from "./pages/chart/excelchart.jsx"
 import SqlChart from "./pages/chart/sqlchart.jsx"
 import BarChart from "./pages/chart/dashboard.jsx";
+import Email from "./pages/email/email.jsx";
 import React from 'react';
 
 
@@ -68,6 +69,7 @@ function App() {
         <Route path="/Charts" element={<Chart/>}></Route>
         <Route path="/SQLChart/:id" element={<SqlChart/>}></Route>
         <Route path="/dashboard" element={<BarChart/>}></Route>
+        <Route path="/email" element={<Email/>}></Route>
       </Routes>
       </BrowserRouter>
     </div>

@@ -9,6 +9,10 @@ import fs from 'fs';
 import ExcelJS from 'exceljs';
 import XlsxPopulate from 'xlsx-populate';
 import CanvasRenderService from 'chartjs-node-canvas';
+import bodyParser from 'body-parser';
+import nodemailer from 'nodemailer';
+import google from 'google-auth-library';
+import readline from 'readline';
 // Load environment variables from .env
 dotenv.config();
 
@@ -29,7 +33,7 @@ const db = mysql.createConnection({
 
 app.use(express.json())
 app.use(cors())
-
+app.use(bodyParser.json()); // for email server
 //chart with excel
 
 
@@ -925,11 +929,12 @@ app.post('/insertStudent/:eventId', (req, res) => {
 
   app.get('/dashboardtotalstudent', async (req, res) => {
 
-    const q = ` select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.status = 'Yes' group by students.event`
+    const q = ` select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' group by students.event order by event.id`
     //console.log(q);
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{
+        // console.log(data);
         return res.json(data);
       }
     })
@@ -937,12 +942,13 @@ app.post('/insertStudent/:eventId', (req, res) => {
 
   app.get('/dashboardattendedstudent', async (req, res) => {
 
-    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and students.Status = 'Yes' group by students.event
+    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and students.Status = 'Yes' group by students.event order by event.id
 `
     //console.log(q);
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{
+        // console.log(data);
         return res.json(data);
       }
     })
@@ -951,11 +957,12 @@ app.post('/insertStudent/:eventId', (req, res) => {
 
   app.get('/dashboardtotalstudent/:name', async (req, res) => {
     const name = req.params.name;
-    const q = ` select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.status = 'Yes' and event.name like '%${name}%' group by students.event`
+    const q = ` select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and event.name like '%${name}%' group by students.event order by event.id`
     //console.log(q);
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{
+        // console.log(data);
         return res.json(data);
       }
     })
@@ -964,13 +971,87 @@ app.post('/insertStudent/:eventId', (req, res) => {
   app.get('/dashboardattendedstudent/:name', async (req, res) => {
     const name = req.params.name;
   
-    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and students.Status = 'Yes' and event.name like '%${name}%' group by students.event
+    const q = `  select event.name,Count(*) as count from students inner join event on students.event = event.id  where students.event is not null and students.attendance = 'Yes' and students.Status = 'Yes' and event.name like '%${name}%' group by students.event order by event.id
 `
     //console.log(q);
     db.query(q,(err,data)=>{
       if(err) return res.json(err);
       else{
+        // console.log(data);
         return res.json(data);
       }
     })
   });
+
+
+  
+
+// // Nodemailer transporter Testin
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     type: "OAuth2",
+//     user: process.env.EMAIL,
+//     pass: process.env.WORD,
+//     clientId: process.env.OAUTH_CLIENTID,
+//     clientSecret: process.env.OAUTH_CLIENT_SECRET,
+//     refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+//   },
+// });
+
+// // Email options
+// const mailOptions = {
+//   from: 'nyp.dime.student1@gmail.com', // Replace with your Gmail address
+//   to: 'chanjordan93@gmail.com',
+//   subject: 'Test Email',
+//   text: 'Hello, this is a test email!',
+// };
+
+// // Send the email
+// transporter.sendMail(mailOptions, (error, info) => {
+//   if (error) {
+//     return console.error('Error sending email:', error);
+//   }
+//   console.log('Email sent:', info.response);
+// });
+
+//  transporter.verify((err, success) => {
+//   err
+//     ? console.log(err)
+//     : console.log(`=== Server is ready to take messages: ${success} ===`);
+//  });
+
+ app.post('/send-email', async (req, res) => {
+  const { emails, subject, message } = req.body;
+
+  // Nodemailer setup
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: "OAuth2",
+      user: process.env.EMAIL,
+      pass: process.env.WORD,
+      clientId: process.env.OAUTH_CLIENTID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+    },
+  });
+
+  // Sending emails
+  const promises = emails.map((email) =>
+    transporter.sendMail({
+      from: 'your-gmail@gmail.com', // Replace with your Gmail address
+      to: email,
+      subject,
+      text: message,
+    })
+  );
+
+  try {
+    await Promise.all(promises);
+    res.status(200).json({ message: 'Emails sent successfully.' });
+  } catch (error) {
+    console.error('Error sending emails:', error);
+    res.status(500).json({ error: 'Error sending emails.' });
+  }
+});

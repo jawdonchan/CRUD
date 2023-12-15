@@ -3,16 +3,15 @@ import { Line } from "react-chartjs-2";
 import axios from 'axios';
 import Navbar from "../navigationbar";
 import Stack from '@mui/material/Stack';
-import { Typography } from "@mui/material";
-import { TextField } from '@mui/material';
-
+import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/material";
+import EmailForm from '../email/email.jsx';
 
 
 function BarChart() {
     const [totalstudents, setTotalStudents] = useState([]);
     const [attendedstudents, setattendedstudents] = useState([]);
     const [searchInput, setSearchInput] = useState('');
-
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const [eventdata, setEventdata] = useState({
         labels: [],
@@ -198,6 +197,13 @@ function BarChart() {
         fetchTotalStudents();
     }, [totalstudents,attendedstudents,searchInput]);
 
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
     return (
      <div>
         <Navbar></Navbar>
@@ -217,6 +223,29 @@ function BarChart() {
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
       />
+        <Button variant="contained" color="primary" onClick={handleOpenModal} style={{ position: 'fixed', bottom: '16px', right: '16px' }}>
+                    Open Email Form
+                </Button>
+                <Modal 
+                
+                    open={isModalOpen}
+                    onClose={handleCloseModal}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={isModalOpen}>
+                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '25px', borderRadius: '10px' , height: '42vh'}}>
+                            {/* Add your email form components here */}
+                            <EmailForm onClose={handleCloseModal} />
+                            {/* <Button variant="contained" color="primary" onClick={handleCloseModal} style={{ marginTop: '16px' }}>
+                                Send Email
+                            </Button> */}
+                        </div>
+                    </Fade>
+                </Modal>
         </div>
         <style>
             {`
@@ -239,6 +268,7 @@ function BarChart() {
             .outlined-basic{
                 width: 30vw;
             }
+            
             `}
         </style>
     </div> 

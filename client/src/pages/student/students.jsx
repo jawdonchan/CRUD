@@ -16,6 +16,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/material";
+import EmailForm from '../email/email.jsx';
+import EmailIcon from '@mui/icons-material/Email';
 var hash = require('object-hash');
 
 const Students = () => {
@@ -29,7 +32,7 @@ const Students = () => {
   const location = useLocation();
   const eventid = location.pathname.split("/")[2];
   const userRole = sessionStorage.getItem("role");
-
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const fetchStudents = async (endpoint) => {
     // console.log("fetching students");
@@ -100,11 +103,22 @@ const Students = () => {
     navigate(`/Excel/${eventid}`);
 
   }
+  const handleOpenModal = () => {
+    setModalOpen(true);
+};
 
+const handleCloseModal = () => {
+    setModalOpen(false);
+};
+const handleEmailClick = () => {
+  handleOpenModal();
+  handleCloseModal(); // Close the SpeedDial options
+};
   const actions = [
     { icon: <CoPresentIcon />, name: 'Slide Show', onClick: handleFIlterClick },
     { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
     { icon: <UploadFileIcon />, name: 'Upload Students', onClick: handleUpload },
+    { icon: <EmailIcon />, name: 'Email ', onClick: handleOpenModal },
 
   ];
 
@@ -112,7 +126,7 @@ const Students = () => {
     { icon: <CoPresentIcon />, name: 'Slide Show', onClick: handleFIlterClick },
     { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
   ]
-
+  
   return (
     <div>
       <Navbar />
@@ -136,7 +150,26 @@ const Students = () => {
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={action.onClick} />
         ))}
       </SpeedDial>
-
+      <Modal 
+                
+                open={isModalOpen}
+                onClose={handleCloseModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isModalOpen}>
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '25px', borderRadius: '10px' , height: '42vh'}}>
+                        {/* Add your email form components here */}
+                        <EmailForm onClose={handleCloseModal} />
+                        {/* <Button variant="contained" color="primary" onClick={handleCloseModal} style={{ marginTop: '16px' }}>
+                            Send Email
+                        </Button> */}
+                    </div>
+                </Fade>
+            </Modal>
       <Grid container spacing={2}>
         <Grid xs={4}></Grid>
         <Grid xs={4}>

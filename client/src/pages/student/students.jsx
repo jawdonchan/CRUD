@@ -19,6 +19,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/material";
 import EmailForm from '../email/email.jsx';
 import EmailIcon from '@mui/icons-material/Email';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 var hash = require('object-hash');
 
 const Students = () => {
@@ -33,6 +34,7 @@ const Students = () => {
   const eventid = location.pathname.split("/")[2];
   const userRole = sessionStorage.getItem("role");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [markstudents,setmarkstudents] = useState('');
 
   const fetchStudents = async (endpoint) => {
     // console.log("fetching students");
@@ -67,8 +69,27 @@ const Students = () => {
     // Fetch students when the component mounts
     const endpoint = `http://localhost:8800/studentsfilter/${filter}/${eventid}`;
     // console.log("this is the endpoint:" + endpoint);
+    const fetchlist = async () => {
+      try{
+        const res = await axios.get("http://localhost:8800/dashboardflag");
+        console.log(res.data.length);
+        setmarkstudents(res.data);
+        for(let i = 0 ; i < res.data.length;i++)
+        {
+          console.log(res.data[i].count);
+          if(res.data[i].count > 2){
+            document.getElementById(res.data[i].admNo).innerHTML = "!";
+          }
+        }        
+
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+    fetchlist();
     fetchStudents(endpoint);
-  }, [filter]);
+  }, [filter,markstudents]);
 
   const handleFilterChange = (event) => {
     const selectedFilter = event.target.value;
@@ -204,7 +225,7 @@ const handleEmailClick = () => {
         </Grid>
       </Grid>
       <br></br>
-      <div className='scroll' style={{marginTop: -50, height: 550}}>
+      <div className='scroll' style={{marginTop: -50}}>
         <table className='seats-table'>
           <thead>
             <tr>
@@ -221,7 +242,7 @@ const handleEmailClick = () => {
           <tbody>
             {students.map((student) => (
               <tr key={student.id}>
-                <td>{student.FullName}</td>
+                <td>{student.FullName}<div className="warning" id = {student.AdmNo}></div></td>
                 <td>{student.AdmNo}</td>
                 <td>{student.Award}</td>
                 <td>{student.Top}</td>
@@ -238,6 +259,10 @@ const handleEmailClick = () => {
       </div>
       <style>
         {`
+        .warning{
+          color:red;
+          font-weight:bold;
+        }
           .floating{
             position:fixed;
             bottom:60px;

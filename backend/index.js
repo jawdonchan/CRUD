@@ -539,7 +539,7 @@ app.put("/attendance/:id", (req, res) => {
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
   const sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-  db.query(sql, [username, password], (err, results) => {
+  db.query(sql, [username, password], (err, results) => { 
     if (err) {
       res.status(500).json({ message: "Database error" });
     } else if (results.length > 0) {
@@ -675,22 +675,31 @@ app.post('/insertStudent/:eventId', (req, res) => {
         if(err) return res.json(err)
         else 
         {
-        const q = " Delete from seating where event = ?"
-        db.query(q,[eventid],(err,data)=>{
-          if(err) return res.json(err)
-          else{
-        const q = "Delete from event where id  = ?"
-        db.query(q,[eventid], (err,data)=>{
-          if(err) return res.json(err)
-          else 
-          {
-            return res.json("Event has been deleted!");
-          }
-        })
-
-        }
-        })
-        
+          console.log("deleted students");
+          const q = " Delete from seating where event = ?"
+          db.query(q,[eventid],(err,data)=>{
+            if(err) return res.json(err)
+            else{
+              console.log("deleted seating");
+              const q = "Delete from event_staff where event_id = ?"
+              db.query(q,[eventid],(err,results)=> {
+                if(err)return res.sendStatus(400)
+                else{ 
+                  const q = "Delete from event where id  = ?"
+                  db.query(q,[eventid], (err,data)=>{
+                  if(err) {
+                    console.log(err);
+                    return res.json(err)}
+                  else 
+                  {
+                    console.log("deleted event");
+                    return res.json("Event has been deleted!");
+                  }
+                  })
+                }
+              })
+            }
+          })
         }
     })
   })
@@ -983,6 +992,17 @@ app.post('/insertStudent/:eventId', (req, res) => {
     })
   });
 
+  app.get('/dashboardflag',async (req,res)=>{
+    const q= "select distinct(admNo),count(*) as count from students where status = 'Yes'  and (Attendance != 'Yes' || Attendance is null) group by admNo";
+
+    db.query(q,(err,data)=>{
+      if(err)return res.status(400).send("Error");
+      else{
+        return res.json(data);
+      }
+    })
+  })
+
 
   
 
@@ -1055,3 +1075,5 @@ app.post('/insertStudent/:eventId', (req, res) => {
     res.status(500).json({ error: 'Error sending emails.' });
   }
 });
+
+

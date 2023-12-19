@@ -20,6 +20,7 @@ import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/mater
 import EmailForm from '../email/email.jsx';
 import EmailIcon from '@mui/icons-material/Email';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import DeleteIcon from '@mui/icons-material/Delete';
 var hash = require('object-hash');
 
 const Students = () => {
@@ -35,6 +36,7 @@ const Students = () => {
   const userRole = sessionStorage.getItem("role");
   const [isModalOpen, setModalOpen] = useState(false);
   const [markstudents,setmarkstudents] = useState('');
+  const [markstudentscount,setmarkstudentscount] = useState(0);
 
   const fetchStudents = async (endpoint) => {
     // console.log("fetching students");
@@ -63,7 +65,7 @@ const Students = () => {
     };
 
     fetchAwardFilters();
-  }, [eventid]);
+  }, [eventid,markstudentscount]);
 
   useEffect(() => {
     // Fetch students when the component mounts
@@ -74,13 +76,17 @@ const Students = () => {
         const res = await axios.get("http://localhost:8800/dashboardflag");
         console.log(res.data.length);
         setmarkstudents(res.data);
+        let count = 0;
         for(let i = 0 ; i < res.data.length;i++)
         {
           console.log(res.data[i].count);
           if(res.data[i].count > 2){
             document.getElementById(res.data[i].admNo).innerHTML = "!";
+            count++ ;
+            console.log("count" + count);
           }
         }        
+        setmarkstudentscount(count);
 
       }
       catch(err){
@@ -124,6 +130,15 @@ const Students = () => {
     navigate(`/Excel/${eventid}`);
 
   }
+
+function deleteStudents(){
+  try{
+    axios.delete(`http://localhost:8800/deletestudents/${eventid}`);
+  }
+  catch(err){
+    console.log(err);
+  }
+}
   const handleOpenModal = () => {
     setModalOpen(true);
 };
@@ -140,6 +155,7 @@ const handleEmailClick = () => {
     { icon: <QrCodeScannerIcon />, name: 'ScanQR', onClick: handleGuestClick },
     { icon: <UploadFileIcon />, name: 'Upload Students', onClick: handleUpload },
     { icon: <EmailIcon />, name: 'Email ', onClick: handleOpenModal },
+    { icon: <DeleteIcon/>, name: "Delete", onClick: deleteStudents}
 
   ];
 
@@ -192,7 +208,12 @@ const handleEmailClick = () => {
                 </Fade>
             </Modal>
       <Grid container spacing={2}>
-        <Grid xs={4}></Grid>
+        <Grid xs={4}>
+          <Stack direction="column" justifyContent={"center"} alignItems={"center"}>
+            <br></br><br></br><br></br><br></br><br></br>
+            <div>Number of Students marked: {markstudentscount > 0 && markstudentscount}</div>
+          </Stack>
+        </Grid>
         <Grid xs={4}>
           <Stack direction='column' justifyContent={'space-around'}>
             <br></br>

@@ -219,7 +219,6 @@ const Events = () => {
     try {
       axios.delete(`http://localhost:8800/deleteeventstaff/${eventId}/${userId}`);
       // Optionally, you can refresh the page or update the UI after successful deletion
-       window.location.reload();
       // console.log()
     } catch (err) {
       console.log(err);

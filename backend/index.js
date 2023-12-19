@@ -1003,6 +1003,17 @@ app.post('/insertStudent/:eventId', (req, res) => {
     })
   })
 
+  app.delete('/deletestudents/:eventid',async (req,res)=>{
+    const eventid = req.params.eventid;
+    const q ="DELETE FROM students WHERE event = ?";
+    db.query(q,eventid,(err,data)=>{
+      if(err) return res.status(400).send("Error");
+      else{
+        return res.json({message:"students deleted"});
+      }
+    })
+  })
+
 
   
 

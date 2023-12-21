@@ -73,7 +73,7 @@ export default function Navbar() {
     <AppBar position="static">
       <Toolbar>
         {/* <Stack  direction="row" alignItems={"space-between"} justifyContent={"center"}> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 0.5 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 2.0 }}>
           Dashboard
         </Typography>
         <Typography variant="h6" component="div" sx={{ flexGrow: 4.5 }}>
@@ -81,7 +81,7 @@ export default function Navbar() {
         </Typography>
         <div></div>
         <div>
-         <Button color="inherit" onClick={handleDashBoardClick}>
+         <Button color="inherit" id = "hiddennav" onClick={handleDashBoardClick}>
           Dashboard
         </Button> 
           <Button color="inherit" id = "hiddennav" onClick={handleUsersClick}>

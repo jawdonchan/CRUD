@@ -5,6 +5,8 @@ import Navbar from "../navigationbar";
 import Stack from '@mui/material/Stack';
 import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/material";
 import EmailForm from '../email/email.jsx';
+import Denied from '../user/access-denied';
+var hash = require('object-hash');
 
 
 function BarChart() {
@@ -12,6 +14,10 @@ function BarChart() {
     const [attendedstudents, setattendedstudents] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
+    const userRole = sessionStorage.getItem("role");
+    const [hashed,setHash] = useState([]);
+
+
 
     const [eventdata, setEventdata] = useState({
         labels: [],
@@ -33,6 +39,8 @@ function BarChart() {
     });
 
     useEffect(() => {
+        setHash(hash.MD5("Admin"));
+                
         const fetchTotalStudents = async () => {
             if(searchInput === "")
             {
@@ -207,46 +215,52 @@ function BarChart() {
     return (
      <div>
         <Navbar></Navbar>
+        {userRole !== hashed && (
+        <div>
+          {/* <p>Access denied. User is not an admin.</p> */}
+          <Denied></Denied>
+          {/* You can redirect here as well if needed */}
+        </div>
+      )}
+      {userRole == hashed && (
         <div className="dashboard">
-            
             <Typography variant="h5">Number of Students Attended</Typography>
-        <br></br><br></br>
+            <br></br><br></br>
             <Stack direction="column" alignItems={"center"}>
                 <div className="Graph">
-                <Line data={eventdata} />
+                    <Line data={eventdata} />
                 </div>
             </Stack>
-            <TextField  label="Search Event"
-            className="outlined-basic"
-        variant="outlined"
-        fullWidth
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
-      />
-        <Button variant="contained" color="primary" onClick={handleOpenModal} style={{ position: 'fixed', bottom: '16px', right: '16px' }}>
-                    Open Email Form
-                </Button>
-                <Modal 
-                
-                    open={isModalOpen}
-                    onClose={handleCloseModal}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
+            <TextField  
+                label="Search Event"
+                className="outlined-basic"
+                variant="outlined"
+                fullWidth
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
+            />
+            <Button variant="contained" color="primary" onClick={handleOpenModal} style={{ position: 'fixed', bottom: '16px', right: '16px' }}>
+                Open Email Form
+            </Button>
+            <Modal                 
+                open={isModalOpen}
+                onClose={handleCloseModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{timeout: 500,}}
                 >
-                    <Fade in={isModalOpen}>
-                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '25px', borderRadius: '10px' , height: '42vh'}}>
-                            {/* Add your email form components here */}
-                            <EmailForm onClose={handleCloseModal} />
+                <Fade in={isModalOpen}>
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '25px', borderRadius: '10px' , height: '42vh'}}>
+                    {/* Add your email form components here */}
+                        <EmailForm onClose={handleCloseModal} />
                             {/* <Button variant="contained" color="primary" onClick={handleCloseModal} style={{ marginTop: '16px' }}>
                                 Send Email
                             </Button> */}
                         </div>
-                    </Fade>
-                </Modal>
+                </Fade>
+            </Modal>
         </div>
+      )}
         <style>
             {`
             .dashboard{

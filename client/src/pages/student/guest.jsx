@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import { Typography, CircularProgress, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
+import ipaddress from '../../../port';
 
 
 const Guest = (props) => {
@@ -41,13 +42,13 @@ const Guest = (props) => {
 
                 console.log(result.text);
 
-                const response = await axios.put("http://localhost:8800/attendance/" + result.text);
+                const response = await axios.put(`http://${ipaddress}/attendance/` + result.text);
                
                 console.log('Axios Response:', response.data);
 
                 // Insert admin number into the student and seatcol tables
-                await axios.post("http://localhost:8800/insertStudent/" + eventid, { adminNo: result.text});
-                // await axios.post("http://localhost:8800/insertSeatcol", { adminNo: result.text });
+                await axios.post(`http://${ipaddress}/insertStudent/` + eventid, { adminNo: result.text});
+                // await axios.post("http://${ipaddress}/insertSeatcol", { adminNo: result.text });
 
                 setData(result.text);
                 // Add a delay of 2 seconds (2000 milliseconds)

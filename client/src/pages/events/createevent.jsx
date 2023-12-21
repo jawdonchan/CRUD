@@ -6,6 +6,7 @@ import Navbar from '../navigationbar';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import ipaddress from '../../../port';
 
 const CreateEvent = () => {
   const [event, setEvent] = useState({
@@ -34,7 +35,7 @@ const CreateEvent = () => {
 
     try {
       console.log('adding Event');
-      await axios.post('http://localhost:8800/addEvent', event);
+      await axios.post(`http://${ipaddress}/addEvent`, event);
       navigate('/event');
     } catch (err) {
       console.log(err);

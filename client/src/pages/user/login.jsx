@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/styles.css"; // Import the CSS file
 import '../../css/login.css';
 import SphereAnimation from '../sphere';
+import ipaddress from '../../../port';
 var hash = require('object-hash');
 
 function Login() {
@@ -23,7 +24,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8800/api/login", {
+      const response = await axios.post(`http://${ipaddress}/api/login`, {
         username,
         password,
       });

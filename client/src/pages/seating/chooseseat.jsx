@@ -9,6 +9,7 @@ import Navbar from '../navigationbar';
 import { createEvents } from '@react-three/fiber';
 import axios from 'axios';
 import { Alert } from '@mui/material';
+import ipaddress from '../../../port';
 
 
 export default function ChooseSeating() {
@@ -23,7 +24,7 @@ export default function ChooseSeating() {
   
   const handleCreateClick = async (id)  => {
     try {
-      const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
+      const res = await axios.get(`http://${ipaddress}/seatingsearch/${id}`);
       console.log(res.data);
       if(res.data.length != 0)
       {

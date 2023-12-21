@@ -17,6 +17,7 @@ import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
+import ipaddress from '../../../port';
 
 
 
@@ -60,7 +61,7 @@ const Events = () => {
 
     const fetchALlEvents = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/events");
+        const res = await axios.get(`http://${ipaddress}/events`);
         setEvents(res.data);
         // console.log("users get : " + res.data);
         for(let i = 0 ; i < res.data.length; i++)
@@ -91,13 +92,13 @@ const Events = () => {
       if(searchCollaboratorInput !== null){
           //console.log("there is input");
           try {
-            const res = await axios.get(`http://localhost:8800/user/${searchCollaboratorInput}`);
+            const res = await axios.get(`http://${ipaddress}/user/${searchCollaboratorInput}`);
             // params: { query: searchCollaboratorInput },
             setCollaboratorOptions(null);
             setCollaboratorOptions(res.data); 
             // console.log("search");
             // console.log(res.data);
-            const eventuser = await axios.get(`http://localhost:8800/eventcollaborator/${selectedEventId}`);
+            const eventuser = await axios.get(`http://${ipaddress}/eventcollaborator/${selectedEventId}`);
         // console.log(eventuser.data);
         for(let l = 0 ; l < eventuser.data.length; l++)
         {
@@ -143,12 +144,12 @@ const Events = () => {
     if(searchCollaboratorInput == "")
     {
       try {
-      const res = await axios.get(`http://localhost:8800/user`);
+      const res = await axios.get(`http://${ipaddress}/user`);
         // params: { query: searchCollaboratorInput },
       setCollaboratorOptions(res.data); 
       // console.log(res.data);
       
-      const eventuser = await axios.get(`http://localhost:8800/eventcollaborator/${selectedEventId}`);
+      const eventuser = await axios.get(`http://${ipaddress}/eventcollaborator/${selectedEventId}`);
       // console.log(eventuser.data);
       for(let l = 0 ; l < eventuser.data.length; l++)
       {
@@ -187,7 +188,7 @@ const Events = () => {
         try{      
         const userid = collaboratorId;
        // console.log(userid);
-          const q = await axios.post(`http://localhost:8800/addeventstaff/${selectedEventId}/`+userid);
+          const q = await axios.post(`http://${ipaddress}/addeventstaff/${selectedEventId}/`+userid);
          // console.log(q);
           handleAddCollaboratorsClose();
         }
@@ -201,7 +202,7 @@ const Events = () => {
   const handleSeat = async (id)  => {
     console.log(id);
     try {
-      const res = await axios.get(`http://localhost:8800/seatingsearch/${id}`);
+      const res = await axios.get(`http://${ipaddress}/seatingsearch/${id}`);
       console.log("data length");
       console.log(res.data);
       if(res.data > 0 )
@@ -217,7 +218,7 @@ const Events = () => {
 
   function deleteEventStaff(eventId, userId) {
     try {
-      axios.delete(`http://localhost:8800/deleteeventstaff/${eventId}/${userId}`);
+      axios.delete(`http://${ipaddress}/deleteeventstaff/${eventId}/${userId}`);
       // Optionally, you can refresh the page or update the UI after successful deletion
       // console.log()
     } catch (err) {
@@ -239,7 +240,7 @@ const handleCollabClick = async (event) =>{
     if(collabbutton == false)
     {
       try{
-        const q = await  axios.get(`http://localhost:8800/eventcollaborator/${event}`);
+        const q = await  axios.get(`http://${ipaddress}/eventcollaborator/${event}`);
         console.log(q.data);
         console.log(q.data.length);
         for(let l = 0 ; l < q.data.length; l++)
@@ -273,7 +274,7 @@ const handleCollabClick = async (event) =>{
     
     else{
       try{
-        const q = await  axios.get(`http://localhost:8800/eventcollaborator/${event}`);
+        const q = await  axios.get(`http://${ipaddress}/eventcollaborator/${event}`);
         console.log(q.data);
         console.log(q.data.length);
         for(let l = 0 ; l < q.data.length; l++)
@@ -309,7 +310,7 @@ const handleCollabClick = async (event) =>{
   
 const checkeventuser = async (eventid) => {
   try{
-    let check = await axios.get(`http://localhost:8800/checkeventcollab/${username}/${eventid}`);
+    let check = await axios.get(`http://${ipaddress}/checkeventcollab/${username}/${eventid}`);
     console.log(check.data[0].count);
     if(check.data[0].count != 0)
     {
@@ -325,7 +326,7 @@ const checkeventuser = async (eventid) => {
 }
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:8800/deleteEvent/${eventId}`);
+      await axios.delete(`http://${ipaddress}/deleteEvent/${eventId}`);
       navigate('/choose')
     } catch (err) {
       console.error(err);

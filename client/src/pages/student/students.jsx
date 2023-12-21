@@ -22,6 +22,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import DeleteIcon from '@mui/icons-material/Delete';
 var hash = require('object-hash');
+import ipaddress from '../../../port.jsx';
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -55,7 +56,7 @@ const Students = () => {
 
     const fetchAwardFilters = async () => {
       try {
-        const awardFilterRes = await axios.get(`http://localhost:8800/studentawardfilter/${eventid}`);
+        const awardFilterRes = await axios.get(`http://${ipaddress}/studentawardfilter/${eventid}`);
         const awardFilters = awardFilterRes.data;
         // console.log(awardFilters);
         setAwardFilters(awardFilters);
@@ -69,11 +70,11 @@ const Students = () => {
 
   useEffect(() => {
     // Fetch students when the component mounts
-    const endpoint = `http://localhost:8800/studentsfilter/${filter}/${eventid}`;
+    const endpoint = `http://${ipaddress}/studentsfilter/${filter}/${eventid}`;
     // console.log("this is the endpoint:" + endpoint);
     const fetchlist = async () => {
       try{
-        const res = await axios.get("http://localhost:8800/dashboardflag");
+        const res = await axios.get(`http://${ipaddress}/dashboardflag`);
         console.log(res.data.length);
         setmarkstudents(res.data);
         let count = 0;
@@ -133,7 +134,7 @@ const Students = () => {
 
 function deleteStudents(){
   try{
-    axios.delete(`http://localhost:8800/deletestudents/${eventid}`);
+    axios.delete(`http://${ipaddress}/deletestudents/${eventid}`);
   }
   catch(err){
     console.log(err);

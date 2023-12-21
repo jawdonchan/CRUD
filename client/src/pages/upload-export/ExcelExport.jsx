@@ -8,6 +8,7 @@ import hash from 'object-hash';
 import moment from 'moment';
 import '../../css/sphere.css';
 import '../../css/export.css';
+import ipaddress from '../../../port';
 
 import Sphere from '../sphere';
 const MainPage = () => {
@@ -20,7 +21,7 @@ const MainPage = () => {
   useEffect(() => {
     setHashed(hash.MD5("Admin"));
     // Fetch events from the database
-    axios.get('http://localhost:8800/events')
+    axios.get(`http://${ipaddress}/events`)
       .then(response => {
         setEvents(response.data);
         setSelectedEvent(response.data[0]);  // Set the default selected event
@@ -47,7 +48,7 @@ const MainPage = () => {
       iframe.style.display = 'none';
       document.body.appendChild(iframe);
       axios
-        .get(`http://localhost:8800/export-students-excel/` + selectedEvent.id, {
+        .get(`http://${ipaddress}/export-students-excel/` + selectedEvent.id, {
           responseType: 'arraybuffer',
         })
           .then((response) => {

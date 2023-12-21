@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Stack, FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import Navbar from '../navigationbar';
+import ipaddress from '../../../port';
+
 
 const AddAccount = () => {
   const [account, setAccount] = useState({
@@ -28,7 +30,7 @@ const AddAccount = () => {
 
     try {
       console.log('adding account');
-      await axios.post('http://localhost:8800/addaccount', account);
+      await axios.post(`http://${ipaddress}/addaccount`, account);
       navigate('/users');
     } catch (err) {
       console.log(err);

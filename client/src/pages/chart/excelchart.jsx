@@ -1,6 +1,7 @@
 // src/components/ChartDisplay.js
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
+import ipaddress from '../../../port';
 
 const ChartDisplay = () => {
   const [excelData, setExcelData] = useState(null);
@@ -16,7 +17,7 @@ const ChartDisplay = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:8800/api/upload-excel', {
+      const response = await fetch(`http://${ipaddress}/api/upload-excel`, {
         method: 'POST',
         body: formData,
       });

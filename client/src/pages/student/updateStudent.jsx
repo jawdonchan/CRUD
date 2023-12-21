@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../css/update.css';
 import Stack from '@mui/material/Stack';
+import ipaddress from '../../../port';
 
 const UpdateStudent = () => {
   const [student, setStudent] = useState({
@@ -18,7 +19,7 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/updategetstudents/${studentId}`);
+        const response = await axios.get(`http://${ipaddress}/updategetstudents/${studentId}`);
         console.log(response.data[0]);
         let studentData = response.data[0];
         setStudent(studentData);
@@ -46,7 +47,7 @@ const UpdateStudent = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8800/updateStudent/${studentId}`, student);
+      await axios.put(`http://${ipaddress}/updateStudent/${studentId}`, student);
       navigate(`/event`); // Redirect to the students page after updating
     } catch (error) {
       console.error(error);

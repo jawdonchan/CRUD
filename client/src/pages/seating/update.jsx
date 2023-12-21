@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ipaddress from '../../../port';
 // import '../css/update.css'; // Import the CSS file
 const Update = () => {
 
@@ -24,7 +25,7 @@ const Update = () => {
     const handleClick = async e =>{
        e.preventDefault()
         try{
-            await axios.put("http://localhost:8800/seat/"+ seatId, seats)
+            await axios.put(`http://${ipaddress}/seat/`+ seatId, seats)
             navigate("/")
         }
         catch(err){

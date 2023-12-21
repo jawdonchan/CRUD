@@ -5,6 +5,7 @@ import moment from 'moment';
 import Navbar from '../navigationbar';
 import CircularProgress from '@mui/material/CircularProgress';
 import '../../css/studentexport.css';
+import ipaddress from '../../../port';
 var hash = require('object-hash');
 const ExportStudentsToExcel = () => {
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ const ExportStudentsToExcel = () => {
 
     // Make a GET request to your server to trigger the export
     axios
-      .get('http://localhost:8800/export-students-excel/2', {
+      .get(`http://${ipaddress}/export-students-excel/2`, {
         responseType: 'arraybuffer',
       })
       .then((response) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/seats.css'; // Import the CSS file
 import { Link } from 'react-router-dom';
+import ipaddress from '../../../port';
 
 const Seats = () => {
   const [seats, setSeats] = useState([]);
@@ -9,7 +10,7 @@ const Seats = () => {
   useEffect(() => {
     const fetchAllSeats = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/seat");
+        const res = await axios.get(`http://${ipaddress}/seat`);
         setSeats(res.data);
       } catch (err) {
         console.log(err);
@@ -20,7 +21,7 @@ const Seats = () => {
 
   const handleDelete = async (id)=>{
     try{
-      await axios.delete("http://localhost:8800/seat/"+id);
+      await axios.delete(`http://${ipaddress}/seat/`+id);
       window.location.reload()
     }catch(err){
       console.log(err);

@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useSpring, animated } from 'react-spring';
 import axios from 'axios';
 import '../../css/transition.css';
+import ipaddress from '../../../port';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -10,7 +11,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('All Students'); // Default tab
 
   useEffect(() => {
-    axios.get('http://localhost:8800/student').then((response) => {
+    axios.get(`http://${ipaddress}/student`).then((response) => {
       setStudents(response.data);
     });
   }, []);

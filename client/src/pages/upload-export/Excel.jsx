@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import CircularProgress from '@mui/material/CircularProgress';
+import ipaddress from "../../../port";
 
 const ExcelFileUpload = () => {
   const [file, setFile] = useState(null);
@@ -41,7 +42,7 @@ return () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch(`http://localhost:8800/upload/${eventid}`, {
+      const response = await fetch(`http://${ipaddress}/upload/${eventid}`, {
         method: 'POST',
         body: formData,
       });
@@ -81,7 +82,7 @@ return () => {
   
     try {
       // Endpoint to export sample Excel file
-      const templateEndpoint = 'http://localhost:8800/export-sample-excel';
+      const templateEndpoint = 'http://${ipaddress}/export-sample-excel';
   
       // Create an invisible link and trigger a click event to initiate the download
       const a = document.createElement('a');

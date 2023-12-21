@@ -13,6 +13,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Denied from '../user/access-denied';
 var hash = require('object-hash');
+import ipaddress from '../../../port';
 
 
 
@@ -38,15 +39,15 @@ const Users = () => {
         {
           if(username == "admin")
           {
-            res= await axios.get("http://localhost:8800/accounts");
+            res= await axios.get(`http://${ipaddress}/accounts`);
           }
           else{
-            res= await axios.get("http://localhost:8800/accountsadmin");
+            res= await axios.get(`http://${ipaddress}/accountsadmin`);
 
           }
         }
         else{
-        res = await axios.get("http://localhost:8800/accountsteacher");
+        res = await axios.get(`http://${ipaddress}/accountsteacher`);
 
         }
         setUsers(res.data);
@@ -77,7 +78,7 @@ const Users = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8800/deleteUser/${userId}`);
+      await axios.delete(`http://${ipaddress}/deleteUser/${userId}`);
       navigate('/addaccount')
       // Navigate to the users page and trigger a page reload
     } catch (err) {

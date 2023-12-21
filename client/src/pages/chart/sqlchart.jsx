@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
 import { useParams } from 'react-router-dom';
+import ipaddress from '../../../port';
 
 const ChartComponent = () => {
   const { id: eventId } = useParams();
@@ -11,7 +12,7 @@ const ChartComponent = () => {
     const fetchData = async () => {
       try {
         // Fetch student data from the backend using the eventId
-        const response = await fetch(`http://localhost:8800/student/${eventId}`);
+        const response = await fetch(`http://${ipaddress}/student/${eventId}`);
         const data = await response.json();
 
         // Sort data by the "Status" column

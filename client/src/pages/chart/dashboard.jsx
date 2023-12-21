@@ -7,6 +7,7 @@ import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/mater
 import EmailForm from '../email/email.jsx';
 import Denied from '../user/access-denied';
 var hash = require('object-hash');
+import ipaddress from "../../../port.jsx";
 
 
 function BarChart() {
@@ -45,10 +46,10 @@ function BarChart() {
             if(searchInput === "")
             {
               try {
-                const res1 = await axios.get("http://localhost:8800/dashboardtotalstudent");
+                const res1 = await axios.get(`http://${ipaddress}/dashboardtotalstudent`);
                 setTotalStudents(res1.data);
                 try{
-                    const res2 = await axios.get("http://localhost:8800/dashboardattendedstudent");
+                    const res2 = await axios.get(`http://${ipaddress}/dashboardattendedstudent`);
                 setattendedstudents(res2.data);
                 if(attendedstudents.length > 0)
                 {
@@ -124,10 +125,10 @@ function BarChart() {
             }
             else{
                 try {
-                    const res1 = await axios.get("http://localhost:8800/dashboardtotalstudent/"+searchInput);
+                    const res1 = await axios.get(`http://${ipaddress}/dashboardtotalstudent/`+searchInput);
                     setTotalStudents(res1.data);
                     try{
-                        const res2 = await axios.get("http://localhost:8800/dashboardattendedstudent/"+searchInput);
+                        const res2 = await axios.get(`http://${ipaddress}/dashboardattendedstudent/`+searchInput);
                     setattendedstudents(res2.data);
                     if(attendedstudents.length > 0)
                     {

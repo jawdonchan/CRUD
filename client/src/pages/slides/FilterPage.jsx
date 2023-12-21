@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
 import '../../css/filterpage.css';
 import { useLocation } from 'react-router-dom';
-
+import ipaddress from '../../../port';
 const BlankSlide = () => (
   <div>
     <h3></h3>
@@ -68,7 +68,7 @@ const handleTabClick = (tab) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/students/${eventId}`);
+        const response = await axios.get(`http://${ipaddress}/students/${eventId}`);
         if (response.data !== null){
           setisdata(true);
           setStudentData(response.data);

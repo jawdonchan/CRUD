@@ -14,7 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-
+import ipaddress from '../../../port';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -71,7 +71,7 @@ export default function Seating() {
     const fetchS = async () => {
       if (usedeventid !== undefined) {
         try {
-          const data = await axios.get(`http://localhost:8800/eventsearch/${usedeventid}`);
+          const data = await axios.get(`http://${ipaddress}/eventsearch/${usedeventid}`);
           const rowncol = data.data[0].rowxcol.split(',');
           console.log("row" + rowncol[0]);
           setRows(rowncol[0]);
@@ -81,7 +81,7 @@ export default function Seating() {
         }
   
         try {
-          const category = await axios.get(`http://localhost:8800/seatingcategory/${usedeventid}`);
+          const category = await axios.get(`http://${ipaddress}/seatingcategory/${usedeventid}`);
           console.log(category.data);
   
           // Accumulate new categories in a temporary array
@@ -301,25 +301,25 @@ export default function Seating() {
     try {      
       // let rowxcol = rows+","+columns;
       // console.log(rowxcol);
-      const res2= await axios.put(`http://localhost:8800/seating/${eventid}/${rows}/${columns}`);
+      const res2= await axios.put(`http://${ipaddress}/seating/${eventid}/${rows}/${columns}`);
       console.log(res2);
 
         if(eventid == usedeventid)
         {        
-          const deletecat = await axios.delete(`http://localhost:8800/seat/${eventid}`);
+          const deletecat = await axios.delete(`http://${ipaddress}/seat/${eventid}`);
           console.log(deletecat);      
           for(let i = 0 ; i < categories.length; i++)
       {         
          console.log(categories[i]);
 
-          const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
+          const res= await axios.post(`http://${ipaddress}/addseat/${eventid}`,categories[i]);
       console.log(res);
       }
         }
         else{
           for(let i = 0 ; i < categories.length; i++)
           {
-          const res= await axios.post(`http://localhost:8800/addseat/${eventid}`,categories[i]);
+          const res= await axios.post(`http://${ipaddress}/addseat/${eventid}`,categories[i]);
         console.log(res);
         }
         }

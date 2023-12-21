@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Navbar from '../navigationbar';
+import ipaddress from "../../../port";
 
 const UpdateUser = () => {
   const [user, setUser] = useState({
@@ -24,7 +25,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/users/${userId}`);
+        const response = await axios.get(`http://${ipaddress}/users/${userId}`);
         const userData = response.data;
         console.log("User data");
         console.log(userData);
@@ -56,7 +57,7 @@ const UpdateUser = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8800/updateUser/${userId}`, user);
+      await axios.put(`http://${ipaddress}/updateUser/${userId}`, user);
       navigate("/users"); // Redirect to the users page after updating
     } catch (error) {
       console.error(error);

@@ -12,7 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import TextField from '@mui/material/TextField';
-
+import ipaddress from '../../../port';
 
 const Seatinglist = () => {
   const [search,setsearch] = useState("");
@@ -32,7 +32,7 @@ const Seatinglist = () => {
     if(catbutton == false)
     {
       try{
-        const q = await  axios.get(`http://localhost:8800/seatingdata/${event}`);
+        const q = await  axios.get(`http://${ipaddress}/seatingdata/${event}`);
         console.log(q.data);
         console.log(q.data.length);
         for(let l = 0 ; l < q.data.length; l++)
@@ -57,7 +57,7 @@ const Seatinglist = () => {
     
     else{
       try{
-        const q = await  axios.get(`http://localhost:8800/seatingdata/${event}`);
+        const q = await  axios.get(`http://${ipaddress}/seatingdata/${event}`);
         console.log(q.data);
         console.log(q.data.length);
         for(let l = 0 ; l < q.data.length; l++)
@@ -101,13 +101,13 @@ const Seatinglist = () => {
       let data;
       if(search != "")
       {
-        data = await axios.get(`http://localhost:8800/searcheventid/${search}`);
+        data = await axios.get(`http://${ipaddress}/searcheventid/${search}`);
         setEvent(data.data);        
 
       }
       else{
         try {
-        data = await axios.get(`http://localhost:8800/searcheventseat/`);
+        data = await axios.get(`http://${ipaddress}/searcheventseat/`);
         setEvent(data.data);        
         // console.log("huh");
         // console.log(data.data);
@@ -122,7 +122,7 @@ const Seatinglist = () => {
 
         for(let i = 0 ; i < eventlist.length ; i ++)
         {
-           const color = await axios.get(`http://localhost:8800/seatingdata/${eventlist[i].id}`);
+           const color = await axios.get(`http://${ipaddress}/seatingdata/${eventlist[i].id}`);
      // console.log(color.data);
      // console.log(color.data.length);        
      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWHXYZ';

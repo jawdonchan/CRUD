@@ -5,7 +5,7 @@ import '../../css/update.css';
 import Stack from '@mui/material/Stack';
 import { TextField } from '@mui/material';
 import Navbar from "../navigationbar";
-
+import ipaddress from '../../../port';
 const UpdateEvent = () => {
   const [event, setevent] = useState({
     name: '',
@@ -21,7 +21,7 @@ const UpdateEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/eventsearch/${eventid}`);
+        const response = await axios.get(`http://${ipaddress}/eventsearch/${eventid}`);
         const eventData = response.data;
         setevent(eventData[0]);
         console.log(eventData[0]);
@@ -55,7 +55,7 @@ const UpdateEvent = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8800/updateEvent/${eventid}`, event);
+      await axios.put(`http://${ipaddress}/updateEvent/${eventid}`, event);
       navigate("/event"); // Redirect to the students page after updating
     } catch (error) {
       console.error(error);

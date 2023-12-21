@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from "../navigationbar";
+import ipaddress from '../../../port';
 
 const EmailForm = () => {
   const [emails, setEmails] = useState('');
@@ -12,7 +13,7 @@ const EmailForm = () => {
     const emailsArray = emails.split(',').map((email) => email.trim());
 
     try {
-      const response = await axios.post(`http://localhost:8800/send-email`, {
+      const response = await axios.post(`http://${ipaddress}/send-email`, {
         emails: emailsArray,
         subject,
         message,

@@ -1,2 +1,10 @@
-const ipaddress = "192.168.1.2:8800";
+const ip = "";
+let ipaddress ="";
+if(ip == "")
+{
+    ipaddress = "localhost:8800";
+}
+else{
+    ipaddress = ip+":8800";
+}
 export default ipaddress;

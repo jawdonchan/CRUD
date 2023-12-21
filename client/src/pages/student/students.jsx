@@ -211,7 +211,8 @@ const handleEmailClick = () => {
         <Grid xs={4}>
           <Stack direction="column" justifyContent={"center"} alignItems={"center"}>
             <br></br><br></br><br></br><br></br><br></br>
-            <div>Number of Students marked: {markstudentscount > 0 && markstudentscount}</div>
+            <div class="red-exclamation"><span>!</span> : Students that don't come to awards</div>
+            {/* <div>Number of Students marked: {markstudentscount > 0 && markstudentscount}</div> */}
           </Stack>
         </Grid>
         <Grid xs={4}>
@@ -280,6 +281,10 @@ const handleEmailClick = () => {
       </div>
       <style>
         {`
+          .red-exclamation span {
+            font-weight: bold;
+            color: red; /* Set the color of the span (exclamation mark) to red */
+          }
         .warning{
           color:red;
           font-weight:bold;

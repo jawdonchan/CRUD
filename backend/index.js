@@ -136,7 +136,7 @@ app.get('/emcee-list', (req,res) => {
 app.get('/export-students-excel/:id', (req, res) => {
   // Define your SQL query to fetch student data
   let id = req.params.id;
-  const q = 'SELECT id, AdmNo, Seating, Event FROM emcee where Event = ' + id;
+  const q = 'SELECT id, Award, AdmNo, FullName, TutGrp, Status, Attendance, Event FROM students where Event = ' + id;
 
   // Execute the query to fetch the data from the students table
   db.query(q, (err, data) => {
@@ -151,11 +151,11 @@ app.get('/export-students-excel/:id', (req, res) => {
       const worksheet = workbook.addWorksheet('Emcee Data');
 
       // Add header row
-      worksheet.addRow(['id', 'AdmNo', 'Seating', 'Event']);
+      worksheet.addRow(['id', 'Award' ,'AdmNo', 'FullName', 'TutGrp', 'Status', 'Attendance', 'Event']);
 
       // Add student data rows
       data.forEach(row => {
-        worksheet.addRow([row.id, row.AdmNo, row.Seating, row.Event]);
+        worksheet.addRow([row.id, row.Award ,row.AdmNo, row.FullName, row.TutGrp, row.Status, row.Attendance ,row.Event]);
       });
 
       // Create a buffer to store the Excel file

@@ -91,8 +91,8 @@ const MainPage = () => {
 
   return (
     <div className='ExcelExp'>
-      <Navbar />
-      <h1>Excel Export Page</h1>
+      {/* <Navbar /> */}
+      <h1>Excel Export</h1>
       {/* <div className="animation-wrapper">
         <Sphere />
       </div> */}

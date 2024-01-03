@@ -15,6 +15,7 @@ const CreateEvent = () => {
     date: '',
     time: ''
   });
+  const username = sessionStorage.getItem("username");
 
 
   const [errorMessage, setErrorMessage] = useState(''); // New state for error message
@@ -35,7 +36,7 @@ const CreateEvent = () => {
 
     try {
       console.log('adding Event');
-      await axios.post(`http://${ipaddress}/addEvent`, event);
+      await axios.post(`http://${ipaddress}/addEvent/${username}`, event);
       navigate('/event');
     } catch (err) {
       console.log(err);

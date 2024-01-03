@@ -627,17 +627,47 @@ app.post('/insertStudent/:eventId', (req, res) => {
       }
     })
   });
-  app.post("/addEvent", (req,res)=>{
+  app.post("/addEvent/:username", (req,res)=>{
     const q = "INSERT INTO Event (name,location,date,time) values (?)";
     const values = [req.body.name, req.body.location,req.body.date,req.body.time];
-    
+    const username = req.params.username;
     db.query(q,[values], (err,data)=>{
         if(err) 
         {return res.json(err)}
         else{
           console.log(data);
-          return res.json("Event has been added!")
-  
+          const q = `SELECT id 
+          FROM event 
+          WHERE name = '`+req.body.name+`' 
+            AND location = '`+req.body.location+`' 
+            AND date = '`+req.body.date+`' 
+            AND time = '`+req.body.time+`'`
+          db.query(q, (e,r) => {
+            if(e){
+              console.log(e)
+            }
+            else{
+              console.log("this is id")
+              console.log(r[0].id)
+              let eventid = r[0].id;
+              const q = `SELECT id from users WHERE username = '${username}'`;
+              db.query(q,(e,r)=>{
+                if(e) {return res.json(e)}
+                else{
+                  const userid = r[0].id;  
+                  console.log("this is userid" + userid);
+                  const insertq = `INSERT INTO event_staff (event_id, user_id) VALUES (${eventid}, ${userid})`;
+                  db.query(insertq,(error,result)=>{
+                    if(error) return res.json(err);
+                    else{
+                      return res.json("inserted event staff");
+                    }
+                  })
+
+                }
+              })
+            }
+          });
         }
     })
   })

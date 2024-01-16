@@ -5,6 +5,7 @@ import Navbar from "../navigationbar";
 import Stack from '@mui/material/Stack';
 import { Typography, Button, Modal, Backdrop, Fade, TextField } from "@mui/material";
 import EmailForm from '../email/email.jsx';
+import ExportData from '../upload-export/ExcelExport.jsx';
 import Denied from '../user/access-denied';
 var hash = require('object-hash');
 import ipaddress from "../../../port.jsx";
@@ -241,7 +242,7 @@ function BarChart() {
                 onChange={(e) => setSearchInput(e.target.value)} // Step 4: Implement the search functionality
             />
             <Button variant="contained" color="primary" onClick={handleOpenModal} style={{ position: 'fixed', bottom: '16px', right: '16px' }}>
-                Open Email Form
+                Open Export Data
             </Button>
             <Modal                 
                 open={isModalOpen}
@@ -253,7 +254,7 @@ function BarChart() {
                 <Fade in={isModalOpen}>
                     <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '25px', borderRadius: '10px' , height: '42vh'}}>
                     {/* Add your email form components here */}
-                        <EmailForm onClose={handleCloseModal} />
+                        <ExportData onClose={handleCloseModal} />
                             {/* <Button variant="contained" color="primary" onClick={handleCloseModal} style={{ marginTop: '16px' }}>
                                 Send Email
                             </Button> */}

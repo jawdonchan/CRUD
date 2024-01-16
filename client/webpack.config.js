@@ -35,6 +35,18 @@ module.exports = {
             use: ['style-loader', 'css-loader'],
           },
           // Add other loaders for different file types as needed
+          {
+            test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[name].[ext]',
+                  outputPath: 'images/', // optional, specify the output path for images
+                },
+              },
+            ],
+          },
         ],
       },
       resolve: {

@@ -6,6 +6,13 @@ import axios from 'axios';
 import '../../css/filterpage.css';
 import { useLocation } from 'react-router-dom';
 import ipaddress from '../../../port';
+
+import image1 from '../../resources/image1.jpg'
+import image2 from '../../resources/image2.jpg'
+import image3 from '../../resources/image3.jpg'
+import image4 from '../../resources/image4.jpg'
+import image5 from '../../resources/image5.jpg'
+
 const BlankSlide = () => (
   <div>
     <h3></h3>
@@ -42,11 +49,11 @@ const FilterPage = ({ match }) => {
 
  
   const tabBackgroundImages = {
-    tab1: 'url(https://i.pinimg.com/originals/f3/3a/4c/f33a4c8f3506265c396565a3cc4ecf27.jpg)', // Change to your image URL
-    tab2: 'url(https://i.pinimg.com/originals/c3/06/40/c306407ea7ea891e9ed4cd535911945a.jpg)', // Change to your image URL
-    tab3: 'url(https://i.pinimg.com/736x/bf/73/df/bf73df24dc5eba9576213812743d230e.jpg)', // Change to your image URL
-    tab4: 'url(https://i.pinimg.com/originals/d7/1d/14/d71d144c2f0c6f7baf612d09c8b9c7fa.jpg)', // Change to your image URL
-    tab5: 'url(https://i.pinimg.com/originals/26/80/c9/2680c91bc126887950edd059bd8f0372.jpg)', // Change to your image URL
+    tab1: `url(${image1})`,
+    tab2: `url(${image2})`, // Change to your image URL
+    tab3: `url(${image3})`,// Change to your image URL
+    tab4: `url(${image4})`,// Change to your image URL
+    tab5: `url(${image5})`, // Change to your image URL
   };
    // Define CSS classes based on the selected style
    const cssClasses = {

@@ -142,7 +142,7 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.length > 0 && users.map((user) => (
             <tr key={user.id}>
               <td>{user.username}</td>
               <td>{user.role}</td>

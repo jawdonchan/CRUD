@@ -225,7 +225,7 @@ const Seatinglist = () => {
       <br></br>
       <div className='scroll'>
         <Grid container direction = "row" justifyContent="space-evenly" alignItems="center" >
-          {eventlist.map((event) => (
+          {eventlist.length > 0 && eventlist.map((event) => (
           <div className='cards'>
             <Grid item xs='auto' >
               <Card key={event.id} sx={{ maxWidth: 400, minHeight: 60 }}>

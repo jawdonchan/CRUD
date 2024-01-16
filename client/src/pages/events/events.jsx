@@ -386,7 +386,7 @@ const checkeventuser = async (eventid) => {
           </tr>
         </thead>
         <tbody>
-          {filteredEvents.map((event) => (
+          {filteredEvents.length > 0 && filteredEvents.map((event) => (
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.location}</td>

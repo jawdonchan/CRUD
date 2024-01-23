@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import "../../css/styles.css"; // Import the CSS file
 import '../../css/login.css';
-import SphereAnimation from '../sphere';
 import ipaddress from '../../../port';
 var hash = require('object-hash');
 
@@ -57,7 +56,7 @@ function Login() {
        <div className="bg-container"> {/* Add this container for the background animation */}
       <Stack spacing={5} alignItems="center">
         <br />
-        {/* <SphereAnimation /> */}
+
         <Typography className="titlelogin" variant="h4">Login Page</Typography>
         <br />
         <form className="loginform" onSubmit={handleLogin}>

@@ -6,11 +6,11 @@ import Denied from '../user/access-denied';
 import axios from 'axios';
 import hash from 'object-hash';
 import moment from 'moment';
-import '../../css/sphere.css';
+
 import '../../css/export.css';
 import ipaddress from '../../../port';
 
-import Sphere from '../sphere';
+
 const MainPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userRole, setUserRole] = useState(sessionStorage.getItem("role"));
@@ -94,7 +94,7 @@ const MainPage = () => {
       {/* <Navbar /> */}
       <h1>Excel Export</h1>
       {/* <div className="animation-wrapper">
-        <Sphere />
+    
       </div> */}
       {userRole === hashed && (
         <>

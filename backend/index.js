@@ -307,7 +307,7 @@ app.get("/students", (req,res)=>{
 //filter students based on events
 app.get("/students/:id", (req,res)=>{
   let studid = req.params.id;
-  const q = "SELECT * from students where Event = " + studid + " And Status != 'No'";
+  const q = "SELECT * from students where Event = " + studid + " And Status != 'No' and attendance = 'yes'";
   db.query(q,(err,data)=>{
     console.log("slides");
       if(err) return res.json(err)
